@@ -23,10 +23,10 @@ if game.CoreGui:FindFirstChild("BOKA_HUB_RESTORED") then
     end
 
     if _G.ScriptExecutionCount >= 6 then
-        Player:Kick("طلعناك عشان يمكن في تحديث ومو راضي يشتغل معك")
+        Player:Kick("سبام ")
         return
     else
-        SendSystemNotify("Syteam BOKA", "السكربت شغال بالفعل انتبه تكرره بيطردك ❗️")
+        SendSystemNotify("Syteam BOKA", "السكربت شغال بالفعل ")
         return 
     end
 end
