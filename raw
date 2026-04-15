@@ -121,10 +121,10 @@ ScreenGui.ResetOnSpawn = false
 
 -- [[ تعديل الزر الدائري: تم تكبير الحجم وإضافة خاصية التحريك ]]
 local GhostBtn = Instance.new("ImageButton")
-GhostBtn.Size = UDim2.new(0, 45, 0, 45) -- الحجم الجديد (أكبر قليلاً)
+GhostBtn.Size = UDim2.new(0, 25, 0, 25) -- الحجم الجديد (أكبر قليلاً)
 GhostBtn.Position = UDim2.new(0, 10, 0.5, -22)
 GhostBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=107746811376355"
+GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=94188591468414"
 GhostBtn.ZIndex = 100
 GhostBtn.Parent = ScreenGui
 MakeRound(GhostBtn, 100) -- دائري بالكامل
