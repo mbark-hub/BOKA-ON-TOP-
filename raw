@@ -306,7 +306,7 @@ DevName.Parent = DevBox
 
 DevName.MouseButton1Click:Connect(function()
     setclipboard("@fx3we4")
-    SendBokaNotify("Syteam BOKA", "تم نسخ يوزر المطور", "rbxthumb://type=Asset&w=420&h=420&id=137274974668253")
+    SendBokaNotify("Syteam BOKA", "تم نسخ يوزر المطور")
 end)
 
 local DevRole = Instance.new("TextLabel")
