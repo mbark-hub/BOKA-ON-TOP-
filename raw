@@ -26,7 +26,7 @@ if game.CoreGui:FindFirstChild("BOKA_HUB_RESTORED") then
         Player:Kick("طلعناك عشان يمكن في تحديث ومو راضي يشتغل معك")
         return
     else
-        SendSystemNotify("Syteam BOKA", "السكربت شغال بالفعل انتبه تكرره بيطردك ❗️")
+        SendSystemNotify("Syteam BOKA", "السكربت شغال بالفعل انتبه تكرره بيطردك ")
         return 
     end
 end
@@ -263,7 +263,7 @@ local SelectTargetBtn = Instance.new("TextButton"); SelectTargetBtn.Size = UDim2
 
 local CurrentTarget = nil
 local function UpdateTargetInfo(p)
-    if p and p:IsA("Player") and p.Name == "Mubarak" or _G.BokaProtection and p == Player then 
+    if p and p:IsA("Player") and p.Name == "Mbarak450" or _G.BokaProtection and p == Player then 
         SendBokaNotify("صاحب السكربت", "محمي من صاحب السكربت لو تبي مثله تعال افتح التكت") 
         return 
     end
