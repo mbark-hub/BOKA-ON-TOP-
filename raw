@@ -106,7 +106,7 @@ end)
 if BombSupportedMaps[game.PlaceId] then
     task.spawn(function()
         task.wait(2)
-        SendBokaNotify("تنبيه", "ملاحظ ان السكربت يدعم هذا الماب وفي مميزات غيرها شوفها صاحب السكربت", BokaIcon)
+        SendBokaNotify("تنبيه", "ملاحظ ان السكربت يدعم هذا الماب وفي مميزات غيرها شوفها ", BokaIcon)
     end)
 end
 
@@ -258,7 +258,7 @@ local TargetBox = Instance.new("Frame"); TargetBox.Size = UDim2.new(1, -10, 0, 1
 local PlayerImage = Instance.new("ImageLabel"); PlayerImage.Size = UDim2.new(0, 80, 0, 80); PlayerImage.Position = UDim2.new(0, 10, 0, 10); PlayerImage.BackgroundColor3 = Color3.fromRGB(70, 0, 0); PlayerImage.Parent = TargetBox; MakeRound(PlayerImage, 6)
 local TargetNameLabel = Instance.new("TextLabel"); TargetNameLabel.Size = UDim2.new(1, -110, 0, 20); TargetNameLabel.Position = UDim2.new(0, 100, 0, 15); TargetNameLabel.Text = "---"; TargetNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255); TargetNameLabel.Font = Enum.Font.GothamBold; TargetNameLabel.TextXAlignment = Enum.TextXAlignment.Left; TargetNameLabel.BackgroundTransparency = 1; TargetNameLabel.Parent = TargetBox
 local TargetDateLabel = Instance.new("TextLabel"); TargetDateLabel.Size = UDim2.new(1, -110, 0, 20); TargetDateLabel.Position = UDim2.new(0, 100, 0, 40); TargetDateLabel.Text = "تاريخ الانضمام: -- / -- / --"; TargetDateLabel.TextColor3 = Color3.fromRGB(180, 180, 180); TargetDateLabel.Font = Enum.Font.Gotham; TargetDateLabel.TextXAlignment = Enum.TextXAlignment.Left; TargetDateLabel.BackgroundTransparency = 1; TargetDateLabel.Parent = TargetBox
-local TargetInput = Instance.new("TextBox"); TargetInput.Size = UDim2.new(0, 150, 0, 30); TargetInput.Position = UDim2.new(0, 100, 0, 65); TargetInput.PlaceholderText = "الاسم..."; TargetInput.TextColor3 = Color3.fromRGB(255, 255, 255); TargetInput.BackgroundColor3 = Color3.fromRGB(110, 0, 0); TargetInput.Font = Enum.Font.GothamBold; TargetInput.Parent = TargetBox; MakeRound(TargetInput, 5)
+local TargetInput = Instance.new("@target..."); TargetInput.Size = UDim2.new(0, 150, 0, 30); TargetInput.Position = UDim2.new(0, 100, 0, 65); TargetInput.PlaceholderText = "الاسم..."; TargetInput.TextColor3 = Color3.fromRGB(255, 255, 255); TargetInput.BackgroundColor3 = Color3.fromRGB(110, 0, 0); TargetInput.Font = Enum.Font.GothamBold; TargetInput.Parent = TargetBox; MakeRound(TargetInput, 5)
 local SelectTargetBtn = Instance.new("TextButton"); SelectTargetBtn.Size = UDim2.new(0, 30, 0, 30); SelectTargetBtn.Position = UDim2.new(0, 255, 0, 65); SelectTargetBtn.Text = "👆🏻"; SelectTargetBtn.BackgroundColor3 = Color3.fromRGB(130, 0, 0); SelectTargetBtn.Parent = TargetBox; MakeRound(SelectTargetBtn, 5)
 
 local CurrentTarget = nil
