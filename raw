@@ -414,7 +414,7 @@ local function TargetAct(stat, type)
                     elseif type == "T4" then Player.Character.Humanoid.Sit = true; local freq = 80; local off = math.sin(tick() * freq) * 0.8; mH.CFrame = tH.CFrame * CFrame.new(0, 1.9, -1.2 + off) * CFrame.Angles(0, math.rad(180), 0)
                     elseif type == "T6" then 
                         Player.Character.Humanoid.PlatformStand = true; local rotation = (tick() * 1000000) % 360; local upDown = math.sin(tick() * 50) * 2
-                        mH.CFrame = tH.CFrame * CFrame.new(0, upDown, 1.5) * CFrame.Angles(math.rad(90), math.rad(rotation), 0); mH.Velocity = Vector3.new(0, 1000000, 0)
+                        mH.CFrame = tH.CFrame * CFrame.new(0, upDown, 1.5) * CFrame.Angles(math.rad(90), math.rad(rotation), 0); mH.Velocity = Vector3.new(0, 1000, 0)
                     elseif type == "T5" then mH.CFrame = CFrame.new(mH.Position, Vector3.new(tH.Position.X, mH.Position.Y, tH.Position.Z))
                     end
                 end
