@@ -502,7 +502,7 @@ end)
 
 local PullBtn, PullStat, PullFrame = CreateToggleBtn("سحب الناس", 50, TrollContent)
 local AntiBombBtn, AntiBombStat, AF2 = CreateToggleBtn("مضاد القنبلة", 50, TrollContent)
-local ChaletTag = Instance.new("TextLabel"); ChaletTag.Size = UDim2.new(0, 100, 0, 20); ChaletTag.Position = UDim2.new(0, 5, 1, -22); ChaletTag.Text = "🟢 شاليه محمد"; ChaletTag.TextColor3 = Color3.fromRGB(0, 255, 0); ChaletTag.Font = Enum.Font.GothamBold; ChaletTag.TextSize = 10; ChaletTag.BackgroundTransparency = 1; ChaletTag.Parent = PullFrame
+local ChaletTag = Instance.new("TextLabel"); ChaletTag.Size = UDim2.new(0, 100, 0, 20); ChaletTag.Position = UDim2.new(0, 5, 1, -22); ChaletTag.Text = " شاليه محمد"; ChaletTag.TextColor3 = Color3.fromRGB(0, 255, 0); ChaletTag.Font = Enum.Font.GothamBold; ChaletTag.TextSize = 10; ChaletTag.BackgroundTransparency = 1; ChaletTag.Parent = PullFrame
 
 _G.PullPeople = false
 PullBtn.MouseButton1Click:Connect(function()
