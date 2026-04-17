@@ -1,5 +1,5 @@
 -- BOKA TEAM : The Mercy script 💎 - V31 [RECTANGLE EDITION]
--- [ تم التعديل: إضافة زر هيدلس + نظام حماية BOKA450 الحصري + تطوير أداة التأشير + زر متحرك ]
+-- [ تم التعديل: توحيد حجم زر الهيدلس مع زر التنقل + نظام حماية BOKA450 الحصري ]
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
@@ -452,8 +452,9 @@ local JumpUpdateBtn = CreateActionBtn("تحديث القفزة", 40, PlayerConte
 local NoBtn, NoStat = CreateToggleBtn("اختراق الجدران", 85, PlayerContent); NoBtn.MouseButton1Click:Connect(function() _G.Noclip = not _G.Noclip; NoStat.Text = _G.Noclip and "🟢" or "🔴" end)
 local JumpBtn, JumpStat = CreateToggleBtn("قفز لا نهائي", 130, PlayerContent); JumpBtn.MouseButton1Click:Connect(function() _G.InfJump = not _G.InfJump; JumpStat.Text = _G.InfJump and "🟢" or "🔴" end)
 
--- [ إضافة زر هيدلس الجديد هنا ]
-local HeadlessBtn = CreateActionBtn("هيدلس", 220, PlayerContent, 0.6)
+-- [ تعديل زر هيدلس ليكون بنفس حجم ولون زر "تنقل" ]
+local HeadlessFrame = Instance.new("Frame"); HeadlessFrame.Size = UDim2.new(1, -10, 0, 40); HeadlessFrame.Position = UDim2.new(0, 5, 0, 220); HeadlessFrame.BackgroundColor3 = Color3.fromRGB(90, 0, 0); HeadlessFrame.Parent = PlayerContent; MakeRound(HeadlessFrame, 6)
+local HeadlessBtn = Instance.new("TextButton"); HeadlessBtn.Size = UDim2.new(1, 0, 1, 0); HeadlessBtn.Text = "هيدلس"; HeadlessBtn.TextColor3 = Color3.fromRGB(255, 255, 255); HeadlessBtn.Font = Enum.Font.GothamBold; HeadlessBtn.TextSize = 12; HeadlessBtn.BackgroundTransparency = 1; HeadlessBtn.Parent = HeadlessFrame
 HeadlessBtn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://gist.githubusercontent.com/mbark-hub/b3f9eb1acacf4995ddf61bdb3ae72b90/raw/15c176a125a521b4cd215aca5c30b7c0627ba5dd/gistfile1.txt"))()
     SendBokaNotify("BOKA HUB", "تم تفعيل سكربت الهيدلس")
