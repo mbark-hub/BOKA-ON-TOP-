@@ -321,7 +321,7 @@ DevRole.Parent = DevBox
 
 -- زر الديسكورد في الأسفل
 local DiscordButton = Instance.new("TextButton"); DiscordButton.Size = UDim2.new(0, 200, 0, 40); DiscordButton.Text = "نسخ رابط الديسكورد"; DiscordButton.Font = Enum.Font.GothamBold; DiscordButton.TextSize = 18; DiscordButton.BackgroundColor3 = Color3.fromRGB(110, 0, 0); DiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255); DiscordButton.Parent = HomeContent; MakeRound(DiscordButton, 6)
-DiscordButton.MouseButton1Click:Connect(function() setclipboard("https://discord.gg/Eh7HN9Hzq"); SendBokaNotify("System BOKA", "تم نسخ رابط الديسكورد تنورنا هناك") end)
+DiscordButton.MouseButton1Click:Connect(function() setclipboard("https://discord.gg/Eh7HN9Hzq"); SendBokaNotify("System BOKA", "تم نسخ رابط الديسكورد تنورنا هناك | تم اصلاح مشكلة الدس 💡") end)
 
 local TargetBox = Instance.new("Frame"); TargetBox.Size = UDim2.new(1, -10, 0, 100); TargetBox.Position = UDim2.new(0, 5, 0, 5); TargetBox.BackgroundColor3 = Color3.fromRGB(90, 0, 0); TargetBox.Parent = MainContent; MakeRound(TargetBox, 8)
 local PlayerImage = Instance.new("ImageLabel"); PlayerImage.Size = UDim2.new(0, 80, 0, 80); PlayerImage.Position = UDim2.new(0, 10, 0, 10); PlayerImage.BackgroundColor3 = Color3.fromRGB(70, 0, 0); PlayerImage.Parent = TargetBox; MakeRound(PlayerImage, 6); AddDarkRedStroke(PlayerImage)
