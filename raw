@@ -64,11 +64,11 @@ local function MakeRound(obj, amount)
     corner.Parent = obj
 end
 
--- وظيفة لإضافة حواف حمراء غامقة للصور
+-- وظيفة لإضافة حواف زرقاء غامقة للصور
 local function AddDarkRedStroke(obj)
     local stroke = Instance.new("UIStroke")
     stroke.Thickness = 2
-    stroke.Color = Color3.fromRGB(150, 0, 0) -- أحمر غامق
+    stroke.Color = Color3.fromRGB(0, 50, 150) -- أزرق غامق
     stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     stroke.Parent = obj
 end
@@ -131,8 +131,8 @@ ScreenGui.ResetOnSpawn = false
 local GhostBtn = Instance.new("ImageButton")
 GhostBtn.Size = UDim2.new(0, 28, 0, 28) 
 GhostBtn.Position = UDim2.new(0, 10, 0.5, -22)
-GhostBtn.BackgroundColor3 = Color3.fromRGB(100, 0, 0) 
-GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=73802760076990"
+GhostBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 50) 
+GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=107244678352383"
 GhostBtn.ZIndex = 100
 GhostBtn.Parent = ScreenGui
 MakeRound(GhostBtn, 100) 
@@ -166,8 +166,8 @@ end)
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 550, 0, 330)
 MainFrame.Position = UDim2.new(0, -600, 0, -400) 
-MainFrame.BackgroundColor3 = Color3.fromRGB(40, 0, 0); MainFrame.Active = true; MainFrame.Draggable = true; MainFrame.Parent = ScreenGui; MakeRound(MainFrame, 10)
-local MainStroke = Instance.new("UIStroke"); MainStroke.Thickness = 2; MainStroke.Color = Color3.fromRGB(255, 0, 0); MainStroke.Parent = MainFrame
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 20); MainFrame.Active = true; MainFrame.Draggable = true; MainFrame.Parent = ScreenGui; MakeRound(MainFrame, 10)
+local MainStroke = Instance.new("UIStroke"); MainStroke.Thickness = 2; MainStroke.Color = Color3.fromRGB(0, 100, 255); MainStroke.Parent = MainFrame
 
 TweenService:Create(MainFrame, TweenInfo.new(1.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -275, 0.5, -165)}):Play()
 
@@ -180,12 +180,12 @@ end)
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Size = UDim2.new(1, -10, 0, 30); TitleLabel.Position = UDim2.new(0, 110, 0, 5); TitleLabel.Text = "BOKA TEAM : The Mercy script 💎"; TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255); TitleLabel.Font = Enum.Font.GothamBold; TitleLabel.TextSize = 14; TitleLabel.TextXAlignment = Enum.TextXAlignment.Left; TitleLabel.BackgroundTransparency = 1; TitleLabel.Parent = MainFrame
 
-local TabBar = Instance.new("Frame"); TabBar.Size = UDim2.new(0, 120, 1, -50); TabBar.Position = UDim2.new(0, 10, 0, 40); TabBar.BackgroundColor3 = Color3.fromRGB(80, 0, 0); TabBar.Parent = MainFrame; MakeRound(TabBar, 8)
+local TabBar = Instance.new("Frame"); TabBar.Size = UDim2.new(0, 120, 1, -50); TabBar.Position = UDim2.new(0, 10, 0, 40); TabBar.BackgroundColor3 = Color3.fromRGB(0, 0, 40); TabBar.Parent = MainFrame; MakeRound(TabBar, 8)
 local TabListConfig = Instance.new("UIListLayout"); TabListConfig.SortOrder = Enum.SortOrder.LayoutOrder; TabListConfig.Padding = UDim.new(0, 8); TabListConfig.Parent = TabBar
 local TabPadding = Instance.new("UIPadding"); TabPadding.PaddingTop = UDim.new(0, 10); TabPadding.PaddingLeft = UDim.new(0, 5); TabPadding.PaddingRight = UDim.new(0, 5); TabPadding.Parent = TabBar
 
 local function CreateTabBtn(text, order)
-    local btn = Instance.new("TextButton"); btn.Size = UDim2.new(1, 0, 0, 35); btn.Text = text; btn.TextColor3 = Color3.fromRGB(255, 255, 255); btn.Font = Enum.Font.GothamBold; btn.TextSize = 12; btn.BackgroundColor3 = Color3.fromRGB(120, 0, 0); btn.LayoutOrder = order; btn.Parent = TabBar; MakeRound(btn, 6); return btn
+    local btn = Instance.new("TextButton"); btn.Size = UDim2.new(1, 0, 0, 35); btn.Text = text; btn.TextColor3 = Color3.fromRGB(255, 255, 255); btn.Font = Enum.Font.GothamBold; btn.TextSize = 12; btn.BackgroundColor3 = Color3.fromRGB(0, 20, 80); btn.LayoutOrder = order; btn.Parent = TabBar; MakeRound(btn, 6); return btn
 end
 
 local HomeTabBtn = CreateTabBtn("القائمة الرئيسية", 0)
@@ -208,7 +208,7 @@ local LargeText = Instance.new("TextLabel")
 LargeText.Size = UDim2.new(0.9, 0, 0, 60); LargeText.Text = "نحنا نوزع جوائز في الدس روح وحط الكود فوق 👆"; LargeText.TextColor3 = Color3.fromRGB(255, 255, 255); LargeText.Font = Enum.Font.GothamBold; LargeText.TextSize = 18; LargeText.TextWrapped = true; LargeText.BackgroundTransparency = 1; LargeText.Parent = RewardsContent
 
 local CodeBox = Instance.new("TextBox")
-CodeBox.Size = UDim2.new(0, 250, 0, 45); CodeBox.PlaceholderText = "ادخل الكود…"; CodeBox.Text = ""; CodeBox.TextColor3 = Color3.fromRGB(255, 255, 255); CodeBox.BackgroundColor3 = Color3.fromRGB(100, 0, 0); CodeBox.Font = Enum.Font.GothamBold; CodeBox.TextSize = 16; CodeBox.Parent = RewardsContent; MakeRound(CodeBox, 8)
+CodeBox.Size = UDim2.new(0, 250, 0, 45); CodeBox.PlaceholderText = "ادخل الكود…"; CodeBox.Text = ""; CodeBox.TextColor3 = Color3.fromRGB(255, 255, 255); CodeBox.BackgroundColor3 = Color3.fromRGB(0, 0, 60); CodeBox.Font = Enum.Font.GothamBold; CodeBox.TextSize = 16; CodeBox.Parent = RewardsContent; MakeRound(CodeBox, 8)
 
 local RewardNotice = Instance.new("TextLabel")
 RewardNotice.Size = UDim2.new(0.9, 0, 0, 40); RewardNotice.Text = ""; RewardNotice.TextColor3 = Color3.fromRGB(255, 255, 0); RewardNotice.Font = Enum.Font.GothamBold; RewardNotice.TextSize = 14; RewardNotice.BackgroundTransparency = 1; RewardNotice.Parent = RewardsContent
@@ -235,14 +235,14 @@ CodeBox.FocusLost:Connect(function(enter)
 end)
 
 local function CreateToggleBtn(text, y, parent)
-    local frame = Instance.new("Frame"); frame.Size = UDim2.new(1, -10, 0, 40); frame.Position = UDim2.new(0, 5, 0, y); frame.BackgroundColor3 = Color3.fromRGB(90, 0, 0); frame.Parent = parent; MakeRound(frame, 6)
+    local frame = Instance.new("Frame"); frame.Size = UDim2.new(1, -10, 0, 40); frame.Position = UDim2.new(0, 5, 0, y); frame.BackgroundColor3 = Color3.fromRGB(0, 0, 45); frame.Parent = parent; MakeRound(frame, 6)
     local b = Instance.new("TextButton"); b.Size = UDim2.new(1, -50, 1, 0); b.Position = UDim2.new(0, 0, 0, 0); b.Text = text; b.TextColor3 = Color3.fromRGB(255, 255, 255); b.Font = Enum.Font.GothamBold; b.TextSize = 12; b.TextXAlignment = Enum.TextXAlignment.Left; b.BackgroundTransparency = 1; b.Parent = frame; local p = Instance.new("UIPadding"); p.PaddingLeft = UDim.new(0, 10); p.Parent = b
     local stat = Instance.new("TextLabel"); stat.Size = UDim2.new(0, 30, 0, 30); stat.Position = UDim2.new(1, -35, 0.5, -15); stat.Text = "🔴"; stat.BackgroundTransparency = 1; stat.Font = Enum.Font.GothamBold; stat.TextSize = 18; stat.Parent = frame
     return b, stat, frame
 end
 
 local function CreateActionBtn(text, y, parent, width)
-    local b = Instance.new("TextButton"); b.Size = UDim2.new(width or 0.45, 0, 0, 35); b.Position = UDim2.new(0, 5, 0, y); b.Text = text; b.TextColor3 = Color3.fromRGB(255, 255, 255); b.Font = Enum.Font.GothamBold; b.TextSize = 11; b.BackgroundColor3 = Color3.fromRGB(150, 0, 0); b.Parent = parent; MakeRound(b, 6); return b
+    local b = Instance.new("TextButton"); b.Size = UDim2.new(width or 0.45, 0, 0, 35); b.Position = UDim2.new(0, 5, 0, y); b.Text = text; b.TextColor3 = Color3.fromRGB(255, 255, 255); b.Font = Enum.Font.GothamBold; b.TextSize = 11; b.BackgroundColor3 = Color3.fromRGB(0, 40, 120); b.Parent = parent; MakeRound(b, 6); return b
 end
 
 local function AddMapHint(parentFrame)
@@ -260,10 +260,10 @@ local InviteLabel = Instance.new("TextLabel"); InviteLabel.Size = UDim2.new(1, 0
 local DevBox = Instance.new("Frame")
 DevBox.Name = "DeveloperBox"
 DevBox.Size = UDim2.new(0.85, 0, 0, 180) 
-DevBox.BackgroundColor3 = Color3.fromRGB(60, 0, 0)
+DevBox.BackgroundColor3 = Color3.fromRGB(0, 0, 40)
 DevBox.Parent = HomeContent 
 MakeRound(DevBox, 10)
-local DevStroke = Instance.new("UIStroke"); DevStroke.Thickness = 2; DevStroke.Color = Color3.fromRGB(255, 0, 0); DevStroke.Parent = DevBox
+local DevStroke = Instance.new("UIStroke"); DevStroke.Thickness = 2; DevStroke.Color = Color3.fromRGB(0, 100, 255); DevStroke.Parent = DevBox
 
 local DevTitle = Instance.new("TextLabel")
 DevTitle.Size = UDim2.new(0, 100, 0, 25)
@@ -320,15 +320,15 @@ DevRole.BackgroundTransparency = 1
 DevRole.Parent = DevBox
 
 -- زر الديسكورد في الأسفل
-local DiscordButton = Instance.new("TextButton"); DiscordButton.Size = UDim2.new(0, 200, 0, 40); DiscordButton.Text = "نسخ رابط الديسكورد"; DiscordButton.Font = Enum.Font.GothamBold; DiscordButton.TextSize = 18; DiscordButton.BackgroundColor3 = Color3.fromRGB(110, 0, 0); DiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255); DiscordButton.Parent = HomeContent; MakeRound(DiscordButton, 6)
+local DiscordButton = Instance.new("TextButton"); DiscordButton.Size = UDim2.new(0, 200, 0, 40); DiscordButton.Text = "نسخ رابط الديسكورد"; DiscordButton.Font = Enum.Font.GothamBold; DiscordButton.TextSize = 18; DiscordButton.BackgroundColor3 = Color3.fromRGB(0, 20, 100); DiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255); DiscordButton.Parent = HomeContent; MakeRound(DiscordButton, 6)
 DiscordButton.MouseButton1Click:Connect(function() setclipboard("https://discord.gg/Eh7HN9Hzq"); SendBokaNotify("System BOKA", "تم نسخ رابط الديسكورد تنورنا هناك | تم اصلاح مشكلة الدس 💡") end)
 
-local TargetBox = Instance.new("Frame"); TargetBox.Size = UDim2.new(1, -10, 0, 100); TargetBox.Position = UDim2.new(0, 5, 0, 5); TargetBox.BackgroundColor3 = Color3.fromRGB(90, 0, 0); TargetBox.Parent = MainContent; MakeRound(TargetBox, 8)
-local PlayerImage = Instance.new("ImageLabel"); PlayerImage.Size = UDim2.new(0, 80, 0, 80); PlayerImage.Position = UDim2.new(0, 10, 0, 10); PlayerImage.BackgroundColor3 = Color3.fromRGB(70, 0, 0); PlayerImage.Parent = TargetBox; MakeRound(PlayerImage, 6); AddDarkRedStroke(PlayerImage)
+local TargetBox = Instance.new("Frame"); TargetBox.Size = UDim2.new(1, -10, 0, 100); TargetBox.Position = UDim2.new(0, 5, 0, 5); TargetBox.BackgroundColor3 = Color3.fromRGB(0, 0, 40); TargetBox.Parent = MainContent; MakeRound(TargetBox, 8)
+local PlayerImage = Instance.new("ImageLabel"); PlayerImage.Size = UDim2.new(0, 80, 0, 80); PlayerImage.Position = UDim2.new(0, 10, 0, 10); PlayerImage.BackgroundColor3 = Color3.fromRGB(0, 0, 30); PlayerImage.Parent = TargetBox; MakeRound(PlayerImage, 6); AddDarkRedStroke(PlayerImage)
 local TargetNameLabel = Instance.new("TextLabel"); TargetNameLabel.Size = UDim2.new(1, -110, 0, 20); TargetNameLabel.Position = UDim2.new(0, 100, 0, 15); TargetNameLabel.Text = "---"; TargetNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255); TargetNameLabel.Font = Enum.Font.GothamBold; TargetNameLabel.TextXAlignment = Enum.TextXAlignment.Left; TargetNameLabel.BackgroundTransparency = 1; TargetNameLabel.Parent = TargetBox
 local TargetDateLabel = Instance.new("TextLabel"); TargetDateLabel.Size = UDim2.new(1, -110, 0, 20); TargetDateLabel.Position = UDim2.new(0, 100, 0, 40); TargetDateLabel.Text = "تاريخ الانضمام: -- / -- / --"; TargetDateLabel.TextColor3 = Color3.fromRGB(180, 180, 180); TargetDateLabel.Font = Enum.Font.Gotham; TargetDateLabel.TextXAlignment = Enum.TextXAlignment.Left; TargetDateLabel.BackgroundTransparency = 1; TargetDateLabel.Parent = TargetBox
-local TargetInput = Instance.new("TextBox"); TargetInput.Size = UDim2.new(0, 150, 0, 30); TargetInput.Position = UDim2.new(0, 100, 0, 65); TargetInput.PlaceholderText = "الاسم..."; TargetInput.TextColor3 = Color3.fromRGB(255, 255, 255); TargetInput.BackgroundColor3 = Color3.fromRGB(110, 0, 0); TargetInput.Font = Enum.Font.GothamBold; TargetInput.Parent = TargetBox; MakeRound(TargetInput, 5)
-local SelectTargetBtn = Instance.new("TextButton"); SelectTargetBtn.Size = UDim2.new(0, 30, 0, 30); SelectTargetBtn.Position = UDim2.new(0, 255, 0, 65); SelectTargetBtn.Text = "👆🏻"; SelectTargetBtn.BackgroundColor3 = Color3.fromRGB(130, 0, 0); SelectTargetBtn.Parent = TargetBox; MakeRound(SelectTargetBtn, 5)
+local TargetInput = Instance.new("TextBox"); TargetInput.Size = UDim2.new(0, 150, 0, 30); TargetInput.Position = UDim2.new(0, 100, 0, 65); TargetInput.PlaceholderText = "الاسم..."; TargetInput.TextColor3 = Color3.fromRGB(255, 255, 255); TargetInput.BackgroundColor3 = Color3.fromRGB(0, 20, 80); TargetInput.Font = Enum.Font.GothamBold; TargetInput.Parent = TargetBox; MakeRound(TargetInput, 5)
+local SelectTargetBtn = Instance.new("TextButton"); SelectTargetBtn.Size = UDim2.new(0, 30, 0, 30); SelectTargetBtn.Position = UDim2.new(0, 255, 0, 65); SelectTargetBtn.Text = "👆🏻"; SelectTargetBtn.BackgroundColor3 = Color3.fromRGB(0, 40, 130); SelectTargetBtn.Parent = TargetBox; MakeRound(SelectTargetBtn, 5)
 
 local CurrentTarget = nil
 local function UpdateTargetInfo(p)
@@ -430,7 +430,7 @@ local B4, S4 = CreateToggleBtn("يمص", 160, MainContent)
 local B3, S3 = CreateToggleBtn("بانق عكسي", 205, MainContent)
 local B2, S2 = CreateToggleBtn("احم", 250, MainContent)
 
-local TP_Frame = Instance.new("Frame"); TP_Frame.Size = UDim2.new(1, -10, 0, 40); TP_Frame.Position = UDim2.new(0, 5, 0, 295); TP_Frame.BackgroundColor3 = Color3.fromRGB(90, 0, 0); TP_Frame.Parent = MainContent; MakeRound(TP_Frame, 6)
+local TP_Frame = Instance.new("Frame"); TP_Frame.Size = UDim2.new(1, -10, 0, 40); TP_Frame.Position = UDim2.new(0, 5, 0, 295); TP_Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 45); TP_Frame.Parent = MainContent; MakeRound(TP_Frame, 6)
 local TP_Btn = Instance.new("TextButton"); TP_Btn.Size = UDim2.new(1, 0, 1, 0); TP_Btn.Text = "تنقل"; TP_Btn.TextColor3 = Color3.fromRGB(255, 255, 255); TP_Btn.Font = Enum.Font.GothamBold; TP_Btn.TextSize = 12; TP_Btn.BackgroundTransparency = 1; TP_Btn.Parent = TP_Frame
 TP_Btn.MouseButton1Click:Connect(function()
     if CurrentTarget and (CurrentTarget == Player and _G.BokaProtection) then SendBokaNotify("صاحب السكربت", "محمي من صاحب السكربت لو تبي مثله تعال افتح التكت") return end
@@ -445,15 +445,15 @@ TargetStats["T6"] = S6; TargetStats["T4"] = S4; TargetStats["T3"] = S3; TargetSt
 B6.MouseButton1Click:Connect(function() TargetAct(S6, "T6") end); B4.MouseButton1Click:Connect(function() TargetAct(S4, "T4") end); B3.MouseButton1Click:Connect(function() TargetAct(S3, "T3") end); B2.MouseButton1Click:Connect(function() TargetAct(S2, "T2") end); B1.MouseButton1Click:Connect(function() TargetAct(S1, "T1") end); B5.MouseButton1Click:Connect(function() TargetAct(S5, "T5") end)
 if BombSupportedMaps[game.PlaceId] then AddMapHint(F1); AddMapHint(F5) else F1.Visible = false; F5.Visible = false end
 
-local SpeedInput = Instance.new("TextBox"); SpeedInput.Size = UDim2.new(0, 120, 0, 30); SpeedInput.Position = UDim2.new(0, 5, 0, 5); SpeedInput.PlaceholderText = "أدخل السرعة..."; SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255); SpeedInput.BackgroundColor3 = Color3.fromRGB(90, 0, 0); SpeedInput.Font = Enum.Font.GothamBold; SpeedInput.Parent = PlayerContent; MakeRound(SpeedInput, 5)
+local SpeedInput = Instance.new("TextBox"); SpeedInput.Size = UDim2.new(0, 120, 0, 30); SpeedInput.Position = UDim2.new(0, 5, 0, 5); SpeedInput.PlaceholderText = "أدخل السرعة..."; SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255); SpeedInput.BackgroundColor3 = Color3.fromRGB(0, 0, 45); SpeedInput.Font = Enum.Font.GothamBold; SpeedInput.Parent = PlayerContent; MakeRound(SpeedInput, 5)
 local SpeedUpdateBtn = CreateActionBtn("تحديث السرعة", 40, PlayerContent, 0.35); SpeedUpdateBtn.MouseButton1Click:Connect(function() _G.CustomSpeed = tonumber(SpeedInput.Text) or 16 end)
-local JumpInput = Instance.new("TextBox"); JumpInput.Size = UDim2.new(0, 120, 0, 30); JumpInput.Position = UDim2.new(0, 135, 0, 5); JumpInput.PlaceholderText = "أدخل القفزة..."; JumpInput.TextColor3 = Color3.fromRGB(255, 255, 255); JumpInput.BackgroundColor3 = Color3.fromRGB(90, 0, 0); JumpInput.Font = Enum.Font.GothamBold; JumpInput.Parent = PlayerContent; MakeRound(JumpInput, 5)
+local JumpInput = Instance.new("TextBox"); JumpInput.Size = UDim2.new(0, 120, 0, 30); JumpInput.Position = UDim2.new(0, 135, 0, 5); JumpInput.PlaceholderText = "أدخل القفزة..."; JumpInput.TextColor3 = Color3.fromRGB(255, 255, 255); JumpInput.BackgroundColor3 = Color3.fromRGB(0, 0, 45); JumpInput.Font = Enum.Font.GothamBold; JumpInput.Parent = PlayerContent; MakeRound(JumpInput, 5)
 local JumpUpdateBtn = CreateActionBtn("تحديث القفزة", 40, PlayerContent, 0.35); JumpUpdateBtn.Position = UDim2.new(0, 135, 0, 40); JumpUpdateBtn.MouseButton1Click:Connect(function() _G.CustomJump = tonumber(JumpInput.Text) or 50 end)
 local NoBtn, NoStat = CreateToggleBtn("اختراق الجدران", 85, PlayerContent); NoBtn.MouseButton1Click:Connect(function() _G.Noclip = not _G.Noclip; NoStat.Text = _G.Noclip and "🟢" or "🔴" end)
 local JumpBtn, JumpStat = CreateToggleBtn("قفز لا نهائي", 130, PlayerContent); JumpBtn.MouseButton1Click:Connect(function() _G.InfJump = not _G.InfJump; JumpStat.Text = _G.InfJump and "🟢" or "🔴" end)
 
 -- [ تعديل زر هيدلس ليكون بنفس حجم ولون زر "تنقل" ]
-local HeadlessFrame = Instance.new("Frame"); HeadlessFrame.Size = UDim2.new(1, -10, 0, 40); HeadlessFrame.Position = UDim2.new(0, 5, 0, 220); HeadlessFrame.BackgroundColor3 = Color3.fromRGB(90, 0, 0); HeadlessFrame.Parent = PlayerContent; MakeRound(HeadlessFrame, 6)
+local HeadlessFrame = Instance.new("Frame"); HeadlessFrame.Size = UDim2.new(1, -10, 0, 40); HeadlessFrame.Position = UDim2.new(0, 5, 0, 220); HeadlessFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 45); HeadlessFrame.Parent = PlayerContent; MakeRound(HeadlessFrame, 6)
 local HeadlessBtn = Instance.new("TextButton"); HeadlessBtn.Size = UDim2.new(1, 0, 1, 0); HeadlessBtn.Text = "هيدلس"; HeadlessBtn.TextColor3 = Color3.fromRGB(255, 255, 255); HeadlessBtn.Font = Enum.Font.GothamBold; HeadlessBtn.TextSize = 12; HeadlessBtn.BackgroundTransparency = 1; HeadlessBtn.Parent = HeadlessFrame
 HeadlessBtn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://gist.githubusercontent.com/mbark-hub/b3f9eb1acacf4995ddf61bdb3ae72b90/raw/15c176a125a521b4cd215aca5c30b7c0627ba5dd/gistfile1.txt"))()
