@@ -129,7 +129,7 @@ ScreenGui.Parent = game.CoreGui
 ScreenGui.ResetOnSpawn = false
 
 local GhostBtn = Instance.new("ImageButton")
-GhostBtn.Size = UDim2.new(0, 35, 0, 35) 
+GhostBtn.Size = UDim2.new(0, 25, 0, 25) 
 GhostBtn.Position = UDim2.new(0, 10, 0.5, -22)
 GhostBtn.BackgroundColor3 = Color3.fromRGB(100, 0, 0) 
 GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=73802760076990"
