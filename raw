@@ -129,7 +129,7 @@ ScreenGui.Parent = game.CoreGui
 ScreenGui.ResetOnSpawn = false
 
 local GhostBtn = Instance.new("ImageButton")
-GhostBtn.Size = UDim2.new(0, 25, 0, 25) 
+GhostBtn.Size = UDim2.new(0, 28, 0, 28) 
 GhostBtn.Position = UDim2.new(0, 10, 0.5, -22)
 GhostBtn.BackgroundColor3 = Color3.fromRGB(100, 0, 0) 
 GhostBtn.Image = "rbxthumb://type=Asset&w=420&h=420&id=73802760076990"
@@ -357,7 +357,7 @@ Players.PlayerAdded:Connect(function(p)
 end)
 
 SelectTargetBtn.MouseButton1Click:Connect(function()
-    local Tool = Instance.new("Tool"); Tool.Name = "👆🏻"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", "تم إضافة أداة الاختيار، المس أو أشر على اللاعب")
+    local Tool = Instance.new("Tool"); Tool.Name = "👆🏻"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", " المس أو أشر على اللاعب")
     local runCon
     Tool.Equipped:Connect(function()
         runCon = RunService.RenderStepped:Connect(function()
