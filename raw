@@ -435,7 +435,7 @@ TargetStats = {}
 local B6, S6 = CreateToggleBtn("فلنق", 115, MainContent)
 local B4, S4 = CreateToggleBtn("يمص", 160, MainContent)
 local B3, S3 = CreateToggleBtn("بانق عكسي", 205, MainContent)
-local B2, S2 = CreateToggleBtn("احم", 250, MainContent)
+local B2, S2 = CreateToggleBtn("بانق", 250, MainContent)
 
 local TP_Frame = Instance.new("Frame"); TP_Frame.Size = UDim2.new(1, -10, 0, 40); TP_Frame.Position = UDim2.new(0, 5, 0, 295); TP_Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 45); TP_Frame.Parent = MainContent; MakeRound(TP_Frame, 6)
 local TP_Btn = Instance.new("TextButton"); TP_Btn.Size = UDim2.new(1, 0, 1, 0); TP_Btn.Text = "تنقل"; TP_Btn.TextColor3 = Color3.fromRGB(255, 255, 255); TP_Btn.Font = Enum.Font.GothamBold; TP_Btn.TextSize = 12; TP_Btn.BackgroundTransparency = 1; TP_Btn.Parent = TP_Frame
