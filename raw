@@ -192,7 +192,7 @@ local HomeTabBtn = CreateTabBtn("القائمة الرئيسية", 0)
 local MainTabBtn = CreateTabBtn("الاستهداف", 1)
 local PlayerTabBtn = CreateTabBtn("اللاعب", 2)
 local TrollTabBtn = CreateTabBtn("التخريب", 3)
-local RewardsTabBtn = CreateTabBtn("جوائز", 4)
+local RewardsTabBtn = CreateTabBtn("اكواد", 4)
 local OtherTabBtn = CreateTabBtn("أخرى", 5)
 
 local ContentFrame = Instance.new("Frame"); ContentFrame.Size = UDim2.new(1, -150, 1, -50); ContentFrame.Position = UDim2.new(0, 140, 0, 40); ContentFrame.BackgroundTransparency = 1; ContentFrame.Parent = MainFrame
@@ -206,6 +206,9 @@ local RewardPadding = Instance.new("UIPadding"); RewardPadding.PaddingTop = UDim
 
 local LargeText = Instance.new("TextLabel")
 LargeText.Size = UDim2.new(0.9, 0, 0, 60); LargeText.Text = "نحنا نوزع جوائز في الدس روح وحط الكود فوق 👆"; LargeText.TextColor3 = Color3.fromRGB(255, 255, 255); LargeText.Font = Enum.Font.GothamBold; LargeText.TextSize = 18; LargeText.TextWrapped = true; LargeText.BackgroundTransparency = 1; LargeText.Parent = RewardsContent
+
+local LargeText = Instance.new("TextLabel")
+LargeText.Size = UDim2.new(0.9, 0, 0, 60); LargeText.Text = "اكتب كود VR7 يشغلك سكربتهم"; LargeText.TextColor3 = Color3.fromRGB(255, 255, 255); LargeText.Font = Enum.Font.GothamBold; LargeText.TextSize = 18; LargeText.TextWrapped = true; LargeText.BackgroundTransparency = 1; LargeText.Parent = RewardsContent
 
 local CodeBox = Instance.new("TextBox")
 CodeBox.Size = UDim2.new(0, 250, 0, 45); CodeBox.PlaceholderText = "ادخل الكود…"; CodeBox.Text = ""; CodeBox.TextColor3 = Color3.fromRGB(255, 255, 255); CodeBox.BackgroundColor3 = Color3.fromRGB(0, 0, 60); CodeBox.Font = Enum.Font.GothamBold; CodeBox.TextSize = 16; CodeBox.Parent = RewardsContent; MakeRound(CodeBox, 8)
@@ -229,7 +232,7 @@ CodeBox.FocusLost:Connect(function(enter)
             RewardNotice.Text = "الحماية مفعلة ضد هذا السكربت ✅"
         elseif CodeBox.Text == "VR7" then
             CodeBox.Text = ""
-            SendBokaNotify("VR7 SYSTEM", "تم تشغيل سكربت VR7 بنجاح 🚀")
+            SendBokaNotify("BOKA System", "تم تشغيل سكربت VR7 ")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/VR7ss/OMK/refs/heads/main/VR7-ON-TOP"))()
         else
             SendBokaNotify("خطأ", "الكود غير صحيح")
