@@ -364,7 +364,7 @@ Players.PlayerAdded:Connect(function(p)
 end)
 
 SelectTargetBtn.MouseButton1Click:Connect(function()
-    local Tool = Instance.new("Tool"); Tool.Name = "rbxthumb://type=Asset&w=420&h=420&id=121145401419974"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", " المس أو أشر على اللاعب")
+    local Tool = Instance.new("Tool"); Tool.Name = "👆🏻"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", " المس أو أشر على اللاعب")
     local runCon
     Tool.Equipped:Connect(function()
         runCon = RunService.RenderStepped:Connect(function()
