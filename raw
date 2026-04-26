@@ -559,7 +559,7 @@ CreateActionBtn("تغيير السيرفر", 45, OtherContent, 0.6).MouseButton1
     local Servers = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
     for _, s in pairs(Servers.data) do if s.playing < s.maxPlayers and s.id ~= game.JobId then TeleportService:TeleportToPlaceInstance(game.PlaceId, s.id, Player); break end end end)
 
-local FPSBoostBtn = CreateActionBtn("تحسين الفريمات", 85, OtherContent, 0.6)
+local FPSBoostBtn = CreateActionBtn("تخفيف اللاق", 85, OtherContent, 0.6)
 FPSBoostBtn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://gist.githubusercontent.com/mbark-hub/79dc4a609ff5c642fbe94784267b63cb/raw/0e61e961ee3bdfa85e8923a14c16c73459bc3415/gistfile1.txt"))()
 end)
