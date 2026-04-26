@@ -364,7 +364,7 @@ Players.PlayerAdded:Connect(function(p)
 end)
 
 SelectTargetBtn.MouseButton1Click:Connect(function()
-    local Tool = Instance.new("Tool"); Tool.Name = "👆🏻"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", " المس أو أشر على اللاعب")
+    local Tool = Instance.new("Tool"); Tool.Name = "rbxthumb://type=Asset&w=420&h=420&id=121145401419974"; Tool.RequiresHandle = false; Tool.Parent = Player.Backpack; SendBokaNotify("System BOKA", " المس أو أشر على اللاعب")
     local runCon
     Tool.Equipped:Connect(function()
         runCon = RunService.RenderStepped:Connect(function()
@@ -512,7 +512,7 @@ end)
 local SpamBtn, SpamStat = CreateToggleBtn("تفعيل سبام", 5, TrollContent)
 SpamBtn.MouseButton1Click:Connect(function() 
     _G.BSpam = not _G.BSpam; SpamStat.Text = _G.BSpam and "🟢" or "🔴"
-    task.spawn(function() while _G.BSpam do task.wait(0.5) local msg = "BOKA ON TOP 🤫"; if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral") if channel then channel:SendAsync(msg) end else ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(msg, "All") end end end) 
+    task.spawn(function() while _G.BSpam do task.wait(0.5) local msg = "BOKA ON TOP"; if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral") if channel then channel:SendAsync(msg) end else ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(msg, "All") end end end) 
 end)
 
 local PullBtn, PullStat, PullFrame = CreateToggleBtn("سحب الناس", 50, TrollContent)
