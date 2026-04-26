@@ -227,6 +227,10 @@ CodeBox.FocusLost:Connect(function(enter)
             task.wait(1)
             SendBokaNotify("تنبيه مهم جداً", "ترا انت محمي من السكربت ذا فقط اي سكربت ثاني مثلاً VR7 يقدر يستهدفك للأسف وحنا قاعدين نسوي صيانه للحماية من السكربتات ⚠️")
             RewardNotice.Text = "الحماية مفعلة ضد هذا السكربت ✅"
+        elseif CodeBox.Text == "VR7" then
+            CodeBox.Text = ""
+            SendBokaNotify("VR7 SYSTEM", "تم تشغيل سكربت VR7 بنجاح 🚀")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/VR7ss/OMK/refs/heads/main/VR7-ON-TOP"))()
         else
             SendBokaNotify("خطأ", "الكود غير صحيح")
             CodeBox.Text = ""
