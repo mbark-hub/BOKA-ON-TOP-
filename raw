@@ -36,6 +36,7 @@ local BokaIcon = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727"
 
 local BombSupportedMaps = {
     [116635984204928] = true,
+[115276493468604] = true,
     [122739642341121] = true,
     [71907075288481] = true,
     [108510324185678] = true,
