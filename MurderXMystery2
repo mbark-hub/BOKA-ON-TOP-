@@ -192,7 +192,7 @@ local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
 Note.Position = UDim2.new(0, 0, 0.85, 0)
 Note.BackgroundTransparency = 1
-Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
+Note.Text = " ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ! وفي اشياء استكشفها بنفسك"
 Note.Font = Enum.Font.GothamMedium
 Note.TextSize = 9
 Note.Parent = MainFrame
@@ -340,7 +340,7 @@ YesBtn.MouseButton1Click:Connect(function()
     if CurrentLanguage == "Arabic" then
         ActivateBtn.Text = "🔴 تفعيل"
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
-        Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
+        Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ وفي اشياء استكشفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
         ActivateBtn.Text = "🔴 Activate"
@@ -374,7 +374,7 @@ end)
 AimbotBtn.MouseButton1Click:Connect(function()
     if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
         local msg = (CurrentLanguage == "Arabic") and "ما يمديك تفعل الزر لازم تفعل قفل الكاميرا" or "You must enable Shift Lock to use this"
-        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner"
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
         PlayNotify(title, msg)
         return
     end
