@@ -12,36 +12,120 @@ local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "BOKA_HUB_MM2"
 ScreenGui.Parent = PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.ResetOnSpawn = false -- هذا السطر يضمن بقاء القائمة عند الموت أو الانتقال
+ScreenGui.ResetOnSpawn = false
 
--- صورة البداية (Splash Screen)
-local SplashScreen = Instance.new("ImageLabel")
-SplashScreen.Size = UDim2.new(0, 300, 0, 300)
-SplashScreen.Position = UDim2.new(0.5, -150, 0.5, -150)
-SplashScreen.Image = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727"
-SplashScreen.BackgroundTransparency = 1
-SplashScreen.Parent = ScreenGui
+-- متغيرات اللغة
+local CurrentLanguage = "Arabic"
 
-task.wait(1)
-SplashScreen:Destroy()
+-- قائمة التحقق (ثابتة في المنتصف)
+local VerifyFrame = Instance.new("Frame")
+VerifyFrame.Size = UDim2.new(0, 300, 0, 180)
+VerifyFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
+VerifyFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+VerifyFrame.BorderSizePixel = 0
+VerifyFrame.Active = true
+VerifyFrame.Visible = true
+VerifyFrame.Parent = ScreenGui
 
--- تشغيل صوت النجاح والإشعار
-local function PlayNotify()
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://170765130" -- Success Sound
-    sound.Parent = game.Workspace
-    sound:Play()
-    
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "صاحب السكربت",
-        Text = "منور السكربت يا " .. LocalPlayer.DisplayName,
-        Icon = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727",
-        Duration = 5
-    })
-end
-PlayNotify()
+local VerifyCorner = Instance.new("UICorner")
+VerifyCorner.CornerRadius = UDim.new(0, 10)
+VerifyCorner.Parent = VerifyFrame
 
--- القائمة الرئيسية
+local VerifyStroke = Instance.new("UIStroke")
+VerifyStroke.Thickness = 3
+VerifyStroke.Color = Color3.fromRGB(255, 0, 0)
+VerifyStroke.Parent = VerifyFrame
+
+task.spawn(function()
+    while task.wait() do
+        local t = tick() * 2
+        VerifyStroke.Color = Color3.fromHSV(0, math.abs(math.sin(t)), 1)
+    end
+end)
+
+-- صفحة اختيار اللغة
+local LangPage = Instance.new("Frame")
+LangPage.Size = UDim2.new(1, 0, 1, 0)
+LangPage.BackgroundTransparency = 1
+LangPage.Parent = VerifyFrame
+
+local VerifyTitle = Instance.new("TextLabel")
+VerifyTitle.Size = UDim2.new(1, 0, 0, 50)
+VerifyTitle.Text = "التحقق"
+VerifyTitle.TextColor3 = Color3.new(1, 1, 1)
+VerifyTitle.TextSize = 18
+VerifyTitle.Font = Enum.Font.GothamBold
+VerifyTitle.BackgroundTransparency = 1
+VerifyTitle.Parent = LangPage
+
+local LangText = Instance.new("TextLabel")
+LangText.Size = UDim2.new(1, 0, 0, 30)
+LangText.Position = UDim2.new(0, 0, 0.3, 0)
+LangText.Text = "وش اللغة ؟ / What your language ?"
+LangText.TextColor3 = Color3.new(1, 1, 1)
+LangText.TextSize = 14
+LangText.Font = Enum.Font.GothamMedium
+LangText.BackgroundTransparency = 1
+LangText.Parent = LangPage
+
+local ArabicBtn = Instance.new("TextButton")
+ArabicBtn.Size = UDim2.new(0, 100, 0, 40)
+ArabicBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
+ArabicBtn.Text = "العربية"
+ArabicBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ArabicBtn.TextColor3 = Color3.new(1, 1, 1)
+ArabicBtn.Font = Enum.Font.GothamBold
+ArabicBtn.Parent = LangPage
+Instance.new("UICorner", ArabicBtn).CornerRadius = UDim.new(0, 6)
+
+local EnglishBtn = Instance.new("TextButton")
+EnglishBtn.Size = UDim2.new(0, 100, 0, 40)
+EnglishBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
+EnglishBtn.Text = "English"
+EnglishBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+EnglishBtn.TextColor3 = Color3.new(1, 1, 1)
+EnglishBtn.Font = Enum.Font.GothamBold
+EnglishBtn.Parent = LangPage
+Instance.new("UICorner", EnglishBtn).CornerRadius = UDim.new(0, 6)
+
+-- صفحة التأكيد
+local ConfirmPage = Instance.new("Frame")
+ConfirmPage.Size = UDim2.new(1, 0, 1, 0)
+ConfirmPage.BackgroundTransparency = 1
+ConfirmPage.Visible = false
+ConfirmPage.Parent = VerifyFrame
+
+local ConfirmText = Instance.new("TextLabel")
+ConfirmText.Size = UDim2.new(1, 0, 0, 50)
+ConfirmText.Position = UDim2.new(0, 0, 0.2, 0)
+ConfirmText.Text = "هل أنت متأكد ؟"
+ConfirmText.TextColor3 = Color3.new(1, 1, 1)
+ConfirmText.TextSize = 18
+ConfirmText.Font = Enum.Font.GothamBold
+ConfirmText.BackgroundTransparency = 1
+ConfirmText.Parent = ConfirmPage
+
+local YesBtn = Instance.new("TextButton")
+YesBtn.Size = UDim2.new(0, 100, 0, 40)
+YesBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
+YesBtn.Text = "Yes"
+YesBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+YesBtn.TextColor3 = Color3.new(1, 1, 1)
+YesBtn.Font = Enum.Font.GothamBold
+YesBtn.Parent = ConfirmPage
+Instance.new("UICorner", YesBtn).CornerRadius = UDim.new(0, 6)
+
+local NoBtn = Instance.new("TextButton")
+NoBtn.Size = UDim2.new(0, 100, 0, 40)
+NoBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
+NoBtn.Text = "No"
+NoBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
+NoBtn.TextColor3 = Color3.new(1, 1, 1)
+NoBtn.Font = Enum.Font.GothamBold
+NoBtn.Parent = ConfirmPage
+Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
+
+-- القائمة الرئيسية (مخفية في البداية)
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 300, 0, 180) 
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
@@ -49,13 +133,13 @@ MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true
+MainFrame.Visible = false
 MainFrame.Parent = ScreenGui
 
 local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 10)
 UICorner.Parent = MainFrame
 
--- تأثير الحواف (RGB Glow)
 local UIStroke = Instance.new("UIStroke")
 UIStroke.Thickness = 3
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -69,7 +153,6 @@ task.spawn(function()
     end
 end)
 
--- العنوان
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundTransparency = 1
@@ -79,7 +162,6 @@ Title.TextSize = 14
 Title.Font = Enum.Font.GothamBold
 Title.Parent = MainFrame
 
--- زر التفعيل المستطيل
 local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 200, 0, 50) 
 ActivateBtn.Position = UDim2.new(0.5, -100, 0.45, -25)
@@ -89,12 +171,8 @@ ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
 ActivateBtn.TextSize = 20
 ActivateBtn.Font = Enum.Font.GothamBold
 ActivateBtn.Parent = MainFrame
+Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
 
-local BtnCorner = Instance.new("UICorner")
-BtnCorner.CornerRadius = UDim.new(0, 8)
-BtnCorner.Parent = ActivateBtn
-
--- الملاحظة المتحركة
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
 Note.Position = UDim2.new(0, 0, 0.82, 0)
@@ -112,7 +190,24 @@ task.spawn(function()
     end
 end)
 
--- وظيفة الـ ESP
+-- وظائف السكربت
+local function PlayNotify()
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://170765130"
+    sound.Parent = game.Workspace
+    sound:Play()
+    
+    local msg = (CurrentLanguage == "Arabic") and ("منور السكربت يا " .. LocalPlayer.DisplayName) or ("Welcome to the script, " .. LocalPlayer.DisplayName)
+    local titleMsg = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner"
+    
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = titleMsg,
+        Text = msg,
+        Icon = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727",
+        Duration = 5
+    })
+end
+
 local function CreateESP(player, color, roleName)
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         local highlight = player.Character:FindFirstChild("BOKA_ESP")
@@ -164,7 +259,7 @@ local function ScanPlayers()
     for _, v in pairs(Players:GetPlayers()) do
         if v ~= LocalPlayer and v.Character then
             local roleColor = Color3.new(0, 1, 0)
-            local roleName = "بريئ"
+            local roleName = (CurrentLanguage == "Arabic") and "بريئ" or "INNOCENT"
             
             if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
                 roleColor = Color3.new(1, 0, 0)
@@ -178,14 +273,54 @@ local function ScanPlayers()
     end
 end
 
--- تفعيل السكربت بنظام التشغيل والإيقاف مع تحديث كل ثانية
+-- برمجة أزرار التحقق
+ArabicBtn.MouseButton1Click:Connect(function()
+    CurrentLanguage = "Arabic"
+    ConfirmText.Text = "هل أنت متأكد ؟"
+    YesBtn.Text = "نعم"
+    NoBtn.Text = "لا"
+    LangPage.Visible = false
+    ConfirmPage.Visible = true
+end)
+
+EnglishBtn.MouseButton1Click:Connect(function()
+    CurrentLanguage = "English"
+    ConfirmText.Text = "Are you sure?"
+    YesBtn.Text = "Yes"
+    NoBtn.Text = "No"
+    LangPage.Visible = false
+    ConfirmPage.Visible = true
+end)
+
+NoBtn.MouseButton1Click:Connect(function()
+    ConfirmPage.Visible = false
+    LangPage.Visible = true
+end)
+
+YesBtn.MouseButton1Click:Connect(function()
+    VerifyFrame.Visible = false
+    MainFrame.Visible = true
+    
+    -- تطبيق اللغة على القائمة الرئيسية
+    if CurrentLanguage == "Arabic" then
+        ActivateBtn.Text = "🔴 تفعيل"
+        Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
+    else
+        ActivateBtn.Text = "🔴 Activate"
+        Note.Text = "Note: This script only shows Murderer, Sheriff, and Innocent!"
+    end
+    
+    PlayNotify()
+end)
+
+-- تفعيل السكربت
 local Toggled = false
 local UpdateLoop
 
 ActivateBtn.MouseButton1Click:Connect(function()
     Toggled = not Toggled
     if Toggled then
-        ActivateBtn.Text = "🟢 تفعيل"
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تفعيل" or "🟢 Enabled"
         ActivateBtn.TextColor3 = Color3.new(0, 1, 0)
         
         UpdateLoop = task.spawn(function()
@@ -195,7 +330,7 @@ ActivateBtn.MouseButton1Click:Connect(function()
             end
         end)
     else
-        ActivateBtn.Text = "🔴 تفعيل"
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تفعيل" or "🔴 Activate"
         ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
         Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
