@@ -435,19 +435,6 @@ AimbotBtn.MouseButton1Click:Connect(function()
 end)
 
 ProtectSheriffBtn.MouseButton1Click:Connect(function()
-
-    local sheriffExists = GetSheriff()
-    
-    if not ProtectToggled then
-        if not sheriffExists then
-           
-            PlayNotify("صاحب السكربت", "الشرف مو موجود")
-            return
-        end
-    end
-
-
-ProtectSheriffBtn.MouseButton1Click:Connect(function()
     ProtectToggled = not ProtectToggled
     if ProtectToggled then
         ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🟢 حماية الشرف" or "🟢 Protect Sheriff"
