@@ -345,6 +345,7 @@ YesBtn.MouseButton1Click:Connect(function()
         ActivateBtn.Text = "🔴 Activate"
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         Note.Text = "Note: This script only shows Murderer, Sheriff, and Innocent, And there are things you can explore for yourself!"
+Note.Size = UDim2.new(0, 10, 0, 10)
 Note.TextSize = 1
         PlayNotify("Owner", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
