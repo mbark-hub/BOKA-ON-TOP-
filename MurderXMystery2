@@ -137,8 +137,8 @@ Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 400) -- زدنا الطول عشان الزر الجديد
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+MainFrame.Size = UDim2.new(0, 300, 0, 420)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -210)
 MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -175,7 +175,7 @@ Title.Parent = MainFrame
 
 local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
-ActivateBtn.Position = UDim2.new(0.5, -120, 0.1, 0)
+ActivateBtn.Position = UDim2.new(0.5, -120, 0.10, 0)
 ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ActivateBtn.Text = "🔴 تفعيل"
 ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -219,21 +219,21 @@ KillSheriffBtn.Font = Enum.Font.GothamBold
 KillSheriffBtn.Parent = MainFrame
 Instance.new("UICorner", KillSheriffBtn).CornerRadius = UDim.new(0, 8)
 
--- الزر الجديد: تجميع الفلوس
-local CollectMoneyBtn = Instance.new("TextButton")
-CollectMoneyBtn.Size = UDim2.new(0, 240, 0, 45)
-CollectMoneyBtn.Position = UDim2.new(0.5, -120, 0.66, 0)
-CollectMoneyBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-CollectMoneyBtn.Text = "🔴 تجميع الفلوس"
-CollectMoneyBtn.TextColor3 = Color3.new(1, 1, 1)
-CollectMoneyBtn.TextSize = 18
-CollectMoneyBtn.Font = Enum.Font.GothamBold
-CollectMoneyBtn.Parent = MainFrame
-Instance.new("UICorner", CollectMoneyBtn).CornerRadius = UDim.new(0, 8)
+
+local CollectCoinsBtn = Instance.new("TextButton")
+CollectCoinsBtn.Size = UDim2.new(0, 240, 0, 45)
+CollectCoinsBtn.Position = UDim2.new(0.5, -120, 0.66, 0)
+CollectCoinsBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+CollectCoinsBtn.Text = "🔴 تجميع الفلوس"
+CollectCoinsBtn.TextColor3 = Color3.new(1, 1, 1)
+CollectCoinsBtn.TextSize = 18
+CollectCoinsBtn.Font = Enum.Font.GothamBold
+CollectCoinsBtn.Parent = MainFrame
+Instance.new("UICorner", CollectCoinsBtn).CornerRadius = UDim.new(0, 8)
 
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
-Note.Position = UDim2.new(0, 0, 0.92, 0)
+Note.Position = UDim2.new(0, 0, 0.9, 0)
 Note.BackgroundTransparency = 1
 Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
 Note.Font = Enum.Font.GothamMedium
@@ -354,8 +354,6 @@ local function GetSheriff()
 end
 
 local ProtectToggled = false
-local MoneyToggled = false
-
 RunService.RenderStepped:Connect(function()
 
     if AimbotToggled then
@@ -377,6 +375,8 @@ RunService.RenderStepped:Connect(function()
             root.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, 1)
         end
     end
+end)
+
 
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
@@ -412,7 +412,7 @@ YesBtn.MouseButton1Click:Connect(function()
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
-        CollectMoneyBtn.Text = "🔴 تجميع الفلوس"
+        CollectCoinsBtn.Text = "🔴 تجميع الفلوس"
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
@@ -420,7 +420,7 @@ YesBtn.MouseButton1Click:Connect(function()
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
-        CollectMoneyBtn.Text = "🔴 Collect Money"
+        CollectCoinsBtn.Text = "🔴 Auto Collect"
         Note.Text = "This script supports MM2 maps and other features see for yourself!"
         PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
@@ -528,5 +528,46 @@ KillSheriffBtn.MouseButton1Click:Connect(function()
         end
     else
         PlayNotify("صاحب السكربت", "الشرف غير موجود حالياً")
+    end
+end)
+
+
+local Collecting = false
+CollectCoinsBtn.MouseButton1Click:Connect(function()
+    Collecting = not Collecting
+    if Collecting then
+        CollectCoinsBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تجميع الفلوس" or "🟢 Auto Collect"
+        CollectCoinsBtn.TextColor3 = Color3.new(0, 1, 0)
+        
+          
+        local msg = (CurrentLanguage == "Arabic") and "تم تفعيل تجميع الفلوس | جمع الفلوس على راحتك 😌" or "Money collection is now enabled | Collect money at your convenience 😌"
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+        PlayNotify(title, msg)
+        return
+        end
+    end
+
+        task.spawn(function()
+            while Collecting do
+                local Container = workspace:FindFirstChild("CoinContainer", true)
+                if Container then
+                    for _, coin in pairs(Container:GetChildren()) do
+                        if not Collecting then break end
+                        if coin:IsA("BasePart") or coin:IsA("Model") then
+                            local coinPos = coin:IsA("Model") and coin:GetPivot().Position or coin.Position
+                            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                                
+                                LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(coinPos)
+                                task.wait(0.00001) 
+                            end
+                        end
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+    else
+        CollectCoinsBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تجميع الفلوس" or "🔴 Auto Collect"
+        CollectCoinsBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
