@@ -263,10 +263,10 @@ local function ScanPlayers()
             
             if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
                 roleColor = Color3.new(1, 0, 0)
-                roleName = "قاتل"
+                roleName = (CurrentLanguage == "Arabic") and "قاتل" or "MURDER"
             elseif v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then
                 roleColor = Color3.new(0, 0, 1)
-                roleName = "شرف"
+                roleName = (CurrentLanguage == "Arabic") and "شرف" or "SHERIFF"
             end
             CreateESP(v, roleColor, roleName)
         end
