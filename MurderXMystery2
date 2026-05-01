@@ -4,8 +4,10 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Camera = workspace.CurrentCamera
 
 -- إنشاء الواجهة البرمجية (GUI)
 local ScreenGui = Instance.new("ScreenGui")
@@ -125,10 +127,10 @@ NoBtn.Font = Enum.Font.GothamBold
 NoBtn.Parent = ConfirmPage
 Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
--- القائمة الرئيسية (مخفية في البداية)
+-- القائمة الرئيسية
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 180) 
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
+MainFrame.Size = UDim2.new(0, 300, 0, 240) -- تم زيادة الطول للزر الجديد
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
 MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -162,20 +164,33 @@ Title.TextSize = 14
 Title.Font = Enum.Font.GothamBold
 Title.Parent = MainFrame
 
+-- زر تفعيل الـ ESP القديم
 local ActivateBtn = Instance.new("TextButton")
-ActivateBtn.Size = UDim2.new(0, 200, 0, 50) 
-ActivateBtn.Position = UDim2.new(0.5, -100, 0.45, -25)
+ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
+ActivateBtn.Position = UDim2.new(0.5, -120, 0.25, 0)
 ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ActivateBtn.Text = "🔴 تفعيل"
 ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
-ActivateBtn.TextSize = 20
+ActivateBtn.TextSize = 18
 ActivateBtn.Font = Enum.Font.GothamBold
 ActivateBtn.Parent = MainFrame
 Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
 
+-- زر ايم بوت للقاتل الجديد
+local AimbotBtn = Instance.new("TextButton")
+AimbotBtn.Size = UDim2.new(0, 240, 0, 45)
+AimbotBtn.Position = UDim2.new(0.5, -120, 0.5, 0)
+AimbotBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+AimbotBtn.Text = "🔴 ايم بوت للقاتل"
+AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
+AimbotBtn.TextSize = 18
+AimbotBtn.Font = Enum.Font.GothamBold
+AimbotBtn.Parent = MainFrame
+Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 8)
+
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
-Note.Position = UDim2.new(0, 0, 0.82, 0)
+Note.Position = UDim2.new(0, 0, 0.85, 0)
 Note.BackgroundTransparency = 1
 Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
 Note.Font = Enum.Font.GothamMedium
@@ -191,18 +206,15 @@ task.spawn(function()
 end)
 
 -- وظائف السكربت
-local function PlayNotify()
+local function PlayNotify(title, text)
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://170765130"
     sound.Parent = game.Workspace
     sound:Play()
     
-    local msg = (CurrentLanguage == "Arabic") and ("منور السكربت يا " .. LocalPlayer.DisplayName) or ("Welcome to the script, " .. LocalPlayer.DisplayName)
-    local titleMsg = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner"
-    
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = titleMsg,
-        Text = msg,
+        Title = title,
+        Text = text,
         Icon = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727",
         Duration = 5
     })
@@ -273,6 +285,30 @@ local function ScanPlayers()
     end
 end
 
+-- نظام الأيم بوت
+local AimbotToggled = false
+local function GetMurderer()
+    for _, v in pairs(Players:GetPlayers()) do
+        if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+            if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
+                return v.Character.HumanoidRootPart
+            end
+        end
+    end
+    return nil
+end
+
+RunService.RenderStepped:Connect(function()
+    if AimbotToggled then
+        if UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter then
+            local target = GetMurderer()
+            if target then
+                Camera.CFrame = CFrame.new(Camera.CFrame.Position, target.Position)
+            end
+        end
+    end
+end)
+
 -- برمجة أزرار التحقق
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
@@ -301,33 +337,29 @@ YesBtn.MouseButton1Click:Connect(function()
     VerifyFrame.Visible = false
     MainFrame.Visible = true
     
-    -- تطبيق اللغة على القائمة الرئيسية
     if CurrentLanguage == "Arabic" then
         ActivateBtn.Text = "🔴 تفعيل"
+        AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
+        PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
         ActivateBtn.Text = "🔴 Activate"
+        AimbotBtn.Text = "🔴 Murderer Aimbot"
         Note.Text = "Note: This script only shows Murderer, Sheriff, and Innocent!"
+        PlayNotify("Owner", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
-    
-    PlayNotify()
 end)
 
--- تفعيل السكربت
+-- تفعيل ESP
 local Toggled = false
 local UpdateLoop
-
 ActivateBtn.MouseButton1Click:Connect(function()
     Toggled = not Toggled
     if Toggled then
         ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تفعيل" or "🟢 Enabled"
         ActivateBtn.TextColor3 = Color3.new(0, 1, 0)
-        
         UpdateLoop = task.spawn(function()
-            while Toggled do
-                ScanPlayers()
-                task.wait(1) 
-            end
+            while Toggled do ScanPlayers() task.wait(1) end
         end)
     else
         ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تفعيل" or "🔴 Activate"
@@ -335,5 +367,24 @@ ActivateBtn.MouseButton1Click:Connect(function()
         Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
         RemoveESP()
+    end
+end)
+
+-- تفعيل ايم بوت للقاتل
+AimbotBtn.MouseButton1Click:Connect(function()
+    if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
+        local msg = (CurrentLanguage == "Arabic") and "ما يمديك تفعل الزر لازم تفعل قفل الكاميرا" or "You must enable Shift Lock to use this"
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner"
+        PlayNotify(title, msg)
+        return
+    end
+
+    AimbotToggled = not AimbotToggled
+    if AimbotToggled then
+        AimbotBtn.Text = (CurrentLanguage == "Arabic") and "🟢 ايم بوت للقاتل" or "🟢 Murderer Aimbot"
+        AimbotBtn.TextColor3 = Color3.new(0, 1, 0)
+    else
+        AimbotBtn.Text = (CurrentLanguage == "Arabic") and "🔴 ايم بوت للقاتل" or "🔴 Murderer Aimbot"
+        AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
