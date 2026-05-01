@@ -291,7 +291,7 @@ local function ScanPlayers()
     for _, v in pairs(Players:GetPlayers()) do
         if v ~= LocalPlayer and v.Character then
             local roleColor = Color3.new(0, 1, 0)
-            local roleName = (CurrentLanguage == "Arabic") and "بريئ" or "INNOCENT"
+            local roleName = (CurrentLanguage == "Arabic") and "بريء" or "INNOCENT"
             
             if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
                 roleColor = Color3.new(1, 0, 0)
@@ -394,7 +394,7 @@ YesBtn.MouseButton1Click:Connect(function()
         ActivateBtn.Text = "🔴 Activate"
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
-        Note.Text = "This script supports MM2 maps and other features; see for yourself!"
+        Note.Text = "This script supports MM2 maps and other features see for yourself!"
         PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
 end)
@@ -457,7 +457,7 @@ ProtectSheriffBtn.MouseButton1Click:Connect(function()
     if ProtectToggled then
         ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🟢 حماية الشرف" or "🟢 Protect Sheriff"
         ProtectSheriffBtn.TextColor3 = Color3.new(0, 1, 0)
-        PlayNotify("BOKA", (CurrentLanguage == "Arabic") and "تم تفعيل حماية الشرف" or "Sheriff Protect Enabled")
+
     else
         ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🔴 حماية الشرف" or "🔴 Protect Sheriff"
         ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
