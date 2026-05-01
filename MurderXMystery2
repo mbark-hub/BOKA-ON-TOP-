@@ -378,26 +378,6 @@ RunService.RenderStepped:Connect(function()
         end
     end
 
-
-    if MoneyToggled then
-        local char = LocalPlayer.Character
-        if char and char:FindFirstChild("HumanoidRootPart") then
-            for _, v in pairs(workspace:GetChildren()) do
-                if v.Name == "CoinContainer" or v.Name == "CoinVisual" or v:FindFirstChild("CoinVisual") then
-                    local coins = v:IsA("Model") and v:GetChildren() or {v}
-                    for _, coin in pairs(coins) do
-                        if coin:IsA("BasePart") or coin:FindFirstChild("TouchInterest") then
-                            firetouchinterest(char.HumanoidRootPart, coin, 0)
-                            firetouchinterest(char.HumanoidRootPart, coin, 1)
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
-
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
     ConfirmText.Text = "هل أنت متأكد ؟"
@@ -548,18 +528,5 @@ KillSheriffBtn.MouseButton1Click:Connect(function()
         end
     else
         PlayNotify("صاحب السكربت", "الشرف غير موجود حالياً")
-    end
-end)
-
-
-CollectMoneyBtn.MouseButton1Click:Connect(function()
-    MoneyToggled = not MoneyToggled
-    if MoneyToggled then
-        CollectMoneyBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تجميع الفلوس" or "🟢 Collect Money"
-        CollectMoneyBtn.TextColor3 = Color3.new(0, 1, 0)
-        PlayNotify("صاحب السكربت", "تم تفعيل تجميع الفلوس جمع الفلوس براحتك 😌 طبعا من صنعي (:")
-    else
-        CollectMoneyBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تجميع الفلوس" or "🔴 Collect Money"
-        CollectMoneyBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
