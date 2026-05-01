@@ -1,5 +1,4 @@
--- Murder Mystery 2 | BOKA ON TOP 💀
--- Developed with High-End UI Effects
+
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -9,17 +8,17 @@ local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Camera = workspace.CurrentCamera
 
--- إنشاء الواجهة البرمجية (GUI)
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "BOKA_HUB_MM2"
 ScreenGui.Parent = PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.ResetOnSpawn = false
 
--- متغيرات اللغة
+
 local CurrentLanguage = "Arabic"
 
--- قائمة التحقق (ثابتة في المنتصف)
+
 local VerifyFrame = Instance.new("Frame")
 VerifyFrame.Size = UDim2.new(0, 300, 0, 180)
 VerifyFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
@@ -45,7 +44,7 @@ task.spawn(function()
     end
 end)
 
--- صفحة اختيار اللغة
+
 local LangPage = Instance.new("Frame")
 LangPage.Size = UDim2.new(1, 0, 1, 0)
 LangPage.BackgroundTransparency = 1
@@ -90,7 +89,7 @@ EnglishBtn.Font = Enum.Font.GothamBold
 EnglishBtn.Parent = LangPage
 Instance.new("UICorner", EnglishBtn).CornerRadius = UDim.new(0, 6)
 
--- صفحة التأكيد
+
 local ConfirmPage = Instance.new("Frame")
 ConfirmPage.Size = UDim2.new(1, 0, 1, 0)
 ConfirmPage.BackgroundTransparency = 1
@@ -127,7 +126,7 @@ NoBtn.Font = Enum.Font.GothamBold
 NoBtn.Parent = ConfirmPage
 Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
--- القائمة الرئيسية
+
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 300, 0, 240) -- تم زيادة الطول للزر الجديد
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
@@ -164,7 +163,7 @@ Title.TextSize = 14
 Title.Font = Enum.Font.GothamBold
 Title.Parent = MainFrame
 
--- زر تفعيل الـ ESP القديم
+
 local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
 ActivateBtn.Position = UDim2.new(0.5, -120, 0.25, 0)
@@ -176,7 +175,7 @@ ActivateBtn.Font = Enum.Font.GothamBold
 ActivateBtn.Parent = MainFrame
 Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
 
--- زر ايم بوت للقاتل الجديد
+
 local AimbotBtn = Instance.new("TextButton")
 AimbotBtn.Size = UDim2.new(0, 240, 0, 45)
 AimbotBtn.Position = UDim2.new(0.5, -120, 0.5, 0)
@@ -205,7 +204,7 @@ task.spawn(function()
     end
 end)
 
--- وظائف السكربت
+
 local function PlayNotify(title, text)
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://170765130"
@@ -285,7 +284,7 @@ local function ScanPlayers()
     end
 end
 
--- نظام الأيم بوت
+
 local AimbotToggled = false
 local function GetMurderer()
     for _, v in pairs(Players:GetPlayers()) do
@@ -309,7 +308,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- برمجة أزرار التحقق
+
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
     ConfirmText.Text = "هل أنت متأكد ؟"
@@ -350,7 +349,7 @@ YesBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- تفعيل ESP
+
 local Toggled = false
 local UpdateLoop
 ActivateBtn.MouseButton1Click:Connect(function()
@@ -370,7 +369,7 @@ ActivateBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- تفعيل ايم بوت للقاتل
+
 AimbotBtn.MouseButton1Click:Connect(function()
     if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
         local msg = (CurrentLanguage == "Arabic") and "ما يمديك تفعل الزر لازم تفعل قفل الكاميرا" or "You must enable Shift Lock to use this"
