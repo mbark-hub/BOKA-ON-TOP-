@@ -413,7 +413,6 @@ YesBtn.MouseButton1Click:Connect(function()
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
         CollectCoinsBtn.Text = "🔴 تجميع الفلوس"
-        Note.Text = "لا تفعل تجميع الفلوس لان رح يطردك"
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
@@ -422,7 +421,6 @@ YesBtn.MouseButton1Click:Connect(function()
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
         CollectCoinsBtn.Text = "🔴 Auto Collect"
-        Note.Text = "Don't hoard money, because he'll kick you out"
         Note.Text = "This script supports MM2 maps and other features see for yourself!"
         PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
