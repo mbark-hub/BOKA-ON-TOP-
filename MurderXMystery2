@@ -391,7 +391,7 @@ YesBtn.MouseButton1Click:Connect(function()
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         Note.Text = "This script supports MM2 maps and other features; see for yourself!"
-        PlayNotify("Owner", "Welcome to the script, " .. LocalPlayer.DisplayName)
+        PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
 end)
 
