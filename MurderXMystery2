@@ -194,7 +194,7 @@ AimbotBtn.Font = Enum.Font.GothamBold
 AimbotBtn.Parent = MainFrame
 Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 8)
 
--- زر حماية الشرف الجديد
+
 local ProtectSheriffBtn = Instance.new("TextButton")
 ProtectSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
 ProtectSheriffBtn.Position = UDim2.new(0.5, -120, 0.55, 0)
@@ -330,7 +330,7 @@ end
 
 local ProtectToggled = false
 RunService.RenderStepped:Connect(function()
-    -- نظام الايم بوت
+
     if AimbotToggled then
         if UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter then
             local target = GetMurderer()
@@ -434,7 +434,21 @@ AimbotBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+
 ProtectSheriffBtn.MouseButton1Click:Connect(function()
+
+    local sheriffExists = GetSheriff()
+    
+    if not ProtectToggled then 
+        if not sheriffExists then
+
+            local msg = (CurrentLanguage == "Arabic") and "الشرف مو موجود" or "Sheriff is not there"
+            local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+            PlayNotify(title, msg)
+            return
+        end
+    end
+
     ProtectToggled = not ProtectToggled
     if ProtectToggled then
         ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🟢 حماية الشرف" or "🟢 Protect Sheriff"
