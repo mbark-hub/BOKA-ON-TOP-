@@ -1,0 +1,204 @@
+-- Murder Mystery 2 | BOKA ON TOP 💀
+-- Developed with High-End UI Effects
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+-- إنشاء الواجهة البرمجية (GUI)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "BOKA_HUB_MM2"
+ScreenGui.Parent = PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false -- هذا السطر يضمن بقاء القائمة عند الموت أو الانتقال
+
+-- صورة البداية (Splash Screen)
+local SplashScreen = Instance.new("ImageLabel")
+SplashScreen.Size = UDim2.new(0, 300, 0, 300)
+SplashScreen.Position = UDim2.new(0.5, -150, 0.5, -150)
+SplashScreen.Image = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727"
+SplashScreen.BackgroundTransparency = 1
+SplashScreen.Parent = ScreenGui
+
+task.wait(1)
+SplashScreen:Destroy()
+
+-- تشغيل صوت النجاح والإشعار
+local function PlayNotify()
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://170765130" -- Success Sound
+    sound.Parent = game.Workspace
+    sound:Play()
+    
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "صاحب السكربت",
+        Text = "منور السكربت يا " .. LocalPlayer.DisplayName,
+        Icon = "rbxthumb://type=Asset&w=420&h=420&id=110338338499727",
+        Duration = 5
+    })
+end
+PlayNotify()
+
+-- القائمة الرئيسية
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 180) 
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
+MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = MainFrame
+
+-- تأثير الحواف (RGB Glow)
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Thickness = 3
+UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke.Parent = MainFrame
+
+task.spawn(function()
+    while task.wait() do
+        local t = tick() * 2
+        local color = Color3.fromHSV(0, math.abs(math.sin(t)), 1)
+        UIStroke.Color = color
+    end
+end)
+
+-- العنوان
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.BackgroundTransparency = 1
+Title.Text = "Murder Mystery 2 | BOKA ON TOP 💀"
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.TextSize = 14
+Title.Font = Enum.Font.GothamBold
+Title.Parent = MainFrame
+
+-- زر التفعيل المستطيل
+local ActivateBtn = Instance.new("TextButton")
+ActivateBtn.Size = UDim2.new(0, 200, 0, 50) 
+ActivateBtn.Position = UDim2.new(0.5, -100, 0.45, -25)
+ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+ActivateBtn.Text = "🔴 تفعيل"
+ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
+ActivateBtn.TextSize = 20
+ActivateBtn.Font = Enum.Font.GothamBold
+ActivateBtn.Parent = MainFrame
+
+local BtnCorner = Instance.new("UICorner")
+BtnCorner.CornerRadius = UDim.new(0, 8)
+BtnCorner.Parent = ActivateBtn
+
+-- الملاحظة المتحركة
+local Note = Instance.new("TextLabel")
+Note.Size = UDim2.new(1, 0, 0, 20)
+Note.Position = UDim2.new(0, 0, 0.82, 0)
+Note.BackgroundTransparency = 1
+Note.Text = "ملاحظة: ذا السكربت بس يعلمك مين القاتل ومين الشريف والبريئ!"
+Note.Font = Enum.Font.GothamMedium
+Note.TextSize = 9
+Note.Parent = MainFrame
+
+task.spawn(function()
+    while task.wait(0.5) do
+        Note.TextColor3 = Color3.new(1, 0, 0)
+        task.wait(0.5)
+        Note.TextColor3 = Color3.new(1, 1, 1)
+    end
+end)
+
+-- وظيفة الـ ESP
+local function CreateESP(player, color, roleName)
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local highlight = player.Character:FindFirstChild("BOKA_ESP")
+        if not highlight then
+            highlight = Instance.new("Highlight")
+            highlight.Name = "BOKA_ESP"
+            highlight.OutlineColor = Color3.new(1, 1, 1)
+            highlight.FillTransparency = 0.5
+            highlight.Parent = player.Character
+        end
+        highlight.Adornee = player.Character
+        highlight.FillColor = color
+
+        local billboard = player.Character:FindFirstChild("RoleTag")
+        if not billboard then
+            billboard = Instance.new("BillboardGui")
+            billboard.Name = "RoleTag"
+            billboard.Size = UDim2.new(0, 100, 0, 50)
+            billboard.AlwaysOnTop = true
+            billboard.ExtentsOffset = Vector3.new(0, 3, 0)
+            
+            local label = Instance.new("TextLabel")
+            label.Name = "Label"
+            label.Size = UDim2.new(1, 0, 1, 0)
+            label.BackgroundTransparency = 1
+            label.TextStrokeTransparency = 0
+            label.Font = Enum.Font.GothamBold
+            label.TextSize = 14
+            label.Parent = billboard
+            
+            billboard.Parent = player.Character
+        end
+        billboard.Adornee = player.Character:WaitForChild("Head")
+        billboard.Label.Text = roleName
+        billboard.Label.TextColor3 = color
+    end
+end
+
+local function RemoveESP()
+    for _, v in pairs(Players:GetPlayers()) do
+        if v.Character then
+            if v.Character:FindFirstChild("BOKA_ESP") then v.Character.BOKA_ESP:Destroy() end
+            if v.Character:FindFirstChild("RoleTag") then v.Character.RoleTag:Destroy() end
+        end
+    end
+end
+
+local function ScanPlayers()
+    for _, v in pairs(Players:GetPlayers()) do
+        if v ~= LocalPlayer and v.Character then
+            local roleColor = Color3.new(0, 1, 0)
+            local roleName = "بريئ"
+            
+            if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
+                roleColor = Color3.new(1, 0, 0)
+                roleName = "MURDERER"
+            elseif v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then
+                roleColor = Color3.new(0, 0, 1)
+                roleName = "SHERIFF"
+            end
+            CreateESP(v, roleColor, roleName)
+        end
+    end
+end
+
+-- تفعيل السكربت بنظام التشغيل والإيقاف مع تحديث كل ثانية
+local Toggled = false
+local UpdateLoop
+
+ActivateBtn.MouseButton1Click:Connect(function()
+    Toggled = not Toggled
+    if Toggled then
+        ActivateBtn.Text = "🟢 تفعيل"
+        ActivateBtn.TextColor3 = Color3.new(0, 1, 0)
+        
+        UpdateLoop = task.spawn(function()
+            while Toggled do
+                ScanPlayers()
+                task.wait(1) 
+            end
+        end)
+    else
+        ActivateBtn.Text = "🔴 تفعيل"
+        ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
+        Toggled = false
+        if UpdateLoop then task.cancel(UpdateLoop) end
+        RemoveESP()
+    end
+end)
