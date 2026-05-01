@@ -135,8 +135,8 @@ Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 240) -- تم زيادة الطول للزر الجديد
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
+MainFrame.Size = UDim2.new(0, 300, 0, 300) -- تم زيادة الطول ليتسع لجميع الازرار
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)
 MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -173,7 +173,7 @@ Title.Parent = MainFrame
 
 local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
-ActivateBtn.Position = UDim2.new(0.5, -120, 0.25, 0)
+ActivateBtn.Position = UDim2.new(0.5, -120, 0.15, 0)
 ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ActivateBtn.Text = "🔴 تفعيل"
 ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -185,7 +185,7 @@ Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
 
 local AimbotBtn = Instance.new("TextButton")
 AimbotBtn.Size = UDim2.new(0, 240, 0, 45)
-AimbotBtn.Position = UDim2.new(0.5, -120, 0.5, 0)
+AimbotBtn.Position = UDim2.new(0.5, -120, 0.35, 0)
 AimbotBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 AimbotBtn.Text = "🔴 ايم بوت للقاتل"
 AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -194,9 +194,21 @@ AimbotBtn.Font = Enum.Font.GothamBold
 AimbotBtn.Parent = MainFrame
 Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 8)
 
+-- زر حماية الشرف الجديد
+local ProtectSheriffBtn = Instance.new("TextButton")
+ProtectSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
+ProtectSheriffBtn.Position = UDim2.new(0.5, -120, 0.55, 0)
+ProtectSheriffBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+ProtectSheriffBtn.Text = "🔴 حماية الشرف"
+ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
+ProtectSheriffBtn.TextSize = 18
+ProtectSheriffBtn.Font = Enum.Font.GothamBold
+ProtectSheriffBtn.Parent = MainFrame
+Instance.new("UICorner", ProtectSheriffBtn).CornerRadius = UDim.new(0, 8)
+
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
-Note.Position = UDim2.new(0, 0, 0.85, 0)
+Note.Position = UDim2.new(0, 0, 0.9, 0)
 Note.BackgroundTransparency = 1
 Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
 Note.Font = Enum.Font.GothamMedium
@@ -304,13 +316,38 @@ local function GetMurderer()
     return nil
 end
 
+
+local function GetSheriff()
+    for _, v in pairs(Players:GetPlayers()) do
+        if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+            if v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then
+                return v.Character
+            end
+        end
+    end
+    return nil
+end
+
+local ProtectToggled = false
 RunService.RenderStepped:Connect(function()
+    -- نظام الايم بوت
     if AimbotToggled then
         if UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter then
             local target = GetMurderer()
             if target then
                 Camera.CFrame = CFrame.new(Camera.CFrame.Position, target.Position)
             end
+        end
+    end
+    
+
+    if ProtectToggled then
+        local sheriffChar = GetSheriff()
+        if sheriffChar and sheriffChar:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local root = LocalPlayer.Character.HumanoidRootPart
+            local sheriffRoot = sheriffChar.HumanoidRootPart
+           
+            root.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, 1)
         end
     end
 end)
@@ -346,11 +383,13 @@ YesBtn.MouseButton1Click:Connect(function()
     if CurrentLanguage == "Arabic" then
         ActivateBtn.Text = "🔴 تفعيل"
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
+        ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
         ActivateBtn.Text = "🔴 Activate"
         AimbotBtn.Text = "🔴 Murderer Aimbot"
+        ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         Note.Text = "This script supports MM2 maps and other features; see for yourself!"
         PlayNotify("Owner", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
@@ -392,5 +431,18 @@ AimbotBtn.MouseButton1Click:Connect(function()
     else
         AimbotBtn.Text = (CurrentLanguage == "Arabic") and "🔴 ايم بوت للقاتل" or "🔴 Murderer Aimbot"
         AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
+    end
+end)
+
+
+ProtectSheriffBtn.MouseButton1Click:Connect(function()
+    ProtectToggled = not ProtectToggled
+    if ProtectToggled then
+        ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🟢 حماية الشرف" or "🟢 Protect Sheriff"
+        ProtectSheriffBtn.TextColor3 = Color3.new(0, 1, 0)
+        PlayNotify("BOKA", (CurrentLanguage == "Arabic") and "تم تفعيل حماية الشرف" or "Sheriff Protect Enabled")
+    else
+        ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🔴 حماية الشرف" or "🔴 Protect Sheriff"
+        ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
