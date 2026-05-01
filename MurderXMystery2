@@ -137,8 +137,8 @@ Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 350) -- زدنا الطول عشان الزر الجديد
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -175)
+MainFrame.Size = UDim2.new(0, 300, 0, 400) -- زدنا الطول عشان الزر الجديد
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
 MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -175,7 +175,7 @@ Title.Parent = MainFrame
 
 local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
-ActivateBtn.Position = UDim2.new(0.5, -120, 0.12, 0)
+ActivateBtn.Position = UDim2.new(0.5, -120, 0.1, 0)
 ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ActivateBtn.Text = "🔴 تفعيل"
 ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -187,7 +187,7 @@ Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
 
 local AimbotBtn = Instance.new("TextButton")
 AimbotBtn.Size = UDim2.new(0, 240, 0, 45)
-AimbotBtn.Position = UDim2.new(0.5, -120, 0.28, 0)
+AimbotBtn.Position = UDim2.new(0.5, -120, 0.24, 0)
 AimbotBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 AimbotBtn.Text = "🔴 ايم بوت للقاتل"
 AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -199,7 +199,7 @@ Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 8)
 
 local ProtectSheriffBtn = Instance.new("TextButton")
 ProtectSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
-ProtectSheriffBtn.Position = UDim2.new(0.5, -120, 0.44, 0)
+ProtectSheriffBtn.Position = UDim2.new(0.5, -120, 0.38, 0)
 ProtectSheriffBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 ProtectSheriffBtn.Text = "🔴 حماية الشرف"
 ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -208,10 +208,9 @@ ProtectSheriffBtn.Font = Enum.Font.GothamBold
 ProtectSheriffBtn.Parent = MainFrame
 Instance.new("UICorner", ProtectSheriffBtn).CornerRadius = UDim.new(0, 8)
 
--- الزر الجديد: قتل الشرف
 local KillSheriffBtn = Instance.new("TextButton")
 KillSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
-KillSheriffBtn.Position = UDim2.new(0.5, -120, 0.60, 0)
+KillSheriffBtn.Position = UDim2.new(0.5, -120, 0.52, 0)
 KillSheriffBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 KillSheriffBtn.Text = "قتل الشرف"
 KillSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
@@ -220,9 +219,21 @@ KillSheriffBtn.Font = Enum.Font.GothamBold
 KillSheriffBtn.Parent = MainFrame
 Instance.new("UICorner", KillSheriffBtn).CornerRadius = UDim.new(0, 8)
 
+-- الزر الجديد: تجميع الفلوس
+local CollectMoneyBtn = Instance.new("TextButton")
+CollectMoneyBtn.Size = UDim2.new(0, 240, 0, 45)
+CollectMoneyBtn.Position = UDim2.new(0.5, -120, 0.66, 0)
+CollectMoneyBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+CollectMoneyBtn.Text = "🔴 تجميع الفلوس"
+CollectMoneyBtn.TextColor3 = Color3.new(1, 1, 1)
+CollectMoneyBtn.TextSize = 18
+CollectMoneyBtn.Font = Enum.Font.GothamBold
+CollectMoneyBtn.Parent = MainFrame
+Instance.new("UICorner", CollectMoneyBtn).CornerRadius = UDim.new(0, 8)
+
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
-Note.Position = UDim2.new(0, 0, 0.9, 0)
+Note.Position = UDim2.new(0, 0, 0.92, 0)
 Note.BackgroundTransparency = 1
 Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
 Note.Font = Enum.Font.GothamMedium
@@ -343,6 +354,8 @@ local function GetSheriff()
 end
 
 local ProtectToggled = false
+local MoneyToggled = false
+
 RunService.RenderStepped:Connect(function()
 
     if AimbotToggled then
@@ -362,6 +375,24 @@ RunService.RenderStepped:Connect(function()
             local sheriffRoot = sheriffChar.HumanoidRootPart
            
             root.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, 1)
+        end
+    end
+
+
+    if MoneyToggled then
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            for _, v in pairs(workspace:GetChildren()) do
+                if v.Name == "CoinContainer" or v.Name == "CoinVisual" or v:FindFirstChild("CoinVisual") then
+                    local coins = v:IsA("Model") and v:GetChildren() or {v}
+                    for _, coin in pairs(coins) do
+                        if coin:IsA("BasePart") or coin:FindFirstChild("TouchInterest") then
+                            firetouchinterest(char.HumanoidRootPart, coin, 0)
+                            firetouchinterest(char.HumanoidRootPart, coin, 1)
+                        end
+                    end
+                end
+            end
         end
     end
 end)
@@ -401,6 +432,7 @@ YesBtn.MouseButton1Click:Connect(function()
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
+        CollectMoneyBtn.Text = "🔴 تجميع الفلوس"
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
@@ -408,6 +440,7 @@ YesBtn.MouseButton1Click:Connect(function()
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
+        CollectMoneyBtn.Text = "🔴 Collect Money"
         Note.Text = "This script supports MM2 maps and other features see for yourself!"
         PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
     end
@@ -515,5 +548,18 @@ KillSheriffBtn.MouseButton1Click:Connect(function()
         end
     else
         PlayNotify("صاحب السكربت", "الشرف غير موجود حالياً")
+    end
+end)
+
+
+CollectMoneyBtn.MouseButton1Click:Connect(function()
+    MoneyToggled = not MoneyToggled
+    if MoneyToggled then
+        CollectMoneyBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تجميع الفلوس" or "🟢 Collect Money"
+        CollectMoneyBtn.TextColor3 = Color3.new(0, 1, 0)
+        PlayNotify("صاحب السكربت", "تم تفعيل تجميع الفلوس جمع الفلوس براحتك 😌 طبعا من صنعي (:")
+    else
+        CollectMoneyBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تجميع الفلوس" or "🔴 Collect Money"
+        CollectMoneyBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
