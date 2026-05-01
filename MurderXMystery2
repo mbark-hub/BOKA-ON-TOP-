@@ -135,7 +135,7 @@ Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
 
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 300, 0, 300) -- تم زيادة الطول ليتسع لجميع الازرار
+MainFrame.Size = UDim2.new(0, 300, 0, 300)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)
 MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
 MainFrame.BorderSizePixel = 0
