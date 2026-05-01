@@ -1,7 +1,7 @@
 local SupportedPlaceId = 142823291
 
 if game.PlaceId ~= SupportedPlaceId then
-    game.Players.LocalPlayer:Kick("MM2 الماب غير مدعوم فقط يدعم ماب : ")
+    game.Players.LocalPlayer:Kick(" الماب غير مدعوم")
     return
 end
 
@@ -59,7 +59,7 @@ LangPage.Parent = VerifyFrame
 
 local VerifyTitle = Instance.new("TextLabel")
 VerifyTitle.Size = UDim2.new(1, 0, 0, 50)
-VerifyTitle.Text = "التحقق"
+VerifyTitle.Text = "التحقق | Verification"
 VerifyTitle.TextColor3 = Color3.new(1, 1, 1)
 VerifyTitle.TextSize = 18
 VerifyTitle.Font = Enum.Font.GothamBold
@@ -69,7 +69,7 @@ VerifyTitle.Parent = LangPage
 local LangText = Instance.new("TextLabel")
 LangText.Size = UDim2.new(1, 0, 0, 30)
 LangText.Position = UDim2.new(0, 0, 0.3, 0)
-LangText.Text = "وش اللغة ؟ / What your language ?"
+LangText.Text = "وش اللغة ؟ / ? What your language"
 LangText.TextColor3 = Color3.new(1, 1, 1)
 LangText.TextSize = 14
 LangText.Font = Enum.Font.GothamMedium
