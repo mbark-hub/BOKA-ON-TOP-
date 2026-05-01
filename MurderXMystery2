@@ -1,7 +1,7 @@
 local SupportedPlaceId = 142823291
 
 if game.PlaceId ~= SupportedPlaceId then
-    game.Players.LocalPlayer:Kick("الماب غير مدعوم فقط يدعم ماب : MM2")
+    game.Players.LocalPlayer:Kick("MM2 الماب غير مدعوم فقط يدعم ماب : ")
     return
 end
 
