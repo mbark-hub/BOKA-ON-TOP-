@@ -77,7 +77,7 @@ LangText.BackgroundTransparency = 1
 LangText.Parent = LangPage
 
 local ArabicBtn = Instance.new("TextButton")
-ArabicBtn.Size = UDim2.new(0, 100, 0, 100)
+ArabicBtn.Size = UDim2.new(0, 100, 0, 40)
 ArabicBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
 ArabicBtn.Text = "العربية"
 ArabicBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -87,7 +87,7 @@ ArabicBtn.Parent = LangPage
 Instance.new("UICorner", ArabicBtn).CornerRadius = UDim.new(0, 6)
 
 local EnglishBtn = Instance.new("TextButton")
-EnglishBtn.Size = UDim2.new(0, 100, 0, 100)
+EnglishBtn.Size = UDim2.new(0, 100, 0, 40)
 EnglishBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
 EnglishBtn.Text = "English"
 EnglishBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
