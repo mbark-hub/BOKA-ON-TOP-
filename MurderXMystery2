@@ -539,14 +539,7 @@ CollectCoinsBtn.MouseButton1Click:Connect(function()
         CollectCoinsBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تجميع الفلوس" or "🟢 Auto Collect"
         CollectCoinsBtn.TextColor3 = Color3.new(0, 1, 0)
         
-          
-        local msg = (CurrentLanguage == "Arabic") and "تم تفعيل تجميع الفلوس | جمع الفلوس على راحتك 😌" or "Money collection is now enabled | Collect money at your convenience 😌"
-        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
-        PlayNotify(title, msg)
-        return
-        end
-    end
-
+        
         task.spawn(function()
             while Collecting do
                 local Container = workspace:FindFirstChild("CoinContainer", true)
