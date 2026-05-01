@@ -177,7 +177,7 @@ local ActivateBtn = Instance.new("TextButton")
 ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
 ActivateBtn.Position = UDim2.new(0.5, -120, 0.10, 0)
 ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-ActivateBtn.Text = "🔴 تفعيل"
+ActivateBtn.Text = "🔴 تفعيل كشف القاتل او الشرف او البريء"
 ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
 ActivateBtn.TextSize = 18
 ActivateBtn.Font = Enum.Font.GothamBold
@@ -408,7 +408,7 @@ YesBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
     
     if CurrentLanguage == "Arabic" then
-        ActivateBtn.Text = "🔴 تفعيل"
+        ActivateBtn.Text = "🔴 تفعيل كشف القاتل او الشرف او البريء"
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
@@ -416,7 +416,7 @@ YesBtn.MouseButton1Click:Connect(function()
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
-        ActivateBtn.Text = "🔴 Activate"
+        ActivateBtn.Text = "🔴 Activate Killer Detection, Sheriff, or Innocect."
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
@@ -438,7 +438,7 @@ ActivateBtn.MouseButton1Click:Connect(function()
             while Toggled do ScanPlayers() task.wait(1) end
         end)
     else
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تفعيل" or "🔴 Activate"
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تفعيل كشف القاتل او الشرف او البريء" or "🔴 Activate Killer Detection, Sheriff, or Innocect."
         ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
         Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
