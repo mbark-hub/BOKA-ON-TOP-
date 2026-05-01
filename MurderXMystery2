@@ -116,7 +116,7 @@ ConfirmText.BackgroundTransparency = 1
 ConfirmText.Parent = ConfirmPage
 
 local YesBtn = Instance.new("TextButton")
-YesBtn.Size = UDim2.new(0, 99, 0, 50)
+YesBtn.Size = UDim2.new(0, 100, 0, 50)
 YesBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
 YesBtn.Text = "Yes"
 YesBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
@@ -126,7 +126,7 @@ YesBtn.Parent = ConfirmPage
 Instance.new("UICorner", YesBtn).CornerRadius = UDim.new(0, 6)
 
 local NoBtn = Instance.new("TextButton")
-NoBtn.Size = UDim2.new(0, 99, 0, 50)
+NoBtn.Size = UDim2.new(0, 100, 0, 50)
 NoBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
 NoBtn.Text = "No"
 NoBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
@@ -369,6 +369,8 @@ EnglishBtn.MouseButton1Click:Connect(function()
     ConfirmText.Text = "Are you sure?"
     YesBtn.Text = "Yes"
     NoBtn.Text = "No"
+    NoBtn.TextSize = 10
+    YesBtn.TextSize = 10
     LangPage.Visible = false
     ConfirmPage.Visible = true
 end)
