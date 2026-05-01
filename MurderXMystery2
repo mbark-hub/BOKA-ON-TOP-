@@ -485,6 +485,7 @@ KillSheriffBtn.MouseButton1Click:Connect(function()
     if not Knife then
         local msg = (CurrentLanguage == "Arabic") and "ما يمديك تقتل الشرف لازم يكون معك اداة القتل" or "You can't kill Sheriff without the killing tool"
         local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+        PlayNotify(title, msg)
         return
     end
 
