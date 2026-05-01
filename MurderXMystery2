@@ -77,7 +77,7 @@ LangText.BackgroundTransparency = 1
 LangText.Parent = LangPage
 
 local ArabicBtn = Instance.new("TextButton")
-ArabicBtn.Size = UDim2.new(0, 100, 0, 40)
+ArabicBtn.Size = UDim2.new(0, 100, 0, 100)
 ArabicBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
 ArabicBtn.Text = "العربية"
 ArabicBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -87,7 +87,7 @@ ArabicBtn.Parent = LangPage
 Instance.new("UICorner", ArabicBtn).CornerRadius = UDim.new(0, 6)
 
 local EnglishBtn = Instance.new("TextButton")
-EnglishBtn.Size = UDim2.new(0, 100, 0, 40)
+EnglishBtn.Size = UDim2.new(0, 100, 0, 100)
 EnglishBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
 EnglishBtn.Text = "English"
 EnglishBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -114,7 +114,7 @@ ConfirmText.BackgroundTransparency = 1
 ConfirmText.Parent = ConfirmPage
 
 local YesBtn = Instance.new("TextButton")
-YesBtn.Size = UDim2.new(0, 100, 0, 40)
+YesBtn.Size = UDim2.new(0, 100, 0, 100)
 YesBtn.Position = UDim2.new(0.2, 0, 0.6, 0)
 YesBtn.Text = "Yes"
 YesBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
@@ -124,7 +124,7 @@ YesBtn.Parent = ConfirmPage
 Instance.new("UICorner", YesBtn).CornerRadius = UDim.new(0, 6)
 
 local NoBtn = Instance.new("TextButton")
-NoBtn.Size = UDim2.new(0, 100, 0, 40)
+NoBtn.Size = UDim2.new(0, 100, 0, 100)
 NoBtn.Position = UDim2.new(0.55, 0, 0.6, 0)
 NoBtn.Text = "No"
 NoBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
@@ -358,6 +358,8 @@ ArabicBtn.MouseButton1Click:Connect(function()
     ConfirmText.Text = "هل أنت متأكد ؟"
     YesBtn.Text = "نعم"
     NoBtn.Text = "لا"
+    YesBtn.TextSize = 28
+    NoBtn.TextSize = 28
     LangPage.Visible = false
     ConfirmPage.Visible = true
 end)
