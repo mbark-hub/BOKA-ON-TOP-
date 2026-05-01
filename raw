@@ -26,7 +26,7 @@ if game.CoreGui:FindFirstChild("BOKA_HUB_RESTORED") then
         Player:Kick("سبام")
         return
     else
-        SendSystemNotify("Syteam BOKA", "السكربت شغال بالفعل انتبه تكرره بيطردك ")
+        SendSystemNotify("System BOKA", "السكربت شغال بالفعل انتبه تكرره بيطردك ")
         return 
     end
 end
@@ -189,12 +189,12 @@ local function CreateTabBtn(text, order)
     local btn = Instance.new("TextButton"); btn.Size = UDim2.new(1, 0, 0, 35); btn.Text = text; btn.TextColor3 = Color3.fromRGB(255, 255, 255); btn.Font = Enum.Font.GothamBold; btn.TextSize = 12; btn.BackgroundColor3 = Color3.fromRGB(0, 20, 80); btn.LayoutOrder = order; btn.Parent = TabBar; MakeRound(btn, 6); return btn
 end
 
-local HomeTabBtn = CreateTabBtn("القائمة الرئيسية", 0)
-local MainTabBtn = CreateTabBtn("الاستهداف", 1)
-local PlayerTabBtn = CreateTabBtn("اللاعب", 2)
-local TrollTabBtn = CreateTabBtn("التخريب", 3)
+local HomeTabBtn = CreateTabBtn("القائمة الرئيسية | Home", 0)
+local MainTabBtn = CreateTabBtn("الاستهداف | Target", 1)
+local PlayerTabBtn = CreateTabBtn("اللاعب | Player", 2)
+local TrollTabBtn = CreateTabBtn("التخريب | Game", 3)
 local RewardsTabBtn = CreateTabBtn("اكواد", 4)
-local OtherTabBtn = CreateTabBtn("أخرى", 5)
+local OtherTabBtn = CreateTabBtn("أخرى | Misc", 5)
 
 local ContentFrame = Instance.new("Frame"); ContentFrame.Size = UDim2.new(1, -150, 1, -50); ContentFrame.Position = UDim2.new(0, 140, 0, 40); ContentFrame.BackgroundTransparency = 1; ContentFrame.Parent = MainFrame
 
@@ -222,7 +222,7 @@ CodeBox.FocusLost:Connect(function(enter)
         if CodeBox.Text == "BOKA431" then
             CodeBox.Text = ""
             RewardNotice.Text = "الجائزة : سكن خثيث اكتب بالشات ;char me crazydalejr"
-            SendBokaNotify("مبروك!", "تم تفعيل الكود بنجاح")
+            SendBokaNotify("BOKA System", "مبروك سكن خثيث")
             task.spawn(function() for i = 50, 1, -1 do task.wait(1) end RewardNotice.Text = "" end)
         elseif CodeBox.Text == "BOKA450" then
             CodeBox.Text = ""
@@ -314,7 +314,7 @@ DevName.Parent = DevBox
 
 DevName.MouseButton1Click:Connect(function()
     setclipboard("@fx3we4")
-    SendBokaNotify("Syteam BOKA", "تم نسخ يوزر المطور")
+    SendBokaNotify("BOKA System", "تم نسخ يوزر المطور")
 end)
 
 local DevRole = Instance.new("TextLabel")
@@ -465,7 +465,7 @@ local HeadlessFrame = Instance.new("Frame"); HeadlessFrame.Size = UDim2.new(1, -
 local HeadlessBtn = Instance.new("TextButton"); HeadlessBtn.Size = UDim2.new(1, 0, 1, 0); HeadlessBtn.Text = "هيدلس"; HeadlessBtn.TextColor3 = Color3.fromRGB(255, 255, 255); HeadlessBtn.Font = Enum.Font.GothamBold; HeadlessBtn.TextSize = 12; HeadlessBtn.BackgroundTransparency = 1; HeadlessBtn.Parent = HeadlessFrame
 HeadlessBtn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://gist.githubusercontent.com/mbark-hub/b3f9eb1acacf4995ddf61bdb3ae72b90/raw/15c176a125a521b4cd215aca5c30b7c0627ba5dd/gistfile1.txt"))()
-    SendBokaNotify("Syteam BOKA ", "تم تفعيل الهيدلس")
+    SendBokaNotify("BOKA System", "تم تفعيل الهيدلس")
 end)
 
 local GhostModeBtn, GhostModeStat = CreateToggleBtn("اختفاء", 175, PlayerContent); 
