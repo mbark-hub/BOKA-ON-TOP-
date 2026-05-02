@@ -408,7 +408,7 @@ YesBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
     
     if CurrentLanguage == "Arabic" then
-        ActivateBtn.Text = "🔴 ،كشف القاتل، الشرف، البريء"
+        ActivateBtn.Text = "🔴 .كشف القاتل، الشرف، البريء"
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
@@ -438,7 +438,7 @@ ActivateBtn.MouseButton1Click:Connect(function()
             while Toggled do ScanPlayers() task.wait(1) end
         end)
     else
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴  كشف القاتل او الشرف او البريء" or "🔴 Detect Killer, Sheriff, Inno."
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 .كشف القاتل، الشرف، البريء" or "🔴 Detect Killer, Sheriff, Inno."
         ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
         Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
