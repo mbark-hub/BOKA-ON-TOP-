@@ -408,7 +408,7 @@ YesBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
     
     if CurrentLanguage == "Arabic" then
-        ActivateBtn.Text = "🔴 كشف القاتل او الشرف او البريء"
+        ActivateBtn.Text = "🔴 ،كشف القاتل، الشرف، البريء"
         AimbotBtn.Text = "🔴 ايم بوت للقاتل"
         ProtectSheriffBtn.Text = "🔴 حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
