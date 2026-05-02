@@ -416,7 +416,7 @@ YesBtn.MouseButton1Click:Connect(function()
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
-        ActivateBtn.Text = "🔴 Detect Killer, Sheriff, Inno."
+        ActivateBtn.Text = "🔴 Detect Killer Sheriff Inno"
         AimbotBtn.Text = "🔴 Murderer Aimbot"
         ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
@@ -432,13 +432,13 @@ local UpdateLoop
 ActivateBtn.MouseButton1Click:Connect(function()
     Toggled = not Toggled
     if Toggled then
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🟢 كشف القاتل او الشرف او البريء" or "🟢 Detect Killer, Sheriff, Inno."
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🟢 كشف القاتل او الشرف او البريء" or "🟢 Detect Killer Sheriff Inno"
         ActivateBtn.TextColor3 = Color3.new(0, 1, 0)
         UpdateLoop = task.spawn(function()
             while Toggled do ScanPlayers() task.wait(1) end
         end)
     else
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 كشف القاتل او الشرف او البريء" or "🔴 Detect Killer, Sheriff, Inno."
+        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 كشف القاتل او الشرف او البريء" or "🔴 Detect Killer Sheriff Inno"
         ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
         Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
