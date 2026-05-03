@@ -15,22 +15,81 @@ local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Camera = workspace.CurrentCamera
 
-
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "BOKA_HUB_MM2"
 ScreenGui.Parent = PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.ResetOnSpawn = false
 
-
 local CurrentLanguage = "Arabic"
 
+
+local function ApplySilverGlow(stroke)
+    task.spawn(function()
+        while task.wait() do
+            local t = tick() * 2
+            local brightness = 0.7 + (math.sin(t) * 0.3)
+            stroke.Color = Color3.new(brightness, brightness, brightness)
+        end
+    end)
+end
+
+
+local function AddButtonStroke(btn)
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 2
+    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    stroke.Parent = btn
+    ApplySilverGlow(stroke)
+end
+
+
+local function CreateToggle(parent, position, text)
+    local Container = Instance.new("TextButton")
+    Container.Size = UDim2.new(0, 240, 0, 45)
+    Container.Position = position
+    Container.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Container.Text = "  " .. text
+    Container.TextColor3 = Color3.new(1, 1, 1)
+    Container.TextSize = 16
+    Container.Font = Enum.Font.GothamBold
+    Container.TextXAlignment = Enum.TextXAlignment.Left
+    Container.Parent = parent
+    Instance.new("UICorner", Container).CornerRadius = UDim.new(0, 8)
+    AddButtonStroke(Container)
+
+    local SwitchBg = Instance.new("Frame")
+    SwitchBg.Size = UDim2.new(0, 40, 0, 20)
+    SwitchBg.Position = UDim2.new(1, -50, 0.5, -10)
+    SwitchBg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    SwitchBg.Parent = Container
+    Instance.new("UICorner", SwitchBg).CornerRadius = UDim.new(1, 0)
+
+    local Circle = Instance.new("Frame")
+    Circle.Size = UDim2.new(0, 16, 0, 16)
+    Circle.Position = UDim2.new(0, 2, 0.5, -8)
+    Circle.BackgroundColor3 = Color3.new(1, 1, 1)
+    Circle.Parent = SwitchBg
+    Instance.new("UICorner", Circle).CornerRadius = UDim.new(1, 0)
+
+    local Toggled = false
+    local function Toggle(state)
+        Toggled = state
+        local targetPos = Toggled and UDim2.new(1, -18, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)
+        local targetColor = Toggled and Color3.fromRGB(100, 150, 255) or Color3.fromRGB(50, 50, 50)
+        
+        TweenService:Create(Circle, TweenInfo.new(0.2), {Position = targetPos}):Play()
+        TweenService:Create(SwitchBg, TweenInfo.new(0.2), {BackgroundColor3 = targetColor}):Play()
+    end
+
+    return Container, function() return Toggled end, Toggle
+end
 
 local VerifyFrame = Instance.new("Frame")
 VerifyFrame.Size = UDim2.new(0, 300, 0, 180)
 VerifyFrame.Position = UDim2.new(0.5, -150, 0.5, -90)
-VerifyFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-VerifyFrame.BorderSizePixel = 0
+VerifyFrame.BackgroundColor3 = Color3.fromRGB(75, 0, 130)
+VerifyFrame.BackgroundTransparency = 0.3
 VerifyFrame.Active = true
 VerifyFrame.Visible = true
 VerifyFrame.Parent = ScreenGui
@@ -41,16 +100,8 @@ VerifyCorner.Parent = VerifyFrame
 
 local VerifyStroke = Instance.new("UIStroke")
 VerifyStroke.Thickness = 3
-VerifyStroke.Color = Color3.fromRGB(255, 0, 0)
 VerifyStroke.Parent = VerifyFrame
-
-task.spawn(function()
-    while task.wait() do
-        local t = tick() * 2
-        VerifyStroke.Color = Color3.fromHSV(0, math.abs(math.sin(t)), 1)
-    end
-end)
-
+ApplySilverGlow(VerifyStroke)
 
 local LangPage = Instance.new("Frame")
 LangPage.Size = UDim2.new(1, 0, 1, 0)
@@ -86,6 +137,7 @@ ArabicBtn.TextColor3 = Color3.new(1, 1, 1)
 ArabicBtn.Font = Enum.Font.GothamBold
 ArabicBtn.Parent = LangPage
 Instance.new("UICorner", ArabicBtn).CornerRadius = UDim.new(0, 6)
+AddButtonStroke(ArabicBtn)
 
 local EnglishBtn = Instance.new("TextButton")
 EnglishBtn.Size = UDim2.new(0, 100, 0, 40)
@@ -97,7 +149,7 @@ EnglishBtn.TextColor3 = Color3.new(1, 1, 1)
 EnglishBtn.Font = Enum.Font.GothamBold
 EnglishBtn.Parent = LangPage
 Instance.new("UICorner", EnglishBtn).CornerRadius = UDim.new(0, 6)
-
+AddButtonStroke(EnglishBtn)
 
 local ConfirmPage = Instance.new("Frame")
 ConfirmPage.Size = UDim2.new(1, 0, 1, 0)
@@ -124,6 +176,7 @@ YesBtn.TextColor3 = Color3.new(1, 1, 1)
 YesBtn.Font = Enum.Font.GothamBold
 YesBtn.Parent = ConfirmPage
 Instance.new("UICorner", YesBtn).CornerRadius = UDim.new(0, 6)
+AddButtonStroke(YesBtn)
 
 local NoBtn = Instance.new("TextButton")
 NoBtn.Size = UDim2.new(0, 100, 0, 50)
@@ -134,13 +187,13 @@ NoBtn.TextColor3 = Color3.new(1, 1, 1)
 NoBtn.Font = Enum.Font.GothamBold
 NoBtn.Parent = ConfirmPage
 Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 6)
-
+AddButtonStroke(NoBtn)
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 300, 0, 420)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -210)
-MainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-MainFrame.BorderSizePixel = 0
+MainFrame.BackgroundColor3 = Color3.fromRGB(75, 0, 130)
+MainFrame.BackgroundTransparency = 0.3
 MainFrame.Active = true
 MainFrame.Draggable = true
 MainFrame.Visible = false
@@ -154,14 +207,7 @@ local UIStroke = Instance.new("UIStroke")
 UIStroke.Thickness = 3
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = MainFrame
-
-task.spawn(function()
-    while task.wait() do
-        local t = tick() * 2
-        local color = Color3.fromHSV(0, math.abs(math.sin(t)), 1)
-        UIStroke.Color = color
-    end
-end)
+ApplySilverGlow(UIStroke)
 
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1, 0, 0, 35)
@@ -173,40 +219,9 @@ Title.Font = Enum.Font.GothamBold
 Title.Parent = MainFrame
 
 
-local ActivateBtn = Instance.new("TextButton")
-ActivateBtn.Size = UDim2.new(0, 240, 0, 45) 
-ActivateBtn.Position = UDim2.new(0.5, -120, 0.10, 0)
-ActivateBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-ActivateBtn.Text = "🔴 تفعيل كشف القاتل او الشرف او البريء"
-ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
-ActivateBtn.TextSize = 18
-ActivateBtn.Font = Enum.Font.GothamBold
-ActivateBtn.Parent = MainFrame
-Instance.new("UICorner", ActivateBtn).CornerRadius = UDim.new(0, 8)
-
-
-local AimbotBtn = Instance.new("TextButton")
-AimbotBtn.Size = UDim2.new(0, 240, 0, 45)
-AimbotBtn.Position = UDim2.new(0.5, -120, 0.24, 0)
-AimbotBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-AimbotBtn.Text = "🔴 ايم بوت للقاتل"
-AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
-AimbotBtn.TextSize = 18
-AimbotBtn.Font = Enum.Font.GothamBold
-AimbotBtn.Parent = MainFrame
-Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 8)
-
-
-local ProtectSheriffBtn = Instance.new("TextButton")
-ProtectSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
-ProtectSheriffBtn.Position = UDim2.new(0.5, -120, 0.38, 0)
-ProtectSheriffBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-ProtectSheriffBtn.Text = "🔴 حماية الشرف"
-ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
-ProtectSheriffBtn.TextSize = 18
-ProtectSheriffBtn.Font = Enum.Font.GothamBold
-ProtectSheriffBtn.Parent = MainFrame
-Instance.new("UICorner", ProtectSheriffBtn).CornerRadius = UDim.new(0, 8)
+local ActivateBtn, IsActivate, SetActivate = CreateToggle(MainFrame, UDim2.new(0.5, -120, 0.10, 0), "كشف القاتل او الشرف")
+local AimbotBtn, IsAimbot, SetAimbot = CreateToggle(MainFrame, UDim2.new(0.5, -120, 0.24, 0), "ايم بوت للقاتل")
+local ProtectSheriffBtn, IsProtect, SetProtect = CreateToggle(MainFrame, UDim2.new(0.5, -120, 0.38, 0), "حماية الشرف")
 
 local KillSheriffBtn = Instance.new("TextButton")
 KillSheriffBtn.Size = UDim2.new(0, 240, 0, 45)
@@ -218,18 +233,9 @@ KillSheriffBtn.TextSize = 18
 KillSheriffBtn.Font = Enum.Font.GothamBold
 KillSheriffBtn.Parent = MainFrame
 Instance.new("UICorner", KillSheriffBtn).CornerRadius = UDim.new(0, 8)
+AddButtonStroke(KillSheriffBtn)
 
-
-local CollectCoinsBtn = Instance.new("TextButton")
-CollectCoinsBtn.Size = UDim2.new(0, 240, 0, 45)
-CollectCoinsBtn.Position = UDim2.new(0.5, -120, 0.66, 0)
-CollectCoinsBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-CollectCoinsBtn.Text = "🔴 تجميع الفلوس"
-CollectCoinsBtn.TextColor3 = Color3.new(1, 1, 1)
-CollectCoinsBtn.TextSize = 18
-CollectCoinsBtn.Font = Enum.Font.GothamBold
-CollectCoinsBtn.Parent = MainFrame
-Instance.new("UICorner", CollectCoinsBtn).CornerRadius = UDim.new(0, 8)
+local CollectCoinsBtn, IsCollect, SetCollect = CreateToggle(MainFrame, UDim2.new(0.5, -120, 0.66, 0), "تجميع الفلوس")
 
 local Note = Instance.new("TextLabel")
 Note.Size = UDim2.new(1, 0, 0, 20)
@@ -247,7 +253,6 @@ task.spawn(function()
         Note.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
-
 
 local function PlayNotify(title, text)
     local sound = Instance.new("Sound")
@@ -328,8 +333,6 @@ local function ScanPlayers()
     end
 end
 
-
-local AimbotToggled = false
 local function GetMurderer()
     for _, v in pairs(Players:GetPlayers()) do
         if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
@@ -340,7 +343,6 @@ local function GetMurderer()
     end
     return nil
 end
-
 
 local function GetSheriff()
     for _, v in pairs(Players:GetPlayers()) do
@@ -353,10 +355,8 @@ local function GetSheriff()
     return nil
 end
 
-local ProtectToggled = false
 RunService.RenderStepped:Connect(function()
-
-    if AimbotToggled then
+    if IsAimbot() then
         if UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter then
             local target = GetMurderer()
             if target then
@@ -365,18 +365,15 @@ RunService.RenderStepped:Connect(function()
         end
     end
     
-
-    if ProtectToggled then
+    if IsProtect() then
         local sheriffChar = GetSheriff()
         if sheriffChar and sheriffChar:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             local root = LocalPlayer.Character.HumanoidRootPart
             local sheriffRoot = sheriffChar.HumanoidRootPart
-           
             root.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, 1)
         end
     end
 end)
-
 
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
@@ -392,8 +389,6 @@ EnglishBtn.MouseButton1Click:Connect(function()
     ConfirmText.Text = "Are you sure?"
     YesBtn.Text = "Yes"
     NoBtn.Text = "No"
-    NoBtn.TextSize = 10
-    YesBtn.TextSize = 10
     LangPage.Visible = false
     ConfirmPage.Visible = true
 end)
@@ -408,159 +403,97 @@ YesBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
     
     if CurrentLanguage == "Arabic" then
-        ActivateBtn.Text = "🔴 كشف القاتل او الشرف او البريء"
-        AimbotBtn.Text = "🔴 ايم بوت للقاتل"
-        ProtectSheriffBtn.Text = "🔴 حماية الشرف"
+        ActivateBtn.Text = "كشف القاتل او الشرف او البريء"
+        AimbotBtn.Text = "ايم بوت للقاتل"
+        ProtectSheriffBtn.Text = "حماية الشرف"
         KillSheriffBtn.Text = "قتل الشرف"
-        CollectCoinsBtn.Text = "🔴 تجميع الفلوس"
+        CollectCoinsBtn.Text = "تجميع الفلوس"
         Note.Text = "ملاحظة: ذا السكربت يدعم ماب MM2 وفي اشياء ثانيه شوفها بنفسك!"
         PlayNotify("صاحب السكربت", "منور السكربت يا " .. LocalPlayer.DisplayName)
     else
-        ActivateBtn.Text = "🔴 Detect Killer Sheriff Inno"
-        AimbotBtn.Text = "🔴 Murderer Aimbot"
-        ProtectSheriffBtn.Text = "🔴 Protect Sheriff"
+        ActivateBtn.Text = "Detect Killer Sheriff Inno"
+        AimbotBtn.Text = "Murderer Aimbot"
+        ProtectSheriffBtn.Text = "Protect Sheriff"
         KillSheriffBtn.Text = "Kill Sheriff"
-        CollectCoinsBtn.Text = "🔴 Auto Collect"
-        Note.Text = "This script supports MM2 maps and other features see for yourself!"
-        PlayNotify("Owner script", "Welcome to the script, " .. LocalPlayer.DisplayName)
+        CollectCoinsBtn.Text = "Auto Collect"
+        Note.Text = "This script supports MM2 maps and other features!"
+        PlayNotify("Owner script", "Welcome, to the script" .. LocalPlayer.DisplayName)
     end
 end)
 
-
-local Toggled = false
 local UpdateLoop
 ActivateBtn.MouseButton1Click:Connect(function()
-    Toggled = not Toggled
-    if Toggled then
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🟢 كشف القاتل او الشرف او البريء" or "🟢 Detect Killer Sheriff Inno"
-        ActivateBtn.TextColor3 = Color3.new(0, 1, 0)
+    local state = not IsActivate()
+    SetActivate(state)
+    if state then
         UpdateLoop = task.spawn(function()
-            while Toggled do ScanPlayers() task.wait(1) end
+            while IsActivate() do ScanPlayers() task.wait(1) end
         end)
     else
-        ActivateBtn.Text = (CurrentLanguage == "Arabic") and "🔴 كشف القاتل او الشرف او البريء" or "🔴 Detect Killer Sheriff Inno"
-        ActivateBtn.TextColor3 = Color3.new(1, 1, 1)
-        Toggled = false
         if UpdateLoop then task.cancel(UpdateLoop) end
         RemoveESP()
     end
 end)
 
-
 AimbotBtn.MouseButton1Click:Connect(function()
     if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
-        local msg = (CurrentLanguage == "Arabic") and "ما يمديك تفعل الزر لازم تفعل قفل الكاميرا" or "You must enable Shift Lock to use this"
+        local msg = (CurrentLanguage == "Arabic") and "فعل قفل الكاميرا عشان تقدر تفعل ايم بوت للقاتل" or "Press Shift lock to activate Aimbot Murder"
         local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
         PlayNotify(title, msg)
         return
     end
-
-    AimbotToggled = not AimbotToggled
-    if AimbotToggled then
-        AimbotBtn.Text = (CurrentLanguage == "Arabic") and "🟢 ايم بوت للقاتل" or "🟢 Murderer Aimbot"
-        AimbotBtn.TextColor3 = Color3.new(0, 1, 0)
-    else
-        AimbotBtn.Text = (CurrentLanguage == "Arabic") and "🔴 ايم بوت للقاتل" or "🔴 Murderer Aimbot"
-        AimbotBtn.TextColor3 = Color3.new(1, 1, 1)
-    end
+    SetAimbot(not IsAimbot())
 end)
-
 
 ProtectSheriffBtn.MouseButton1Click:Connect(function()
-
     local sheriffExists = GetSheriff()
-    
-    if not ProtectToggled then 
-        if not sheriffExists then
-
-            local msg = (CurrentLanguage == "Arabic") and "الشرف مو موجود" or "Sheriff is not there"
-            local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
-            PlayNotify(title, msg)
-            return
-        end
+    if not IsProtect() and not sheriffExists then
+        local msg = (CurrentLanguage == "Arabic") and "الشرف مو موجود" or "Sheriff is not there"
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+        PlayNotify(title, msg)
+        return
     end
-
-    ProtectToggled = not ProtectToggled
-    if ProtectToggled then
-        ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🟢 حماية الشرف" or "🟢 Protect Sheriff"
-        ProtectSheriffBtn.TextColor3 = Color3.new(0, 1, 0)
-
-    else
-        ProtectSheriffBtn.Text = (CurrentLanguage == "Arabic") and "🔴 حماية الشرف" or "🔴 Protect Sheriff"
-        ProtectSheriffBtn.TextColor3 = Color3.new(1, 1, 1)
-    end
+    SetProtect(not IsProtect())
 end)
-
 
 KillSheriffBtn.MouseButton1Click:Connect(function()
     local Knife = LocalPlayer.Backpack:FindFirstChild("Knife") or LocalPlayer.Character:FindFirstChild("Knife")
-    
-    if not Knife then
-        local msg = (CurrentLanguage == "Arabic") and "ما يمديك تقتل الشرف لازم يكون معك اداة القتل" or "You can't kill Sheriff without the killing tool"
-        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
-        PlayNotify(title, msg)
+    if not Knife then  
+     local msg = (CurrentLanguage == "Arabic") and "تحتاج سكين عشان تقدر تقتل الشرف" or "Need Knife!")
+     local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+     playNotify(title, msg)
         return
     end
 
     local sheriffChar = GetSheriff()
-    if sheriffChar and sheriffChar:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+    if sheriffChar and sheriffChar:FindFirstChild("HumanoidRootPart") then
         local oldPos = LocalPlayer.Character.HumanoidRootPart.CFrame
-        local sheriffRoot = sheriffChar.HumanoidRootPart
-        
-
         Knife.Parent = LocalPlayer.Character
-        
-        
-        LocalPlayer.Character.HumanoidRootPart.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, -2) * CFrame.Angles(0, math.pi, 0)
-        
-        
+        LocalPlayer.Character.HumanoidRootPart.CFrame = sheriffChar.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2)
         task.wait(0.1)
         Knife:Activate()
-        
         task.wait(0.2)
-        
-        
         LocalPlayer.Character.HumanoidRootPart.CFrame = oldPos
-        
-        
-        if LocalPlayer.Character:FindFirstChild("Knife") then
-            LocalPlayer.Character.Knife.Parent = LocalPlayer.Backpack
-        end
-    else
-        PlayNotify("صاحب السكربت", "الشرف غير موجود حالياً")
     end
 end)
 
-
-local Collecting = false
 CollectCoinsBtn.MouseButton1Click:Connect(function()
-    Collecting = not Collecting
-    if Collecting then
-        CollectCoinsBtn.Text = (CurrentLanguage == "Arabic") and "🟢 تجميع الفلوس" or "🟢 Auto Collect"
-        CollectCoinsBtn.TextColor3 = Color3.new(0, 1, 0)
-        
-        
+    local state = not IsCollect()
+    SetCollect(state)
+    if state then
         task.spawn(function()
-            while Collecting do
+            while IsCollect() do
                 local Container = workspace:FindFirstChild("CoinContainer", true)
                 if Container then
                     for _, coin in pairs(Container:GetChildren()) do
-                        if not Collecting then break end
-                        if coin:IsA("BasePart") or coin:IsA("Model") then
-                            local coinPos = coin:IsA("Model") and coin:GetPivot().Position or coin.Position
-                            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                                
-                                LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(coinPos)
-                                task.wait(0.00001) 
-                            end
-                        end
+                        if not IsCollect() then break end
+                        local p = coin:IsA("Model") and coin:GetPivot().Position or coin.Position
+                        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(p)
+                        task.wait(0.01)
                     end
                 end
                 task.wait(0.1)
             end
         end)
-    else
-        CollectCoinsBtn.Text = (CurrentLanguage == "Arabic") and "🔴 تجميع الفلوس" or "🔴 Auto Collect"
-        CollectCoinsBtn.TextColor3 = Color3.new(1, 1, 1)
     end
 end)
