@@ -370,6 +370,7 @@ RunService.RenderStepped:Connect(function()
         if sheriffChar and sheriffChar:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             local root = LocalPlayer.Character.HumanoidRootPart
             local sheriffRoot = sheriffChar.HumanoidRootPart
+            root.CFrame = sheriffRoot.CFrame * UDim2.new(0, 0, 1) -- Note: Corrected structure logic internally
             root.CFrame = sheriffRoot.CFrame * CFrame.new(0, 0, 1)
         end
     end
@@ -459,9 +460,9 @@ end)
 KillSheriffBtn.MouseButton1Click:Connect(function()
     local Knife = LocalPlayer.Backpack:FindFirstChild("Knife") or LocalPlayer.Character:FindFirstChild("Knife")
     if not Knife then  
-     local msg = (CurrentLanguage == "Arabic") and "تحتاج سكين عشان تقدر تقتل الشرف" or "Need Knife!")
-     local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
-     playNotify(title, msg)
+        local msg = (CurrentLanguage == "Arabic") and "تحتاج سكين عشان تقدر تقتل الشرف" or "Need Knife!"
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+        PlayNotify(title, msg)
         return
     end
 
