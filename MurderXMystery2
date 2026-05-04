@@ -486,7 +486,7 @@ end)
 
 AimbotBtn.MouseButton1Click:Connect(function()
     if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
-        local msg = (CurrentLanguage == "Arabic") and "فعل قفل الكاميرا عشان تقدر تفعل ايم بوت للقاتل" or "Press Shift lock to activate Aimbot Murder"
+        local msg = (CurrentLanguage == "Arabic") and "فعل قفل الكاميرا عشان تقدر تفعل الايم بوت " or "Press Shift lock to activate Aimbot"
         local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
         PlayNotify(title, msg)
         return
@@ -508,7 +508,7 @@ end)
 KillSheriffBtn.MouseButton1Click:Connect(function()
     local Knife = LocalPlayer.Backpack:FindFirstChild("Knife") or LocalPlayer.Character:FindFirstChild("Knife")
     if not Knife then  
-        local msg = (CurrentLanguage == "Arabic") and "تحتاج سكين عشان تقدر تقتل الشرف" or "Need Knife!"
+        local msg = (CurrentLanguage == "Arabic") and "تحتاج سكين عشان تقدر تقتل الشرف" or "You need a knife to be able to kill honor"
         local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
         PlayNotify(title, msg)
         return
