@@ -427,6 +427,7 @@ end)
 ArabicBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "Arabic"
     ConfirmText.Text = "هل أنت متأكد ؟"
+    ConfirmText.TextSize = 10
     YesBtn.Text = "نعم"
     NoBtn.Text = "لا"
     LangPage.Visible = false
@@ -436,6 +437,7 @@ end)
 EnglishBtn.MouseButton1Click:Connect(function()
     CurrentLanguage = "English"
     ConfirmText.Text = "Are you sure?"
+    ConfirmText.TextSize = 10
     YesBtn.Text = "Yes"
     NoBtn.Text = "No"
     LangPage.Visible = false
