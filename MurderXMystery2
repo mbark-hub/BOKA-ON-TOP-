@@ -276,7 +276,6 @@ Note.Font = Enum.Font.GothamMedium
 Note.TextSize = 9
 Note.Parent = ContentFrame
 
-
 local Minimized = false
 MinimizeBtn.MouseButton1Click:Connect(function()
     Minimized = not Minimized
@@ -284,16 +283,13 @@ MinimizeBtn.MouseButton1Click:Connect(function()
         ContentFrame.Visible = false
         MainFrame:TweenSize(UDim2.new(0, 300, 0, 35), "Out", "Quad", 0.3, true)
         MinimizeBtn.Text = "+"
-        Title.Text = "Murder Mystery 2 | BOKA ON TOP"
     else
         MainFrame:TweenSize(UDim2.new(0, 300, 0, 420), "Out", "Quad", 0.3, true)
         task.wait(0.3)
         ContentFrame.Visible = true
         MinimizeBtn.Text = "_"
-        Title.Text = "Murder Mystery 2 | BOKA ON TOP"
     end
 end)
-
 
 CloseBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
@@ -530,23 +526,106 @@ KillSheriffBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+
+local OriginalCFrame
+local CollectLoop
+
 CollectCoinsBtn.MouseButton1Click:Connect(function()
-    local state = not IsCollect()
-    SetCollect(state)
-    if state then
-        task.spawn(function()
+    local newState = not IsCollect()
+    
+    
+    local container = workspace:FindFirstChild("CoinContainer", true)
+    local coinsFound = false
+    if container then
+        for _, c in pairs(container:GetChildren()) do
+            if c:IsA("TouchTransmitter") or c:FindFirstChild("TouchInterest") or c:IsA("Model") then
+                coinsFound = true
+                break
+            end
+        end
+    end
+
+    if newState and not coinsFound then
+        local title = (CurrentLanguage == "Arabic") and "صاحب السكربت" or "Owner script"
+        local msg = (CurrentLanguage == "Arabic") and "ما يمديك تفعلها والعملات ما هي موجوده بالماب" or "Can't activate, no coins in map"
+        PlayNotify(title, msg)
+        return
+    end
+
+    SetCollect(newState)
+
+    if newState then
+        
+        OriginalCFrame = LocalPlayer.Character.HumanoidRootPart.CFrame
+        
+        CollectLoop = task.spawn(function()
+            
+            local char = LocalPlayer.Character
+            local hum = char:FindFirstChildOfClass("Humanoid")
+            
+            
+            for _, anim in pairs(hum:GetPlayingAnimationTracks()) do
+                anim:Stop()
+            end
+            
+            
+            local animScript = char:FindFirstChild("Animate")
+            if animScript then animScript.Disabled = true end
+
             while IsCollect() do
-                local Container = workspace:FindFirstChild("CoinContainer", true)
-                if Container then
-                    for _, coin in pairs(Container:GetChildren()) do
+                local currentContainer = workspace:FindFirstChild("CoinContainer", true)
+                if currentContainer then
+                    local children = currentContainer:GetChildren()
+                    if #children == 0 then break end
+                    
+                    for _, coin in pairs(children) do
                         if not IsCollect() then break end
-                        local p = coin:IsA("Model") and coin:GetPivot().Position or coin.Position
-                        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(p)
-                        task.wait(0.01)
+                        
+                        local targetPos = coin:IsA("Model") and coin:GetPivot().Position or (coin:IsA("BasePart") and coin.Position)
+                        
+                        if targetPos then
+                            
+                            for _, part in pairs(char:GetDescendants()) do
+                                if part:IsA("BasePart") then part.CanCollide = false end
+                            end
+                            
+                            
+                            local dist = (char.HumanoidRootPart.Position - targetPos).Magnitude
+                            local duration = dist / 35
+                            
+                            local tween = TweenService:Create(char.HumanoidRootPart, TweenInfo.new(duration, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPos)})
+                            tween:Play()
+                            tween.Completed:Wait()
+                        end
                     end
+                else
+                    break
                 end
                 task.wait(0.1)
             end
+            
+            
+            SetCollect(false)
+            if OriginalCFrame then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = OriginalCFrame
+            end
+            local animScript = char:FindFirstChild("Animate")
+            if animScript then animScript.Disabled = false end
+            for _, part in pairs(char:GetDescendants()) do
+                if part:IsA("BasePart") then part.CanCollide = true end
+            end
         end)
+    else
+        
+        if CollectLoop then task.cancel(CollectLoop) end
+        if OriginalCFrame then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = OriginalCFrame
+        end
+        local char = LocalPlayer.Character
+        local animScript = char:FindFirstChild("Animate")
+        if animScript then animScript.Disabled = false end
+        for _, part in pairs(char:GetDescendants()) do
+            if part:IsA("BasePart") then part.CanCollide = true end
+        end
     end
 end)
