@@ -1,5 +1,4 @@
 local SupportedPlaceId = 83499829716554
-
 local SupportedPlaceId = 142823291
 
 if game.PlaceId ~= SupportedPlaceId then
