@@ -468,6 +468,13 @@ HeadlessBtn.MouseButton1Click:Connect(function()
     SendBokaNotify("BOKA System", "تم تفعيل الهيدلس")
 end)
 
+local HeadlessFrame = Instance.new("Frame"); HeadlessFrame.Size = UDim2.new(1, -10, 0, 40); HeadlessFrame.Position = UDim2.new(0, 5, 0, 220); HeadlessFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 45); HeadlessFrame.Parent = PlayerContent; MakeRound(HeadlessFrame, 6)
+local HeadlessBtn = Instance.new("TextButton"); HeadlessBtn.Size = UDim2.new(1, 0, 1, 0); HeadlessBtn.Text = "سكربت M.M.2"; HeadlessBtn.TextColor3 = Color3.fromRGB(255, 255, 255); HeadlessBtn.Font = Enum.Font.GothamBold; HeadlessBtn.TextSize = 12; HeadlessBtn.BackgroundTransparency = 1; HeadlessBtn.Parent = HeadlessFrame
+HeadlessBtn.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/mbark-hub/BOKA-ON-TOP-/refs/heads/main/MurderXMystery2."))()
+    SendBokaNotify("BOKA System", "تم تفعيل سكربت M.M.2")
+end)
+
 local GhostModeBtn, GhostModeStat = CreateToggleBtn("اختفاء", 175, PlayerContent); 
 local ActiveGhost = nil; 
 
