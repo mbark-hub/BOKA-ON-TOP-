@@ -203,7 +203,7 @@ toggleStates = {}
 mobileButtons = {}
 mobBtnRefs = {}
 AntiRagdollConns = {}
-CONFIG_KEY = "5RT_Hub_Config"
+CONFIG_KEY = "BOKA_Hub_Config"
 changingKeybind = nil
 SavedToggleStates = {}
 
@@ -242,7 +242,7 @@ Keybinds = {
 KeybindButtons = {}
 
 local aimbotHighlight = Instance.new("Highlight")
-aimbotHighlight.Name = "5RT_Hub_AimbotESP"
+aimbotHighlight.Name = "BOKA_Hub_AimbotESP"
 aimbotHighlight.FillColor = C_PURPLE
 aimbotHighlight.OutlineColor = C_WHITE
 aimbotHighlight.FillTransparency = 0.5
@@ -420,7 +420,7 @@ local function startTaunt()
                 if ch then
                     ch:SendAsync("/lol BOKA HUB 🔥🔥")
                 else
-                    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents", 1):WaitForChild("SayMessageRequest", 1):FireServer("/lol 5RT HUB 🔥🔥", "All")
+                    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents", 1):WaitForChild("SayMessageRequest", 1):FireServer("/lol BOKA HUB 🔥🔥", "All")
                 end
             end)
             task.wait(0.5)
@@ -752,10 +752,10 @@ local function createESP(plr)
     if not root then return end
     local head = c:FindFirstChild("Head")
     if not head then return end
-    if c:FindFirstChild("5RT_Hub_ESP") then return end
+    if c:FindFirstChild("BOKA_Hub_ESP") then return end
 
     local box = Instance.new("BoxHandleAdornment")
-    box.Name = "5RT_Hub_ESP"
+    box.Name = "BOKA_Hub_ESP"
     box.Adornee = root
     box.Size = Vector3.new(4, 6, 2)
     box.Color3 = C_ACCENT
@@ -765,7 +765,7 @@ local function createESP(plr)
     box.Parent = c
 
     local bb = Instance.new("BillboardGui")
-    bb.Name = "5RT_Hub_ESP_Name"
+    bb.Name = "BOKA_Hub_ESP_Name"
     bb.Adornee = head
     bb.Size = UDim2.new(0, 200, 0, 45)
     bb.StudsOffset = Vector3.new(0, 3, 0)
@@ -786,8 +786,8 @@ end
 
 local function removeESP(plr)
     if not plr.Character then return end
-    local b = plr.Character:FindFirstChild("5RT_Hub_ESP")
-    local n = plr.Character:FindFirstChild("5RT_Hub_ESP_Name")
+    local b = plr.Character:FindFirstChild("BOKA_Hub_ESP")
+    local n = plr.Character:FindFirstChild("BOKA_Hub_ESP_Name")
     if b then b:Destroy() end
     if n then n:Destroy() end
 end
@@ -950,7 +950,7 @@ local function startSpin()
     if not root then return end
     if spinBAV then spinBAV:Destroy() end
     spinBAV = Instance.new("BodyAngularVelocity")
-    spinBAV.Name = "5RT_Hub_SpinBAV"
+    spinBAV.Name = "BOKA_Hub_SpinBAV"
     spinBAV.MaxTorque = Vector3.new(0, math.huge, 0)
     spinBAV.AngularVelocity = Vector3.new(0, SPIN_SPEED, 0)
     spinBAV.Parent = root
@@ -1467,7 +1467,7 @@ end)
 
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "5RT_Hub"
+ScreenGui.Name = "BOKA_Hub"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = CoreGui
@@ -1489,7 +1489,7 @@ RunService.RenderStepped:Connect(function()
     fpsCount = fpsCount + 1
     if tick() - fpsTimer >= 1 then
         local ping = math.floor(player:GetNetworkPing() * 1000)
-        topLabel.Text = "5RT DUEL | " .. fpsCount .. " FPS | " .. ping .. " ms"
+        topLabel.Text = "BOKA DUEL | " .. fpsCount .. " FPS | " .. ping .. " ms"
         fpsCount = 0
         fpsTimer = tick()
     end
@@ -1500,7 +1500,7 @@ local menuBtnFrame, menuBtnStroke = CreateButtonFrame(ScreenGui, UDim2.new(0, 45
 local menuBtn = Instance.new("TextButton", menuBtnFrame)
 menuBtn.Size = UDim2.new(1, -2, 1, -2)
 menuBtn.Position = UDim2.new(0, 1, 0, 1)
-menuBtn.Text = "5"
+menuBtn.Text = "BOKA"
 menuBtn.TextSize = 22
 menuBtn.Font = Enum.Font.Bangers
 menuBtn.TextColor3 = C_TEXT
@@ -1529,7 +1529,7 @@ TitleFix.BorderSizePixel = 0
 local TitleLbl = Instance.new("TextLabel", TitleBar)
 TitleLbl.Size = UDim2.new(1, 0, 1, 0)
 TitleLbl.BackgroundTransparency = 1
-TitleLbl.Text = "5RT HUB"
+TitleLbl.Text = "BOKA HUB"
 TitleLbl.Font = Enum.Font.Bangers
 TitleLbl.TextSize = 20
 TitleLbl.TextColor3 = C_WHITE
@@ -2286,4 +2286,4 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
-print("✅ BOKA HUB - 2 Tabs (FEATURES & SETTINGS) loaded. Press the 5 button to toggle GUI.")
+print("✅ BOKA HUB - 2 Tabs (FEATURES & SETTINGS) loaded. Press the BOKA button to toggle GUI.")
