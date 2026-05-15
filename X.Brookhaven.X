@@ -28,14 +28,6 @@ MainFrame.Active = true
 MainFrame.Draggable = true
 MainFrame.Parent = ScreenGui
 
--- Border (الحواف)
-local Border = Instance.new("ImageLabel")
-Border.Name = "Border"
-Border.Size = UDim2.new(1, 0, 1, 0)
-Border.BackgroundTransparency = 1
-Border.Image = "rbxthumb://type=Asset&w=420&h=420&id=105575085262070" -- صورة الحواف
-Border.Parent = MainFrame
-
 -- Home Page (الصفحة الرئيسية)
 local HomePage = Instance.new("Frame")
 HomePage.Name = "HomePage"
