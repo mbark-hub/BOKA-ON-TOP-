@@ -22,7 +22,7 @@ local MainFrame = Instance.new("ImageLabel")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0, 350, 0, 200)
 MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
-MainFrame.Image = "rbxassetid://89906424339503" -- صورة الخلفية
+MainFrame.Image = "rbxthumb://type=Asset&w=420&h=420&id=89906424339503" -- صورة الخلفية
 MainFrame.BackgroundTransparency = 1
 MainFrame.Active = true
 MainFrame.Draggable = true
@@ -33,7 +33,7 @@ local Border = Instance.new("ImageLabel")
 Border.Name = "Border"
 Border.Size = UDim2.new(1, 0, 1, 0)
 Border.BackgroundTransparency = 1
-Border.Image = "rbxassetid://105575085262070" -- صورة الحواف
+Border.Image = "rbxthumb://type=Asset&w=420&h=420&id=105575085262070" -- صورة الحواف
 Border.Parent = MainFrame
 
 -- Home Page (الصفحة الرئيسية)
