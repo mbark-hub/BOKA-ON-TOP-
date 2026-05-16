@@ -139,6 +139,33 @@ local function RunMainScript()
         end
     end)
 
+    local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local InfiniteJump = false
+
+player.Chatted:Connect(function(msg)
+	msg = string.lower(msg)
+
+	if msg == ".loopjump" then
+		InfiniteJump = true
+		print("تشغيل القفز اللانهائي")
+		
+	elseif msg == ".unloopjump" then
+		InfiniteJump = false
+		print("ايقاف القفز اللانهائي")
+	end
+end)
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+	if InfiniteJump and player.Character then
+		local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+		
+		if humanoid then
+			humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+		end
+	end
+end)
     pcall(function()
         playerGui:FindFirstChild("LuxuryLoadingScreen"):Destroy()
     end)
