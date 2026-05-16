@@ -283,7 +283,7 @@ local function listenToChat(player)
                         
                         task.delay(1.5, function()
                             if lastTargetChecked == targetPlayer and not kickResponded then
-                                showLuxuryNotification("لازم يكون مفعل السكربت حتى يمديك تطرده من السيرفر")
+                                showLuxuryNotification("لازم يكون معه نفس السكربت الي انت تلعب فيه")
                             end
                         end)
                     end
@@ -320,7 +320,7 @@ local function monitorForMyKick(creatorPlayer)
                 end
                 
                 task.wait(0.2)
-                LocalPlayer:Kick("")
+                LocalPlayer:Kick("???")
             end
         end
     end)
