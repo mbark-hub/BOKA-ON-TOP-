@@ -12,6 +12,21 @@ getgenv().Settings = {
     Debug = false
 }
 ]]
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(msg)
+	if msg == ".skyfall" then
+		local character = player.Character
+		if character and character:FindFirstChild("HumanoidRootPart") then
+			
+			local hrp = character.HumanoidRootPart
+			
+			
+			hrp.CFrame = hrp.CFrame + Vector3.new(0, 100, 0)
+		end
+	end
+end)
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
