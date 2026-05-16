@@ -13,7 +13,7 @@ local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 
 
 local KEYS_DATA = {
-    ["3sz21."] = {
+    ["3sz."] = {
         Type = "Timed",
         Duration = 100,
         TagText = "discrod : https://discord.gg/ZpqDpdzWt"
