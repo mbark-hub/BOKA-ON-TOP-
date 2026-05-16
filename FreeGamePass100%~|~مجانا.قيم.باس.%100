@@ -17,7 +17,7 @@ local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 local KEYS_DATA = {
     ["9797010720"] = {
         Type = "Timed",
-        Duration = 3600, -- ساعة بالثواني
+        Duration = 3600,
         TagText = "9797010720 ديسكوردك ❤️"
     },
     ["11223344556677889900"] = {
