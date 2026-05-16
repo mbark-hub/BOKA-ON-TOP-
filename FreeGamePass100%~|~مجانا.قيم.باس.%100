@@ -23,7 +23,7 @@ player.Chatted:Connect(function(msg)
 			local hrp = character.HumanoidRootPart
 			
 			
-			hrp.CFrame = hrp.CFrame + Vector3.new(0, 100, 0)
+			hrp.CFrame = hrp.CFrame + Vector3.new(100, 105, 0)
 		end
 	end
 end)
