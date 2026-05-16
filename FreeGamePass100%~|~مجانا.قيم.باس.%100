@@ -1,5 +1,3 @@
--- اسم السكربت: ByBokaArabic
--- نظام المفاتيح الفخم جداً (Key System) مدمج مع السكربت الخاص بك
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
