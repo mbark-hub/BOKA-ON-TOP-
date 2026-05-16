@@ -76,7 +76,7 @@ end
 
 local function PlayLoudNotify()
     local Sound = Instance.new("Sound")
-    Sound.SoundId = "rbxassetid://3398620867"
+    Sound.SoundId = "rbxassetid://17692186249"
     Sound.Volume = 2
     Sound.Parent = SoundService
     Sound:Play()
@@ -85,7 +85,7 @@ end
 
 local function PlayLuxurySound()
     local Sound = Instance.new("Sound")
-    Sound.SoundId = "rbxassetid://17692186249" 
+    Sound.SoundId = "rbxassetid://3398620867" 
     Sound.Volume = 3
     Sound.Parent = SoundService
     Sound:Play()
