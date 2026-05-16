@@ -10,10 +10,10 @@ local SoundService = game:GetService("SoundService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- ملف حفظ البيانات للتفعيل التلقائي
+
 local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 
--- إعدادات المفاتيح
+
 local KEYS_DATA = {
     ["9797010720"] = {
         Type = "Timed",
@@ -26,12 +26,12 @@ local KEYS_DATA = {
     }
 }
 
--- دالة لإنشاء العبارة الفخمة فوق الرأس (غير لاصقة ومرتفعة)
+
 local function createOverheadTag(text)
     local character = player.Character or player.CharacterAdded:Wait()
     local head = character:WaitForChild("Head")
     
-    -- حذف أي تاغ قديم
+    
     if head:FindFirstChild("BokaKeyTag") then
         head.BokaKeyTag:Destroy()
     end
@@ -40,28 +40,28 @@ local function createOverheadTag(text)
     billboard.Name = "BokaKeyTag"
     billboard.Size = UDim2.new(0, 200, 0, 50)
     billboard.AlwaysOnTop = true
-    billboard.ExtentsOffset = Vector3.new(0, 3.5, 0) -- جعلها مرتفعة وغير لاصقة بالرأس
+    billboard.ExtentsOffset = Vector3.new(0, 3.5, 0)
     billboard.Parent = head
     
     local label = Instance.new("TextLabel")
     label.Size = UDim2.new(1, 0, 1, 0)
     label.BackgroundTransparency = 1
     label.Text = text
-    label.TextColor3 = Color3.fromRGB(150, 0, 0) -- أحمر داكن فخم
+    label.TextColor3 = Color3.fromRGB(150, 0, 0)
     label.TextSize = 24
     label.Font = Enum.Font.GothamBlack
     label.TextStrokeTransparency = 0.5
     label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     label.Parent = billboard
     
-    -- حماية العبارة عند إعادة الرسبون
+    
     player.CharacterAdded:Connect(function(newChar)
         local newHead = newChar:WaitForChild("Head")
         billboard.Parent = newHead
     end)
 end
 
--- دالة إظهار إشعارات فخمة من صاحب السكربت
+
 local function showNotification(title, message)
     local notifyGui = Instance.new("ScreenGui")
     notifyGui.Name = "BokaNotification"
@@ -69,7 +69,7 @@ local function showNotification(title, message)
     
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 300, 0, 80)
-    frame.Position = UDim2.new(1, 20, 0.85, 0) -- تبدأ من خارج الشاشة يمين
+    frame.Position = UDim2.new(1, 20, 0.85, 0)
     frame.BackgroundColor3 = Color3.fromRGB(15, 0, 0)
     frame.BorderSizePixel = 0
     frame.Parent = notifyGui
@@ -106,7 +106,7 @@ local function showNotification(title, message)
     mLabel.BackgroundTransparency = 1
     mLabel.Parent = frame
     
-    -- أنيميشن دخول وخروج الإشعار
+    
     frame:TweenPosition(UDim2.new(1, -320, 0.85, 0), "Out", "Quad", 0.5, true)
     task.wait(4)
     frame:TweenPosition(UDim2.new(1, 20, 0.85, 0), "In", "Quad", 0.5, true, function()
@@ -114,11 +114,11 @@ local function showNotification(title, message)
     end)
 end
 
--- دالة تشغيل السكربت الأصلي الخاص بك بعد تخطي المفتاح بنجاح
+
 local function RunMainScript()
-    ------------------------------------------------------------
-    -- [بداية السكربت الخاص بك]
-    ------------------------------------------------------------
+    
+    
+    
     getgenv().Settings = {
         CopyButton = false,
         -------------------
@@ -1010,7 +1010,7 @@ local function RunMainScript()
                     local freeBtn = template:Clone()
                     freeBtn.Name = "FreeButton"
                     freeBtn.Parent = parent
-                    decorateButton(freeBtn, "Free | مجاني", (template.ZIndex or 1) + 10)
+                    decorateButton(freeBtn, "مجاني", (template.ZIndex or 1) + 10)
                     settleFreeButtonPosition(template, freeBtn, parent)
                     wireHover(freeBtn, COLORS)
                     freeBtn.Activated:Connect(function()
@@ -1334,12 +1334,10 @@ local function RunMainScript()
     end
 
     performAutoMassPurchase()
-    ------------------------------------------------------------
-    -- [نهاية السكربت الخاص بك]
-    ------------------------------------------------------------
+    
 end
 
--- نظام فحص وتخزين البيانات محلياً للتأكد من الوقت والصلاحية
+
 local function loadSavedData()
     if isfile(KEY_FILE) then
         local ok, data = pcall(function()
@@ -1359,7 +1357,7 @@ local function saveKeyData(key, expiryTime, tagText)
     writefile(KEY_FILE, HttpService:JSONEncode(data))
 end
 
--- فحص البيانات عند التشغيل لتخطي القائمة تلقائياً لو كان المفتاح فعالاً
+
 local savedData = loadSavedData()
 if savedData and savedData.SavedKey then
     local currentKey = savedData.SavedKey
@@ -1376,26 +1374,26 @@ if savedData and savedData.SavedKey then
                 RunMainScript()
                 return
             else
-                delfile(KEY_FILE) -- الكود منتهي الوقت، احذفه ليطلب المفتاح من جديد
+                delfile(KEY_FILE)
             end
         end
     end
 end
 
--- صُنع الواجهة الفخمة جداً لنظام المفاتيح
+
 local keyGui = Instance.new("ScreenGui")
 keyGui.Name = "BokaKeySystem"
 keyGui.ResetOnSpawn = false
 keyGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 keyGui.Parent = playerGui
 
--- الباك جراوند الفخم المتوهج بالمنتصف
+
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 mainFrame.Size = UDim2.new(0, 420, 0, 260)
-mainFrame.BackgroundColor3 = Color3.fromRGB(15, 2, 2) -- أسود ملكي ممتزج بالأحمر الداكن
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 2, 2)
 mainFrame.BorderSizePixel = 0
 mainFrame.Parent = keyGui
 
@@ -1403,13 +1401,13 @@ local frameCorner = Instance.new("UICorner")
 frameCorner.CornerRadius = UDim.new(0, 12)
 frameCorner.Parent = mainFrame
 
--- ستروك (إطار نيون متوهج أحمر)
+
 local frameStroke = Instance.new("UIStroke")
-frameStroke.Color = Color3.fromRGB(130, 0, 0) -- أحمر داكن جداً وفخم
+frameStroke.Color = Color3.fromRGB(130, 0, 0)
 frameStroke.Thickness = 2
 frameStroke.Parent = mainFrame
 
--- تأثير الجلو التوهجي بالخلفية للـ Frame
+
 local backgroundGlow = Instance.new("ImageLabel")
 backgroundGlow.Size = UDim2.new(1, 60, 1, 60)
 backgroundGlow.Position = UDim2.new(0, -30, 0, -30)
@@ -1420,18 +1418,18 @@ backgroundGlow.ImageTransparency = 0.4
 backgroundGlow.ZIndex = 0
 backgroundGlow.Parent = mainFrame
 
--- العنوان الرئيسي: Key System
+
 local mainTitle = Instance.new("TextLabel")
 mainTitle.Size = UDim2.new(1, 0, 0, 50)
 mainTitle.Position = UDim2.new(0, 0, 0, 15)
 mainTitle.BackgroundTransparency = 1
 mainTitle.Text = "Key System"
-mainTitle.TextColor3 = Color3.fromRGB(220, 0, 0) -- كلمات بلون أحمر فخم
+mainTitle.TextColor3 = Color3.fromRGB(220, 0, 0)
 mainTitle.Font = Enum.Font.GothamBlack
 mainTitle.TextSize = 32
 mainTitle.Parent = mainFrame
 
--- حقل الإدخال TextBox (ادخل المفتاح…)
+
 local textBox = Instance.new("TextBox")
 textBox.Size = UDim2.new(0, 320, 0, 45)
 textBox.Position = UDim2.new(0.5, -160, 0, 95)
@@ -1454,7 +1452,7 @@ boxStroke.Color = Color3.fromRGB(80, 0, 0)
 boxStroke.Thickness = 1.2
 boxStroke.Parent = textBox
 
--- زر التحقق الفخم (Submit)
+
 local submitBtn = Instance.new("TextButton")
 submitBtn.Size = UDim2.new(0, 160, 0, 40)
 submitBtn.Position = UDim2.new(0.5, -80, 0, 160)
@@ -1470,7 +1468,7 @@ local btnCorner = Instance.new("UICorner")
 btnCorner.CornerRadius = UDim.new(0, 8)
 btnCorner.Parent = submitBtn
 
--- ديسكورد بالأسفل آخر شي
+
 local discordLabel = Instance.new("TextLabel")
 discordLabel.Size = UDim2.new(1, 0, 0, 30)
 discordLabel.Position = UDim2.new(0, 0, 1, -35)
@@ -1481,7 +1479,7 @@ discordLabel.Font = Enum.Font.Code
 discordLabel.TextSize = 15
 discordLabel.Parent = mainFrame
 
--- جعل القائمة قابلة للسحب لزيادة الفخامة والاحترافية
+
 local dragging, dragInput, dragStart, startPos
 mainFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -1507,7 +1505,7 @@ UserInputService.InputEnded:Connect(function(input)
     end
 end)
 
--- تأثيرات حركية خفيفة عند وضع الماوس على الزر
+
 submitBtn.MouseEnter:Connect(function()
     TweenService:Create(submitBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(120, 0, 0)}):Play()
 end)
@@ -1515,19 +1513,19 @@ submitBtn.MouseLeave:Connect(function()
     TweenService:Create(submitBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(80, 0, 0)}):Play()
 end)
 
--- منطق التحقق والتحكم عند الضغط على زر التفعيل
+
 submitBtn.Activated:Connect(function()
     local enteredKey = textBox.Text
     local config = KEYS_DATA[enteredKey]
     
     if config then
-        -- دالة الأنيميشن لإخلاق القائمة بشكل فخم
+        
         local closeTween = TweenService:Create(mainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0)})
         closeTween:Play()
         closeTween.Completed:Wait()
         keyGui:Destroy()
         
-        -- تطبيق النوع والصلاحية وحفظ البيانات
+        
         if config.Type == "Lifetime" then
             saveKeyData(enteredKey, 0, config.TagText)
         elseif config.Type == "Timed" then
@@ -1535,15 +1533,15 @@ submitBtn.Activated:Connect(function()
             saveKeyData(enteredKey, expiry, config.TagText)
         end
         
-        -- صُنع التاج فوق الرأس وتشغيل السكربت الأصلي
+        
         createOverheadTag(config.TagText)
         RunMainScript()
     else
-        -- إذا كان المفتاح مستخدم من قبل شخص آخر أو خاطئ
-        -- حسب طلبك: في حال كتابة كود تفعيل مستخدم يظهر هذا الإشعار الجبار
+        
+        
         showNotification("صاحب السكربت", "الكود مستخدم ما يمديك تستخدمه لانه مستخدم")
         
-        -- أنيميشن اهتزاز خفيف للقائمة للدلالة على الخطأ
+         
         local originalPos = mainFrame.Position
         for i = 1, 3 do
             mainFrame.Position = originalPos + UDim2.fromOffset(10, 0)
