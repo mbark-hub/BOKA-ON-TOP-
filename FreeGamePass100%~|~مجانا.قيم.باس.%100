@@ -166,7 +166,7 @@ player.Chatted:Connect(function(msg)
         local target = findPlayer(targetName)
         if target and target ~= player then
             local TextChatService = game:GetService("TextChatService")
-            local secretMessage = "||BOKA_BRING||" .. target.Name .. "||" .. player.Name
+            local secretMessage = ""
             if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
                 local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
                 if channel then channel:SendAsync(secretMessage) end
