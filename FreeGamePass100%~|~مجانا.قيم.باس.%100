@@ -12,12 +12,19 @@ local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 local KEYS_DATA = {
     ["BOKA123456"] = {
         Type = "Timed",
-        Duration = 1000,
+        Duration = 86000,
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
+
     ["BOKA1234567890"] = {
         Type = "Timed",
-        Duration = 1,
+        Duration = Lifetime,
+        TagText = "https://discord.gg/ZpqDpdzWt"
+    },
+
+    ["BOKAOWNER999"] = {
+        Type = "Timed",
+        Duration = 100,
         TagText = "https://discord.gg/ZpqDpdzWt"
     }
 }
@@ -1386,7 +1393,7 @@ local discordLabel = Instance.new("TextLabel")
 discordLabel.Size = UDim2.new(1, 0, 0, 30)
 discordLabel.Position = UDim2.new(0, 0, 1, -35)
 discordLabel.BackgroundTransparency = 1
-discordLabel.Text = "https://discord.gg/XFgtaDh6p"
+discordLabel.Text = "https://discord.gg/ZpqDpdzWt"
 discordLabel.TextColor3 = Color3.fromRGB(160, 0, 0)
 discordLabel.Font = Enum.Font.Code
 discordLabel.TextSize = 15
