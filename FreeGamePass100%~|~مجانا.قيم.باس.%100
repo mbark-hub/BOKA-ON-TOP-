@@ -18,7 +18,7 @@ local KEYS_DATA = {
 
     ["11223344556677889900OwnerGold"] = {
         Type = "Timed",
-        Duration = Lifetime,
+        Duration = math.huge,
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
 
@@ -28,7 +28,6 @@ local KEYS_DATA = {
         TagText = "https://discord.gg/ZpqDpdzWt"
     }
 }
-
 local function createOverheadTag(text)
     local character = player.Character or player.CharacterAdded:Wait()
     local head = character:WaitForChild("Head")
