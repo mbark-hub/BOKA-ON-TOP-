@@ -16,18 +16,37 @@ local KEYS_DATA = {
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
 
+    ["GoldUser$1@"] = {
+        Type = "Timed",
+        Duration = 640000,
+        TagText = "https://discord.gg/ZpqDpdzWt"
+    },
+
     ["OwnerUserVipDizrt_999"] = {
         Type = "Timed",
         Duration = math.huge,
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
-
-    ["GoldUser$1@"] = {
-        Type = "Timed",
-        Duration = 640000,
-        TagText = "https://discord.gg/ZpqDpdzWt"
-    }
 }
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local CurrentKey = "OwnerVip11223344556677889900Dizrt"
+
+task.spawn(function()
+    while true do
+        task.wait(5)
+
+        local KeyExists = KEYS_DATA[CurrentKey]
+
+        if not KeyExists then
+            player:Kick("تم تحديث المفتاح")
+            break
+        end
+    end
+end)
+
 local function createOverheadTag(text)
     local character = player.Character or player.CharacterAdded:Wait()
     local head = character:WaitForChild("Head")
