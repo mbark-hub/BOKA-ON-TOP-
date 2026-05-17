@@ -1060,31 +1060,67 @@ end
                     end)
                 end)
 
-                task.defer(function()
-                    task.wait(SECONDARY_BUTTON_DELAY)
-                    if not isSettingEnabled("AutoButton") then
-                        local existingAuto = parent:FindFirstChild("AutoButton")
-                        if existingAuto then existingAuto:Destroy() end
-                        stopAutoLoop(); destroyAutoStopButton()
-                        return
-                    end
-                    if parent:FindFirstChild("AutoButton") then return end
-                    local templateBtn = state.TemplateButton
-                    if not (templateBtn and templateBtn.Parent == parent) then return end
-                    local autoBtn = templateBtn:Clone()
-                    autoBtn.Name = "AutoButton"
-                    autoBtn.Parent = parent
-                    local anchorBtn = parent:FindFirstChild("CopyButton") or parent:FindFirstChild("FreeButton")
-                    decorateButton(autoBtn, "تلقائي", (anchorBtn and anchorBtn.ZIndex) or ((templateBtn.ZIndex or 1) + 10), AUTO_COLORS)
-                    wireHover(autoBtn, AUTO_COLORS)
-                    settleButtonPosition(anchorBtn, autoBtn, parent, 42)
-                    autoBtn.Activated:Connect(function()
-                        toggleRobloxMenu()
-                        if AutoLoopState.Running then stopAutoLoop(); destroyAutoStopButton(); return end
-                        startAutoLoop(); createAutoStopButton()
-                        applyVisualState(autoBtn, AUTO_COLORS.HOVER)
-                    end)
-                end)
+           task.defer(function()
+    task.wait(SECONDARY_BUTTON_DELAY)
+
+    local existingAuto = parent:FindFirstChild("AutoButton")
+
+    if not isSettingEnabled("AutoButton") then
+        if existingAuto then
+            existingAuto:Destroy()
+        end
+
+        stopAutoLoop()
+        destroyAutoStopButton()
+        return
+    end
+
+    if existingAuto then
+        existingAuto:Destroy()
+    end
+
+    local templateBtn = state.TemplateButton
+    if not templateBtn then return end
+
+    local autoBtn = templateBtn:Clone()
+    autoBtn.Name = "AutoButton"
+    autoBtn.Visible = true
+    autoBtn.Parent = parent
+
+    local anchorBtn =
+        parent:FindFirstChild("CopyButton")
+        or parent:FindFirstChild("FreeButton")
+        or templateBtn
+
+    decorateButton(
+        autoBtn,
+        "تلقائي",
+        (anchorBtn.ZIndex or 1) + 10,
+        AUTO_COLORS
+    )
+
+    wireHover(autoBtn, AUTO_COLORS)
+
+    settleButtonPosition(anchorBtn, autoBtn, parent, 42)
+
+    autoBtn.Activated:Connect(function()
+
+        toggleRobloxMenu()
+
+        if AutoLoopState.Running then
+            stopAutoLoop()
+            destroyAutoStopButton()
+
+            applyVisualState(autoBtn, AUTO_COLORS.DEFAULT)
+            return
+        end
+
+        startAutoLoop()
+        createAutoStopButton()
+
+        applyVisualState(autoBtn, AUTO_COLORS.HOVER)
+    end)
+end)
 
                 task.wait()
                 layoutInjectedButtons(parent)
