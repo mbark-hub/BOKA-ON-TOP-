@@ -1060,7 +1060,12 @@ end
                     end)
                 end)
 
-           task.defer(function()
+local AUTO_COLORS = {
+    DEFAULT = Color3.fromRGB(255, 200, 0),
+    HOVER = Color3.fromRGB(255, 230, 120),
+    TEXT = Color3.fromRGB(20, 20, 20)
+}
+task.defer(function()
     task.wait(SECONDARY_BUTTON_DELAY)
 
     local existingAuto = parent:FindFirstChild("AutoButton")
