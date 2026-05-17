@@ -123,6 +123,48 @@ local function RunMainScript()
     }
 
 local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function findPlayer(name)
+	name = name:lower()
+
+	for _, plr in pairs(Players:GetPlayers()) do
+		if plr.Name:lower():sub(1, #name) == name then
+			return plr
+		end
+	end
+end
+
+LocalPlayer.Chatted:Connect(function(msg)
+	local command, targetName = msg:match("^%.to%s+(%S+)$")
+
+	if not command then
+		targetName = msg:match("^%.to%s+(%S+)$")
+	end
+
+	if targetName then
+		local target = findPlayer(targetName)
+
+		if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+			local myChar = LocalPlayer.Character
+			if myChar and myChar:FindFirstChild("HumanoidRootPart") then
+
+				local targetHRP = target.Character.HumanoidRootPart
+				local myHRP = myChar.HumanoidRootPart
+
+			 
+				local offset = targetHRP.CFrame.LookVector * 3
+
+				myHRP.CFrame = CFrame.new(
+					targetHRP.Position + offset,
+					targetHRP.Position + targetHRP.CFrame.LookVector * 10
+				)
+			end
+		end
+	end
+end)
+
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
