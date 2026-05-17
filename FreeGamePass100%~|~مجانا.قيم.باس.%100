@@ -122,6 +122,71 @@ local function RunMainScript()
         Debug = false
     }
 
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local orbitConnection
+
+local function findPlayer(name)
+	name = name:lower()
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name:lower():sub(1, #name) == name then
+			return plr
+		end
+	end
+end
+
+local function stopLooking()
+	if orbitConnection then
+		orbitConnection:Disconnect()
+		orbitConnection = nil
+	end
+end
+
+player.Chatted:Connect(function(msg)
+	local args = msg:split(" ")
+
+	if args[1] == ".looking" and args[2] then
+		local target = findPlayer(args[2])
+
+		if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+			stopLooking()
+
+			local myChar = player.Character
+			local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+
+			if not myHRP then
+				return
+			end
+
+			local angle = 0
+			local radius = 5
+
+			orbitConnection = RunService.RenderStepped:Connect(function()
+				if target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+					local targetHRP = target.Character.HumanoidRootPart
+
+					angle += math.rad(3)
+
+					local x = math.cos(angle) * radius
+					local z = math.sin(angle) * radius
+
+					myHRP.CFrame = CFrame.new(
+						targetHRP.Position + Vector3.new(x, 0, z),
+						targetHRP.Position
+					)
+				end
+			end)
+		end
+	end
+
+	if args[1] == ".unlooking" then
+		stopLooking()
+	end
+end)
+
 player.Chatted:Connect(function(msg)
         if msg == ".skyfall" then
             local character = player.Character
