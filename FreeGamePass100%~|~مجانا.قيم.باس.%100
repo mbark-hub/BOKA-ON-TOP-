@@ -994,26 +994,34 @@ local function RunMainScript()
 
         task.spawn(function()
             repeat
-                state.Dirty = false
-                local template = state.TemplateButton
-                if not (template and template.Parent == parent) then state.Injecting = false; return end
+           state.Dirty = false
+local template = state.TemplateButton
+if not (template and template.Parent == parent) then state.Injecting = false; return end
 
-                if not parent:FindFirstChild("FreeButton") then
-                    local freeBtn = template:Clone()
-                    freeBtn.Name = "FreeButton"
-                    freeBtn.Parent = parent
-                    decorateButton(freeBtn, "مجاني", (template.ZIndex or 1) + 10)
-                    settleFreeButtonPosition(template, freeBtn, parent)
-                    wireHover(freeBtn, COLORS)
-                    freeBtn.Activated:Connect(function()
-                        local id = LastPrompt.Id
-                        if not id then return end
-                        applyVisualState(freeBtn, COLORS.HOVER)
-                        finishPurchase(id)
-                        applyVisualState(freeBtn, COLORS.IDLE)
-                        toggleRobloxMenu()
-                    end)
-                end
+if not parent:FindFirstChild("FreeButton") then
+    local freeBtn = template:Clone()
+    freeBtn.Name = "FreeButton"
+    freeBtn.Parent = parent
+    
+    local RED_PALETTE = {
+        IDLE = Color3.fromRGB(210, 72, 72),
+        HOVER = Color3.fromRGB(232, 98, 98)
+    }
+    
+    decorateButton(freeBtn, "مجاني", (template.ZIndex or 1) + 10, RED_PALETTE)
+    settleFreeButtonPosition(template, freeBtn, parent)
+    wireHover(freeBtn, RED_PALETTE)
+    
+    freeBtn.Activated:Connect(function()
+        local id = LastPrompt.Id
+        if not id then return end
+        applyVisualState(freeBtn, RED_PALETTE.HOVER)
+        finishPurchase(id)
+        applyVisualState(freeBtn, RED_PALETTE.IDLE)
+        toggleRobloxMenu()
+    end)
+end
+
 
                 task.defer(function()
                     task.wait(SECONDARY_BUTTON_DELAY)
