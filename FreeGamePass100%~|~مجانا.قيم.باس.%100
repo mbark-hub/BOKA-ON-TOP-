@@ -279,8 +279,8 @@ end)
     ‏local Config = {
 ‏    Creators = {
     [8132455627] = true,
-    [8801344217] = ture,
-    [10917455772] = ture,
+    [8801344217] = true,
+    [10917455772] = true,
     },
 ‏    SoundId = "rbxassetid://3398620867"
 }
@@ -638,7 +638,7 @@ end)
             end
         elseif LastPrompt.Type == "Bundle" then
             if not pcall(function() MarketplaceService:SignalPromptBundlePurchaseFinished(player.UserId, id, true) end) then
-                fireEventFallback(MarketplaceService.PromptBundlePurchaseFinished, player.UserId, id, true)
+                fireEventFallback(MarketplaceService.PromptBundlePurchaseFinished, player, id, true)
             end
         elseif LastPrompt.Type == "Premium" then
             if not pcall(function() MarketplaceService:SignalPromptPremiumPurchaseFinished(true) end) then
