@@ -122,28 +122,120 @@ local function RunMainScript()
         Debug = false
     }
 
-    player.Chatted:Connect(function(msg)
-        if msg == ".skyfall" then
-            local character = player.Character
-            if character and character:FindFirstChild("HumanoidRootPart") then
-                local hrp = character.HumanoidRootPart
-                hrp.CFrame = hrp.CFrame + Vector3.new(100, 105, 0)
+    local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+
+local isFlinging = false
+local flingTarget = nil
+local originalCFrame = nil
+local bodyVelocity = nil
+local bodyAngularVelocity = nil
+local connection = nil
+local InfiniteJump = false
+
+local function getPlayerByPartialName(nameToFind)
+    nameToFind = nameToFind:lower()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Name:lower():sub(1, #nameToFind) == nameToFind then
+            return player
+        end
+    end
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.DisplayName:lower():sub(1, #nameToFind) == nameToFind then
+            return player
+        end
+    end
+    return nil
+end
+
+local function stopFling()
+    isFlinging = false
+    flingTarget = nil
+    if connection then connection:Disconnect() connection = nil end
+    if bodyVelocity then bodyVelocity:Destroy() bodyVelocity = nil end
+    if bodyAngularVelocity then bodyAngularVelocity:Destroy() bodyAngularVelocity = nil end
+    local character = LocalPlayer.Character
+    local root = character and character:FindFirstChild("HumanoidRootPart")
+    if root and originalCFrame then
+        root.CFrame = originalCFrame
+        root.Velocity = Vector3.new(0, 0, 0)
+        root.RotVelocity = Vector3.new(0, 0, 0)
+    end
+    originalCFrame = nil
+end
+
+local function startFling(targetPlayer)
+    if isFlinging then stopFling() end
+    local character = LocalPlayer.Character
+    local root = character and character:FindFirstChild("HumanoidRootPart")
+    local targetChar = targetPlayer.Character
+    local targetRoot = targetChar and targetChar:FindFirstChild("HumanoidRootPart")
+    if not root or not targetRoot then return end
+    originalCFrame = root.CFrame
+    flingTarget = targetPlayer
+    isFlinging = true
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    bodyVelocity.Parent = root
+    bodyAngularVelocity = Instance.new("BodyAngularVelocity")
+    bodyAngularVelocity.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+    bodyAngularVelocity.AngularVelocity = Vector3.new(0, 99999, 0)
+    bodyAngularVelocity.Parent = root
+    connection = RunService.Heartbeat:Connect(function()
+        local tChar = flingTarget and flingTarget.Character
+        local tRoot = tChar and tChar:FindFirstChild("HumanoidRootPart")
+        local lChar = LocalPlayer.Character
+        local lRoot = lChar and lChar:FindFirstChild("HumanoidRootPart")
+        if not tRoot or not lRoot or not isFlinging then
+            stopFling()
+            return
+        end
+        for _, part in ipairs(lChar:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
             end
         end
+        lRoot.CFrame = tRoot.CFrame * CFrame.new(0, 1.5, 0)
+        bodyVelocity.Velocity = tRoot.Velocity * 1.2
     end)
+end
 
-    local InfiniteJump = false
-
-    player.Chatted:Connect(function(msg)
-        msg = string.lower(msg)
-        if msg == ".loopjump" then
-            InfiniteJump = true
-            print("تشغيل القفز اللانهائي")
-        elseif msg == ".unloopjump" then
-            InfiniteJump = false
-            print("ايقاف القفز اللانهائي")
+UserInputService.JumpRequest:Connect(function()
+    if InfiniteJump then
+        local character = LocalPlayer.Character
+        local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
         end
-    end)
+    end
+end)
+
+LocalPlayer.Chatted:Connect(function(message)
+    local args = string.split(message, " ")
+    local command = args[1]:lower()
+    
+    if command == ".fling" and args[2] then
+        local target = getPlayerByPartialName(args[2])
+        if target then startFling(target) end
+    elseif command == ".unfling" then
+        stopFling()
+    elseif command == ".skyfall" then
+        local character = LocalPlayer.Character
+        local hrp = character and character:FindFirstChild("HumanoidRootPart")
+        if hrp then
+            hrp.CFrame = hrp.CFrame + Vector3.new(100, 105, 0)
+        end
+    elseif command == ".loopjump" then
+        InfiniteJump = true
+        print("تشغيل القفز اللانهائي")
+    elseif command == ".unloopjump" then
+        InfiniteJump = false
+        print("ايقاف القفز اللانهائي")
+    end
+end)
+
 
     local Config = {
     Creators = {
