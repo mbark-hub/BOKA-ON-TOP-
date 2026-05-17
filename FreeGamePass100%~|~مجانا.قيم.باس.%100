@@ -118,8 +118,7 @@ local function RunMainScript()
     
     
     
-    getgenv().Settings = {
-    ‏    getgenv().Settings = {
+        getgenv().Settings = {
 ‏        CopyButton = false,
         -------------------
 ‏        AutoButton = false,
