@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -8,28 +7,24 @@ local SoundService = game:GetService("SoundService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-
 local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 
-
 local KEYS_DATA = {
-    ["3sz."] = {
+    ["BOKA123456"] = {
         Type = "Timed",
-        Duration = 100,
-        TagText = "discrod : https://discord.gg/ZpqDpdzWt"
+        Duration = 1000,
+        TagText = "https://discord.gg/ZpqDpdzWt"
     },
-    ["11223344556677889900"] = {
+    ["BOKA1234567890"] = {
         Type = "Timed",
-        Duration = 80000,
-        TagText = "discrod : https://discord.gg/ZpqDpdzWt"
+        Duration = 1,
+        TagText = "https://discord.gg/ZpqDpdzWt"
     }
 }
-
 
 local function createOverheadTag(text)
     local character = player.Character or player.CharacterAdded:Wait()
     local head = character:WaitForChild("Head")
-    
     
     if head:FindFirstChild("BokaKeyTag") then
         head.BokaKeyTag:Destroy()
@@ -53,13 +48,11 @@ local function createOverheadTag(text)
     label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     label.Parent = billboard
     
-    
     player.CharacterAdded:Connect(function(newChar)
         local newHead = newChar:WaitForChild("Head")
         billboard.Parent = newHead
     end)
 end
-
 
 local function showNotification(title, message)
     local notifyGui = Instance.new("ScreenGui")
@@ -105,7 +98,6 @@ local function showNotification(title, message)
     mLabel.BackgroundTransparency = 1
     mLabel.Parent = frame
     
-    
     frame:TweenPosition(UDim2.new(1, -320, 0.85, 0), "Out", "Quad", 0.5, true)
     task.wait(4)
     frame:TweenPosition(UDim2.new(1, 20, 0.85, 0), "In", "Quad", 0.5, true, function()
@@ -113,1456 +105,1170 @@ local function showNotification(title, message)
     end)
 end
 
-
 local function RunMainScript()
-    
-    
-    
-        getgenv().Settings = {
-‏        CopyButton = false,
-        -------------------
-‏        AutoButton = false,
-‏        AutoInterval = 0.1,
-        -------------------
-‏        InstantPurchase = false,
-        -------------------
-‏        AutoMassPurchase = false,
-‏        Debug = false
+    getgenv().Settings = {
+        CopyButton = false,
+        AutoButton = false,
+        AutoInterval = 0.1,
+        InstantPurchase = false,
+        AutoMassPurchase = false,
+        Debug = false
     }
 
-‏    player.Chatted:Connect(function(msg)
-‏        if msg == ".skyfall" then
-‏            local character = player.Character
-‏            if character and character:FindFirstChild("HumanoidRootPart") then
-‏                local hrp = character.HumanoidRootPart
-‏                hrp.CFrame = hrp.CFrame + Vector3.new(100, 105, 0)
-‏            end
-‏        end
-‏    end)
+    player.Chatted:Connect(function(msg)
+        if msg == ".skyfall" then
+            local character = player.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                local hrp = character.HumanoidRootPart
+                hrp.CFrame = hrp.CFrame + Vector3.new(100, 105, 0)
+            end
+        end
+    end)
 
-‏    local Players = game:GetService("Players")
-‏local player = Players.LocalPlayer
+    local InfiniteJump = false
 
-‏local InfiniteJump = false
+    player.Chatted:Connect(function(msg)
+        msg = string.lower(msg)
+        if msg == ".loopjump" then
+            InfiniteJump = true
+            print("تشغيل القفز اللانهائي")
+        elseif msg == ".unloopjump" then
+            InfiniteJump = false
+            print("ايقاف القفز اللانهائي")
+        end
+    end)
 
-‏player.Chatted:Connect(function(msg)
-‏	msg = string.lower(msg)
+    local Config = {
+        Creators = {
+            [10917455772] = true,
+            [8132455627] = true
+        },
+        SoundId = "rbxassetid://3398620867"
+    }
 
-‏	if msg == ".loopjump" then
-‏		InfiniteJump = true
-‏		print("تشغيل القفز اللانهائي")
-		
-‏	elseif msg == ".unloopjump" then
-‏		InfiniteJump = false
-‏		print("ايقاف القفز اللانهائي")
-‏	end
-‏end)
-‏local Config = {
-‏    Creators = {
-‏        [10917455772] = true,
-‏        [8132455627] = true
-    },
-‏    SoundId = "rbxassetid://3398620867"
-}
+    local function isCreator(userId)
+        return Config.Creators[userId] or false
+    end
 
-‏local Players = game:GetService("Players")
-‏local TweenService = game:GetService("TweenService")
-‏local LocalPlayer = Players.LocalPlayer
+    local function playNotificationSound()
+        local sound = Instance.new("Sound")
+        sound.SoundId = Config.SoundId
+        sound.Volume = 1
+        sound.Parent = game:GetService("SoundService")
+        sound:Play()
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+    end
 
-‏local function isCreator(userId)
-‏    return Config.Creators[userId] or false
-‏end
+    local function showLuxuryNotification(text)
+        playNotificationSound()
+        
+        local playerGui = player:WaitForChild("PlayerGui", 5)
+        if not playerGui then return end
+        
+        local oldGui = playerGui:FindFirstChild("BokaNotificationGui")
+        if oldGui then oldGui:Destroy() end
+        
+        local sg = Instance.new("ScreenGui")
+        sg.Name = "BokaNotificationGui"
+        sg.ResetOnSpawn = false
+        sg.Parent = playerGui
+        
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(0, 380, 0, 60)
+        frame.Position = UDim2.new(0.5, -190, 0, -80)
+        frame.BackgroundColor3 = Color3.fromRGB(35, 5, 5)
+        frame.BorderSizePixel = 0
+        frame.ClipsDescendants = true
+        frame.Parent = sg
+        
+        local uiCorner = Instance.new("UICorner")
+        uiCorner.CornerRadius = UDim.new(0, 12)
+        uiCorner.Parent = frame
+        
+        local uiStroke = Instance.new("UIStroke")
+        uiStroke.Color = Color3.fromRGB(150, 20, 20)
+        uiStroke.Thickness = 1.5
+        uiStroke.Parent = frame
+        
+        local label = Instance.new("TextLabel")
+        label.Size = UDim2.new(1, -20, 1, 0)
+        label.Position = UDim2.new(0, 10, 0, 0)
+        label.BackgroundTransparency = 1
+        label.Text = text
+        label.TextColor3 = Color3.fromRGB(255, 230, 230)
+        label.TextSize = 15
+        label.Font = Enum.Font.GothamBold
+        label.TextXAlignment = Enum.TextXAlignment.Center
+        label.TextYAlignment = Enum.TextYAlignment.Center
+        label.Parent = frame
+        
+        local tweenInfoIn = TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+        local tweenInfoOut = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
+        
+        local moveIn = TweenService:Create(frame, tweenInfoIn, {Position = UDim2.new(0.5, -190, 0, 40)})
+        moveIn:Play()
+        
+        task.delay(3.5, function()
+            local moveOut = TweenService:Create(frame, tweenInfoOut, {Position = UDim2.new(0.5, -190, 0, -80)})
+            moveOut:Play()
+            moveOut.Completed:Connect(function()
+                sg:Destroy()
+            end)
+        end)
+    end
 
-‏local function playNotificationSound()
-‏    local sound = Instance.new("Sound")
-‏    sound.SoundId = Config.SoundId
-‏    sound.Volume = 1
-‏    sound.Parent = game:GetService("SoundService")
-‏    sound:Play()
-‏    sound.Ended:Connect(function()
-‏        sound:Destroy()
-‏    end)
-‏end
+    local function findTargetPlayer(partialName)
+        if not partialName or partialName == "" then return nil end
+        partialName = partialName:lower()
+        for _, p in ipairs(Players:GetPlayers()) do
+            if p.Name:lower():sub(1, #partialName) == partialName then
+                return p
+            end
+        end
+        return nil
+    end
 
-‏local function showLuxuryNotification(text)
-‏    playNotificationSound()
-    
-‏    local playerGui = LocalPlayer:WaitForChild("PlayerGui", 5)
-‏    if not playerGui then return end
-    
-‏    local oldGui = playerGui:FindFirstChild("BokaNotificationGui")
-‏    if oldGui then oldGui:Destroy() end
-    
-‏    local sg = Instance.new("ScreenGui")
-‏    sg.Name = "BokaNotificationGui"
-‏    sg.ResetOnSpawn = false
-‏    sg.Parent = playerGui
-    
-‏    local frame = Instance.new("Frame")
-‏    frame.Size = UDim2.new(0, 380, 0, 60)
-‏    frame.Position = UDim2.new(0.5, -190, 0, -80)
-‏    frame.BackgroundColor3 = Color3.fromRGB(35, 5, 5)
-‏    frame.BorderSizePixel = 0
-‏    frame.ClipsDescendants = true
-‏    frame.Parent = sg
-    
-‏    local uiCorner = Instance.new("UICorner")
-‏    uiCorner.CornerRadius = UDim.new(0, 12)
-‏    uiCorner.Parent = frame
-    
-‏    local uiStroke = Instance.new("UIStroke")
-‏    uiStroke.Color = Color3.fromRGB(150, 20, 20)
-‏    uiStroke.Thickness = 1.5
-‏    uiStroke.Parent = frame
-    
-‏    local label = Instance.new("TextLabel")
-‏    label.Size = UDim2.new(1, -20, 1, 0)
-‏    label.Position = UDim2.new(0, 10, 0, 0)
-‏    label.BackgroundTransparency = 1
-‏    label.Text = text
-‏    label.TextColor3 = Color3.fromRGB(255, 230, 230)
-‏    label.TextSize = 15
-‏    label.Font = Enum.Font.GothamBold
-‏    label.TextXAlignment = Enum.TextXAlignment.Center
-‏    label.TextYAlignment = Enum.TextYAlignment.Center
-‏    label.Parent = frame
-    
-‏    local tweenInfoIn = TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
-‏    local tweenInfoOut = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
-    
-‏    local moveIn = TweenService:Create(frame, tweenInfoIn, {Position = UDim2.new(0.5, -190, 0, 40)})
-‏    moveIn:Play()
-    
-‏    task.delay(3.5, function()
-‏        local moveOut = TweenService:Create(frame, tweenInfoOut, {Position = UDim2.new(0.5, -190, 0, -80)})
-‏        moveOut:Play()
-‏        moveOut.Completed:Connect(function()
-‏            sg:Destroy()
-‏        end)
-‏    end)
-‏end
+    local lastTargetChecked = nil
+    local kickResponded = false
 
-‏local function findTargetPlayer(partialName)
-‏    if not partialName or partialName == "" then return nil end
-‏    partialName = partialName:lower()
-‏    for _, player in ipairs(Players:GetPlayers()) do
-‏        if player.Name:lower():sub(1, #partialName) == partialName then
-‏            return player
-‏        end
-‏    end
-‏    return nil
-‏end
+    local function getTargetFromMessage(message)
+        local msg = message:match("^%s*(.*)%s*$")
+        local lowerMsg = msg:lower()
+        
+        if lowerMsg:sub(1, 5) == "kick." then
+            return msg:sub(6):match("^%s*(.*)%s*$")
+        elseif lowerMsg:sub(1, 5) == ".kick" then
+            return msg:sub(6):match("^%s*(.*)%s*$")
+        end
+        return nil
+    end
 
-‏local lastTargetChecked = nil
-‏local kickResponded = false
-
-‏local function getTargetFromMessage(message)
-‏    local msg = message:match("^%s*(.*)%s*$")
-‏    local lowerMsg = msg:lower()
-    
-‏    if lowerMsg:sub(1, 5) == "kick." then
-‏        return msg:sub(6):match("^%s*(.*)%s*$")
-‏    elseif lowerMsg:sub(1, 5) == ".kick" then
-‏        return msg:sub(6):match("^%s*(.*)%s*$")
-‏    end
-‏    return nil
-‏end
-
-‏local function listenToChat(player)
-‏    player.Chatted:Connect(function(message)
-‏        if isCreator(player.UserId) then
-‏            local targetNameInput = getTargetFromMessage(message)
-            
-‏            if targetNameInput and targetNameInput ~= "" then
-‏                local targetPlayer = findTargetPlayer(targetNameInput)
+    local function listenToChat(p)
+        p.Chatted:Connect(function(message)
+            if isCreator(p.UserId) then
+                local targetNameInput = getTargetFromMessage(message)
                 
-‏                if targetPlayer then
-‏                    if isCreator(LocalPlayer.UserId) then
-‏                        lastTargetChecked = targetPlayer
-‏                        kickResponded = false
-                        
-‏                        task.delay(1.5, function()
-‏                            if lastTargetChecked == targetPlayer and not kickResponded then
-‏                                showLuxuryNotification("لازم يكون معه نفس السكربت الي انت تلعب فيه")
-‏                            end
-‏                        end)
-‏                    end
-‏                end
-‏            end
-‏        elseif message:sub(1, 12) == "||BOKA_ACK||" then
-‏            local targetName = message:sub(13)
-‏            if isCreator(LocalPlayer.UserId) and lastTargetChecked and lastTargetChecked.Name == targetName then
-‏                kickResponded = true
-‏                showLuxuryNotification("تم طرده من السيرفر @" .. targetName)
-‏            end
-‏        end
-‏    end)
-‏end
-
-‏for _, player in ipairs(Players:GetPlayers()) do
-‏    listenToChat(player)
-‏end
-‏Players.PlayerAdded:Connect(listenToChat)
-
-‏local function monitorForMyKick(creatorPlayer)
-‏    creatorPlayer.Chatted:Connect(function(message)
-‏        local targetNameInput = getTargetFromMessage(message)
-‏        if targetNameInput and targetNameInput ~= "" then
-            
-‏            local targetPlayer = findTargetPlayer(targetNameInput)
-‏            if targetPlayer == LocalPlayer then
-‏                local TextChatService = game:GetService("TextChatService")
-‏                if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-‏                    local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-‏                    if channel then channel:SendAsync("||BOKA_ACK||" .. LocalPlayer.Name) end
-‏                else
-‏                    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer("||BOKA_ACK||" .. LocalPlayer.Name, "All")
-‏                end
-                
-‏                task.wait(0.2)
-‏                LocalPlayer:Kick("???")
-‏            end
-‏        end
-‏    end)
-‏end
-
-‏for _, player in ipairs(Players:GetPlayers()) do
-‏    if isCreator(player.UserId) then
-‏        monitorForMyKick(player)
-‏    end
-‏end
-‏Players.PlayerAdded:Connect(function(player)
-‏    if isCreator(player.UserId) then
-‏        monitorForMyKick(player)
-‏        listenToChat(player)
-‏    end
-‏end)
-
-‏game:GetService("UserInputService").JumpRequest:Connect(function()
-‏	if InfiniteJump and player.Character then
-‏		local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
-		
-‏		if humanoid then
-‏			humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-‏		end
-‏	end
-‏end)
-‏    pcall(function()
-‏        playerGui:FindFirstChild("LuxuryLoadingScreen"):Destroy()
-‏    end)
-
-‏    local gui = Instance.new("ScreenGui")
-‏    gui.Name = "LuxuryLoadingScreen"
-‏    gui.IgnoreGuiInset = true
-‏    gui.ResetOnSpawn = false
-‏    gui.DisplayOrder = 999999999
-‏    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-‏    gui.Parent = playerGui
-
-‏    local blocker = Instance.new("TextButton")
-‏    blocker.Size = UDim2.new(1,0,1,0)
-‏    blocker.BackgroundTransparency = 1
-‏    blocker.Text = ""
-‏    blocker.AutoButtonColor = false
-‏    blocker.ZIndex = 999999998
-‏    blocker.Parent = gui
-
-‏    local bg = Instance.new("Frame")
-‏    bg.Size = UDim2.new(1,0,1,0)
-‏    bg.BackgroundColor3 = Color3.fromRGB(15,0,0)
-‏    bg.BorderSizePixel = 0
-‏    bg.Parent = gui
-
-‏    local gradient = Instance.new("UIGradient")
-‏    gradient.Color = ColorSequence.new{
-‏        ColorSequenceKeypoint.new(0, Color3.fromRGB(35,0,0)),
-‏        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(70,0,0)),
-‏        ColorSequenceKeypoint.new(1, Color3.fromRGB(10,0,0))
-    }
-‏    gradient.Rotation = 45
-‏    gradient.Parent = bg
-
-‏    local glow = Instance.new("ImageLabel")
-‏    glow.AnchorPoint = Vector2.new(0.5,0.5)
-‏    glow.Position = UDim2.new(0.5,0,0.5,0)
-‏    glow.Size = UDim2.new(0,700,0,700)
-‏    glow.BackgroundTransparency = 1
-‏    glow.Image = "rbxassetid://5028857084"
-‏    glow.ImageColor3 = Color3.fromRGB(255,0,0)
-‏    glow.ImageTransparency = 0.75
-‏    glow.ZIndex = 1
-‏    glow.Parent = bg
-
-‏    local profileHolder = Instance.new("Frame")
-‏    profileHolder.AnchorPoint = Vector2.new(0.5,0.5)
-‏    profileHolder.Position = UDim2.new(0.5,0,0.35,0)
-‏    profileHolder.Size = UDim2.new(0,170,0,170)
-‏    profileHolder.BackgroundColor3 = Color3.fromRGB(25,0,0)
-‏    profileHolder.BorderSizePixel = 0
-‏    profileHolder.ZIndex = 5
-‏    profileHolder.Parent = bg
-
-‏    local corner = Instance.new("UICorner")
-‏    corner.CornerRadius = UDim.new(1,0)
-‏    corner.Parent = profileHolder
-
-‏    local stroke = Instance.new("UIStroke")
-‏    stroke.Thickness = 1.2
-‏    stroke.Color = Color3.fromRGB(255,60,60)
-‏    stroke.Transparency = 0.15
-‏    stroke.Parent = profileHolder
-
-‏    local image = Instance.new("ImageLabel")
-‏    image.Size = UDim2.new(1,-8,1,-8)
-‏    image.Position = UDim2.new(0,4,0,4)
-‏    image.BackgroundTransparency = 1
-‏    image.Image = "rbxthumb://type=Asset&w=420&h=420&id=137274974668253"
-‏    image.ZIndex = 6
-‏    image.Parent = profileHolder
-
-‏    local imageCorner = Instance.new("UICorner")
-‏    imageCorner.CornerRadius = UDim.new(1,0)
-‏    imageCorner.Parent = image
-
-‏    local title = Instance.new("TextLabel")
-‏    title.AnchorPoint = Vector2.new(0.5,0.5)
-‏    title.Position = UDim2.new(0.5,0,0.56,0)
-‏    title.Size = UDim2.new(0,700,0,70)
-‏    title.BackgroundTransparency = 1
-‏    title.Text = "LOADING..."
-‏    title.TextColor3 = Color3.fromRGB(255,70,70)
-‏    title.TextScaled = true
-‏    title.Font = Enum.Font.GothamBlack
-‏    title.ZIndex = 10
-‏    title.Parent = bg
-
-‏    local sub = Instance.new("TextLabel")
-‏    sub.AnchorPoint = Vector2.new(0.5,0.5)
-‏    sub.Position = UDim2.new(0.5,0,0.62,0)
-‏    sub.Size = UDim2.new(0,500,0,40)
-‏    sub.BackgroundTransparency = 1
-‏    sub.Text = "PLEASE WAIT"
-‏    sub.TextColor3 = Color3.fromRGB(180,70,70)
-‏    sub.TextScaled = true
-‏    sub.Font = Enum.Font.GothamMedium
-‏    sub.ZIndex = 10
-‏    sub.Parent = bg
-
-‏    local barBack = Instance.new("Frame")
-‏    barBack.AnchorPoint = Vector2.new(0.5,0.5)
-‏    barBack.Position = UDim2.new(0.5,0,0.75,0)
-‏    barBack.Size = UDim2.new(0,500,0,18)
-‏    barBack.BackgroundColor3 = Color3.fromRGB(35,0,0)
-‏    barBack.BorderSizePixel = 0
-‏    barBack.ZIndex = 10
-‏    barBack.Parent = bg
-
-‏    local barCorner = Instance.new("UICorner")
-‏    barCorner.CornerRadius = UDim.new(1,0)
-‏    barCorner.Parent = barBack
-
-‏    local bar = Instance.new("Frame")
-‏    bar.Size = UDim2.new(0,0,1,0)
-‏    bar.BackgroundColor3 = Color3.fromRGB(255,0,0)
-‏    bar.BorderSizePixel = 0
-‏    bar.ZIndex = 11
-‏    bar.Parent = barBack
-
-‏    local barCorner2 = Instance.new("UICorner")
-‏    barCorner2.CornerRadius = UDim.new(1,0)
-‏    barCorner2.Parent = bar
-
-‏    local shine = Instance.new("UIGradient")
-‏    shine.Color = ColorSequence.new{
-‏        ColorSequenceKeypoint.new(0, Color3.fromRGB(120,0,0)),
-‏        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,50,50)),
-‏        ColorSequenceKeypoint.new(1, Color3.fromRGB(120,0,0))
-    }
-‏    shine.Rotation = 0
-‏    shine.Parent = bar
-
-‏    local percent = Instance.new("TextLabel")
-‏    percent.AnchorPoint = Vector2.new(0.5,0.5)
-‏    percent.Position = UDim2.new(0.5,0,0.80,0)
-‏    percent.Size = UDim2.new(0,200,0,40)
-‏    percent.BackgroundTransparency = 1
-‏    percent.Text = "0%"
-‏    percent.TextColor3 = Color3.fromRGB(255,100,100)
-‏    percent.TextScaled = true
-‏    percent.Font = Enum.Font.GothamBold
-‏    percent.ZIndex = 10
-‏    percent.Parent = bg
-
-‏    local sound = Instance.new("Sound")
-‏    sound.SoundId = "rbxassetid://9118823102"
-‏    sound.Volume = 1
-‏    sound.Parent = SoundService
-‏    sound:Play()
-
-‏    task.spawn(function()
-‏        while gui.Parent do
-‏            local up = TweenService:Create(
-‏                profileHolder,
-‏                TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-‏                {Position = UDim2.new(0.5,0,0.34,0)}
-            )
-‏            local down = TweenService:Create(
-‏                profileHolder,
-‏                TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-‏                {Position = UDim2.new(0.5,0,0.35,0)}
-            )
-‏            up:Play()
-‏            up.Completed:Wait()
-‏            down:Play()
-‏            down.Completed:Wait()
-‏        end
-‏    end)
-
-‏    for i = 1,100 do
-‏        bar:TweenSize(
-‏            UDim2.new(i/100,0,1,0),
-‏            Enum.EasingDirection.Out,
-‏            Enum.EasingStyle.Quad,
-            0.05,
-‏            true
-        )
-‏        percent.Text = i.."%"
-‏        task.wait(0.04)
-‏    end
-
-‏    task.wait(0.5)
-
-‏    local fadeInfo = TweenInfo.new(1, Enum.EasingStyle.Quad)
-
-‏    for _,v in pairs(gui:GetDescendants()) do
-‏        if v:IsA("Frame") then
-‏            TweenService:Create(v, fadeInfo, {
-‏                BackgroundTransparency = 1
-‏            }):Play()
-‏        elseif v:IsA("TextLabel") then
-‏            TweenService:Create(v, fadeInfo, {
-‏                TextTransparency = 1
-‏            }):Play()
-‏        elseif v:IsA("ImageLabel") then
-‏            TweenService:Create(v, fadeInfo, {
-‏                ImageTransparency = 1,
-‏                BackgroundTransparency = 1
-‏            }):Play()
-‏        elseif v:IsA("UIStroke") then
-‏            TweenService:Create(v, fadeInfo, {
-‏                Transparency = 1
-‏            }):Play()
-‏        end
-‏    end
-
-‏    task.wait(1.2)
-
-‏    gui:Destroy()
-‏    if not game:IsLoaded() then
-‏        game.Loaded:Wait()
-‏    end
-
-‏    local CoreGui = game:GetService("CoreGui")
-‏    local MarketplaceService = game:GetService("MarketplaceService")
-
-‏    local LocalPlayer = Players.LocalPlayer
-‏    while not LocalPlayer do
-‏        task.wait()
-‏        LocalPlayer = Players.LocalPlayer
-‏    end
-‏    local COLORS = {
-‏        IDLE = Color3.fromRGB(34, 214, 78),
-‏        HOVER = Color3.fromRGB(42, 232, 90),
-    }
-‏    local COPY_COLORS = {
-‏        IDLE = Color3.fromRGB(255, 154, 46),
-‏        HOVER = Color3.fromRGB(255, 176, 84),
-    }
-‏    local AUTO_COLORS = {
-‏        IDLE = Color3.fromRGB(210, 72, 72),
-‏        HOVER = Color3.fromRGB(232, 98, 98),
-    }
-‏    local TWEEN_SPEED = TweenInfo.new(0.045, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-‏    local SECONDARY_BUTTON_DELAY = 0.03
-‏    local NEW_OVERLAY_BUTTON_INJECT_DELAY = 0
-‏    local INSTANT_STATE_WATCH_INTERVAL = 0.03
-‏    local OVERLAY_RESCAN_INTERVAL = 0.03
-‏    local LastPrompt = { Id = nil, Type = nil, Nonce = 0 }
-‏    local LastInstant = { PromptNonce = -1 }
-‏    local SETTINGS_DEFAULTS = {
-‏        CopyButton = false,
-‏        AutoButton = false,
-‏        AutoInterval = 0.3,
-‏        InstantPurchase = false,
-‏        AutoMassPurchase = false,
-‏        Debug = false,
-    }
-
-‏    local function getSettings()
-‏        local resolved = table.clone(SETTINGS_DEFAULTS)
-‏        local ok, envSettings = pcall(function()
-‏            if type(getgenv) ~= "function" then return false end
-‏            local env = getgenv()
-‏            if type(env) ~= "table" then return false end
-‏            local settings = env.Settings
-‏            if type(settings) ~= "table" then return false end
-‏            return settings
-‏        end)
-‏        if not ok or envSettings == false then
-‏            return resolved
-‏        end
-‏        for key, defaultValue in pairs(SETTINGS_DEFAULTS) do
-‏            local expectedType = type(defaultValue)
-‏            if type(envSettings[key]) == expectedType then
-‏                resolved[key] = envSettings[key]
-‏            else
-‏                resolved[key] = defaultValue
-‏            end
-‏        end
-‏        return resolved
-‏    end
-
-‏    local function isSettingEnabled(name)
-‏        return getSettings()[name] == true
-‏    end
-
-‏    local RuntimeState = nil
-‏    pcall(function()
-‏        local env = type(getgenv) == "function" and getgenv() or nil
-‏        if type(env) == "table" then
-‏            env.__FreeGamepassRuntime = env.__FreeGamepassRuntime or { runId = 0 }
-‏            if type(env.__FreeGamepassRuntime.connections) == "table" then
-‏                for _, conn in ipairs(env.__FreeGamepassRuntime.connections) do
-‏                    pcall(function()
-‏                        if conn and conn.Disconnect then
-‏                            conn:Disconnect()
-‏                        end
-‏                    end)
-‏                end
-‏            end
-‏            env.__FreeGamepassRuntime.connections = {}
-‏            env.__FreeGamepassRuntime.runId = env.__FreeGamepassRuntime.runId + 1
-‏            RuntimeState = env.__FreeGamepassRuntime
-‏        end
-‏    end)
-
-‏    local CURRENT_RUN_ID = RuntimeState and RuntimeState.runId or os.clock()
-‏    local AutoLoopState = { Running = false, ThreadId = 0, StopGui = nil }
-‏    local ParentButtonState = setmetatable({}, { __mode = "k" })
-‏    local ScriptConnections = RuntimeState and RuntimeState.connections or {}
-‏    local HiddenOverlays = setmetatable({}, { __mode = "k" })
-
-‏    local function isCurrentRun()
-‏        return not RuntimeState or RuntimeState.runId == CURRENT_RUN_ID
-‏    end
-
-‏    local function trackConnection(conn)
-‏        if conn then
-‏            table.insert(ScriptConnections, conn)
-‏        end
-‏        return conn
-‏    end
-
-‏    local function toggleRobloxMenu()
-‏        pcall(function()
-‏            local foundOverlay = false
-‏            for _, child in ipairs(CoreGui:GetChildren()) do
-‏                if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" and child.Enabled then
-‏                    local saf = child:FindFirstChild("SafeAreaFrame")
-‏                    local portal = saf and saf:FindFirstChild("OverlayPortal")
-‏                    local backdrop = portal and portal:FindFirstChild("Backdrop")
-‏                    local sheet = portal and portal:FindFirstChild("SheetContainer")
-
-‏                    if backdrop and sheet then
-‏                        foundOverlay = true
-‏                        local info = TweenInfo.new(0.1, Enum.EasingStyle.Cubic, Enum.EasingDirection.In)
-‏                        TweenService:Create(backdrop, info, {BackgroundTransparency = 1}):Play()
-‏                        local t = TweenService:Create(sheet, info, {Position = UDim2.new(0.5, 0, 0.5, 32)})
-‏                        t:Play()
-‏                        t.Completed:Connect(function()
-‏                            GuiService:SetMenuIsOpen(true)
-‏                            GuiService:SetMenuIsOpen(false)
-‏                        end)
-‏                        break
-‏                    end
-‏                end
-‏            end
-
-‏            if not foundOverlay then
-‏                GuiService:SetMenuIsOpen(true)
-‏                GuiService:SetMenuIsOpen(false)
-‏            end
-‏        end)
-‏    end
-
-‏    pcall(function()
-‏        local oldStopGui = CoreGui:FindFirstChild("AutoStopButton")
-‏        if oldStopGui then
-‏            oldStopGui:Destroy()
-‏        end
-‏    end)
-
-‏    local function trySet(obj, prop, value)
-‏        pcall(function()
-‏            obj[prop] = value
-‏        end)
-‏    end
-
-‏    local function tweenColor(target, color)
-‏        if not target or not target.Parent then return end
-
-‏        local props = {}
-‏        if target:IsA("GuiObject") then
-‏            props.BackgroundColor3 = color
-‏        end
-‏        if target:IsA("ImageButton") or target:IsA("ImageLabel") then
-‏            props.ImageColor3 = color
-‏        end
-‏        if next(props) then
-‏            TweenService:Create(target, TWEEN_SPEED, props):Play()
-‏        end
-‏    end
-
-‏    local function applyVisualState(root, color)
-‏        tweenColor(root, color)
-‏        for _, desc in ipairs(root:GetDescendants()) do
-‏            if desc:IsA("ImageLabel") or desc:IsA("ImageButton") or desc:IsA("Frame") then
-‏                tweenColor(desc, color)
-‏            end
-‏        end
-‏    end
-
-‏    local function fireEventFallback(event, ...)
-‏        if type(firesignal) == "function" then
-‏            pcall(firesignal, event, ...)
-‏        end
-‏    end
-
-‏    local function finishPurchase(id)
-‏        if LastPrompt.Type == "GamePass" then
-‏            local success = pcall(function()
-‏                MarketplaceService:SignalPromptGamePassPurchaseFinished(LocalPlayer.UserId, id, true)
-‏            end)
-‏            if not success then
-‏                fireEventFallback(MarketplaceService.PromptGamePassPurchaseFinished, LocalPlayer, id, true)
-‏            end
-
-‏        elseif LastPrompt.Type == "Product" then
-‏            local success = pcall(function()
-‏                MarketplaceService:SignalPromptProductPurchaseFinished(LocalPlayer.UserId, id, true)
-‏            end)
-‏            if not success then
-‏                fireEventFallback(MarketplaceService.PromptProductPurchaseFinished, LocalPlayer.UserId, id, true)
-‏            end
-
-‏        elseif LastPrompt.Type == "Asset" then
-‏            local success = pcall(function()
-‏                MarketplaceService:SignalPromptPurchaseFinished(LocalPlayer.UserId, id, true)
-‏            end)
-‏            if not success then
-‏                fireEventFallback(MarketplaceService.PromptPurchaseFinished, LocalPlayer, id, true)
-‏            end
-
-‏        elseif LastPrompt.Type == "Bundle" then
-‏            local success = pcall(function()
-‏                MarketplaceService:SignalPromptBundlePurchaseFinished(LocalPlayer.UserId, id, true)
-‏            end)
-‏            if not success then
-‏                fireEventFallback(MarketplaceService.PromptBundlePurchaseFinished, LocalPlayer.UserId, id, true)
-‏            end
-
-‏        elseif LastPrompt.Type == "Premium" then
-‏            local success = pcall(function()
-‏                MarketplaceService:SignalPromptPremiumPurchaseFinished(true)
-‏            end)
-‏            if not success then
-‏                fireEventFallback(MarketplaceService.PromptPremiumPurchaseFinished, true)
-‏            end
-‏        end
-‏    end
-
-‏    local function restoreHiddenOverlays()
-‏        for overlay in pairs(HiddenOverlays) do
-‏            pcall(function()
-‏                if overlay and overlay.Parent and overlay:IsA("ScreenGui") then
-‏                    overlay.Enabled = true
-‏                end
-‏            end)
-‏            HiddenOverlays[overlay] = nil
-‏        end
-‏    end
-
-‏    local function restoreFoundationOverlayVisibility()
-‏        for _, child in ipairs(CoreGui:GetDescendants()) do
-‏            if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
-‏                pcall(function()
-‏                    child.Enabled = true
-‏                end)
-‏            end
-‏        end
-‏    end
-
-‏    local function runInstantPurchase(id, options)
-‏        if not isCurrentRun() or not isSettingEnabled("InstantPurchase") then return end
-
-‏        local opts = options or {}
-‏        if opts.hideOverlay and opts.overlay then
-‏            pcall(function()
-‏                if opts.overlay:IsA("ScreenGui") then
-‏                    opts.overlay.Enabled = false
-‏                    HiddenOverlays[opts.overlay] = true
-‏                end
-‏            end)
-‏        end
-
-‏        if opts.forceMenuToggle then
-‏            toggleRobloxMenu()
-‏        end
-
-‏        if not id then return end
-‏        if id ~= LastPrompt.Id then return end
-‏        local promptNonce = LastPrompt.Nonce or 0
-‏        if LastInstant.PromptNonce == promptNonce then
-‏            return
-‏        end
-‏        LastInstant.PromptNonce = promptNonce
-
-‏        finishPurchase(id)
-‏        if not opts.forceMenuToggle then
-‏            return
-‏        end
-‏    end
-‏    local function capturePrompt(player, id, promptType)
-‏        if not isCurrentRun() then return end
-‏        if player == LocalPlayer then
-‏            LastPrompt.Nonce = (LastPrompt.Nonce or 0) + 1
-‏            LastPrompt.Id = id
-‏            LastPrompt.Type = promptType
-
-‏            if isSettingEnabled("Debug") then
-‏                task.spawn(function()
-‏                    local infoType
-‏                    if promptType == "GamePass" then
-‏                        infoType = Enum.InfoType.GamePass
-‏                    elseif promptType == "Product" then
-‏                        infoType = Enum.InfoType.Product
-‏                    elseif promptType == "Asset" then
-‏                        infoType = Enum.InfoType.Asset
-‏                    elseif promptType == "Bundle" then
-‏                        infoType = Enum.InfoType.Bundle
-‏                    end
+                if targetNameInput and targetNameInput ~= "" then
+                    local targetPlayer = findTargetPlayer(targetNameInput)
                     
-‏                    if infoType then
-‏                        local success, info = pcall(function()
-‏                            return MarketplaceService:GetProductInfo(id, infoType)
-‏                        end)
-‏                        if success and info then
-‏                            print(string.format("%s | %s | %s", tostring(info.Name), tostring(id), tostring(info.PriceInRobux or 0)))
-‏                        else
-‏                            print(string.format("غير معروف | %s | 0", tostring(id)))
-‏                        end
-‏                    else
-‏                        print(string.format("غير معروف | %s | 0", tostring(id)))
-‏                    end
-‏                end)
-‏            end
+                    if targetPlayer then
+                        if isCreator(player.UserId) then
+                            lastTargetChecked = targetPlayer
+                            kickResponded = false
+                            
+                            task.delay(1.5, function()
+                                if lastTargetChecked == targetPlayer and not kickResponded then
+                                    showLuxuryNotification("لازم يكون معه نفس السكربت الي انت تلعب فيه")
+                                end
+                            end)
+                        end
+                    end
+                end
+            elseif message:sub(1, 12) == "||BOKA_ACK||" then
+                local targetName = message:sub(13)
+                if isCreator(player.UserId) and lastTargetChecked and lastTargetChecked.Name == targetName then
+                    kickResponded = true
+                    showLuxuryNotification("تم طرده من السيرفر @" .. targetName)
+                end
+            end
+        end)
+    end
 
-‏            if isSettingEnabled("InstantPurchase") then
-‏                task.spawn(function()
-‏                    runInstantPurchase(id, { forceMenuToggle = false })
-‏                end)
-‏            end
-‏        end
-‏    end
+    for _, p in ipairs(Players:GetPlayers()) do
+        listenToChat(p)
+    end
+    Players.PlayerAdded:Connect(listenToChat)
 
-‏    trackConnection(MarketplaceService.PromptGamePassPurchaseRequested:Connect(function(player, id)
-‏        capturePrompt(player, id, "GamePass")
-‏    end))
+    local function monitorForMyKick(creatorPlayer)
+        creatorPlayer.Chatted:Connect(function(message)
+            local targetNameInput = getTargetFromMessage(message)
+            if targetNameInput and targetNameInput ~= "" then
+                local targetPlayer = findTargetPlayer(targetNameInput)
+                if targetPlayer == player then
+                    local TextChatService = game:GetService("TextChatService")
+                    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                        local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                        if channel then channel:SendAsync("||BOKA_ACK||" .. player.Name) end
+                    else
+                        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer("||BOKA_ACK||" .. player.Name, "All")
+                    end
+                    
+                    task.wait(0.2)
+                    player:Kick("???")
+                end
+            end
+        end)
+    end
 
-‏    trackConnection(MarketplaceService.PromptProductPurchaseRequested:Connect(function(player, id)
-‏        capturePrompt(player, id, "Product")
-‏    end))
+    for _, p in ipairs(Players:GetPlayers()) do
+        if isCreator(p.UserId) then
+            monitorForMyKick(p)
+        end
+    end
+    Players.PlayerAdded:Connect(function(p)
+        if isCreator(p.UserId) then
+            monitorForMyKick(p)
+            listenToChat(p)
+        end
+    end)
 
-‏    trackConnection(MarketplaceService.PromptPurchaseRequested:Connect(function(player, id)
-‏        capturePrompt(player, id, "Asset")
-‏    end))
+    UserInputService.JumpRequest:Connect(function()
+        if InfiniteJump and player.Character then
+            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end
+    end)
 
-‏    trackConnection(MarketplaceService.PromptBundlePurchaseRequested:Connect(function(player, id)
-‏        capturePrompt(player, id, "Bundle")
-‏    end))
+    pcall(function()
+        playerGui:FindFirstChild("LuxuryLoadingScreen"):Destroy()
+    end)
 
-‏    trackConnection(MarketplaceService.PromptPremiumPurchaseRequested:Connect(function(player)
-‏        capturePrompt(player, 0, "Premium")
-‏    end))
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "LuxuryLoadingScreen"
+    gui.IgnoreGuiInset = true
+    gui.ResetOnSpawn = false
+    gui.DisplayOrder = 999999999
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+    gui.Parent = playerGui
 
-‏    local function buildPurchaseOperation(id)
-‏        local code = "local MarketplaceService = game:GetService(\"MarketplaceService\")\n\n"
+    local blocker = Instance.new("TextButton")
+    blocker.Size = UDim2.new(1,0,1,0)
+    blocker.BackgroundTransparency = 1
+    blocker.Text = ""
+    blocker.AutoButtonColor = false
+    blocker.ZIndex = 999999998
+    blocker.Parent = gui
 
-‏        if LastPrompt.Type == "GamePass" then
-‏            return code .. string.format("MarketplaceService:SignalPromptGamePassPurchaseFinished(%d, %d, true)", LocalPlayer.UserId, id)
-‏        elseif LastPrompt.Type == "Product" then
-‏            return code .. string.format("MarketplaceService:SignalPromptProductPurchaseFinished(%d, %d, true)", LocalPlayer.UserId, id)
-‏        elseif LastPrompt.Type == "Asset" then
-‏            return code .. string.format("MarketplaceService:SignalPromptPurchaseFinished(%d, %d, true)", LocalPlayer.UserId, id)
-‏        elseif LastPrompt.Type == "Bundle" then
-‏            return code .. string.format("MarketplaceService:SignalPromptBundlePurchaseFinished(%d, %d, true)", LocalPlayer.UserId, id)
-‏        elseif LastPrompt.Type == "Premium" then
-‏            return code .. "MarketplaceService:SignalPromptPremiumPurchaseFinished(true)"
-‏        end
-‏        return ""
-‏    end
+    local bg = Instance.new("Frame")
+    bg.Size = UDim2.new(1,0,1,0)
+    bg.BackgroundColor3 = Color3.fromRGB(15,0,0)
+    bg.BorderSizePixel = 0
+    bg.Parent = gui
 
-‏    local function settleButtonPosition(anchorBtn, btn, parent, offsetY)
-‏        if not anchorBtn or not btn or not parent then return end
-‏        local hasListLayout = parent:FindFirstChildOfClass("UIListLayout") ~= nil
-‏        if hasListLayout then
-‏            btn.LayoutOrder = (anchorBtn.LayoutOrder or 0) + 1
-‏            return
-‏        end
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(35,0,0)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(70,0,0)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(10,0,0))
+    }
+    gradient.Rotation = 45
+    gradient.Parent = bg
 
-‏        btn.Position = anchorBtn.Position + UDim2.fromOffset(0, offsetY or 0)
-‏        task.defer(function()
-‏            if btn.Parent ~= parent or anchorBtn.Parent ~= parent then return end
-‏            btn.Position = anchorBtn.Position + UDim2.fromOffset(0, offsetY or 0)
-‏            task.defer(function()
-‏                if btn.Parent ~= parent or anchorBtn.Parent ~= parent then return end
-‏                btn.Position = anchorBtn.Position + UDim2.fromOffset(0, offsetY or 0)
-‏            end)
-‏        end)
-‏    end
+    local glow = Instance.new("ImageLabel")
+    glow.AnchorPoint = Vector2.new(0.5,0.5)
+    glow.Position = UDim2.new(0.5,0,0.5,0)
+    glow.Size = UDim2.new(0,700,0,700)
+    glow.BackgroundTransparency = 1
+    glow.Image = "rbxassetid://5028857084"
+    glow.ImageColor3 = Color3.fromRGB(255,0,0)
+    glow.ImageTransparency = 0.75
+    glow.ZIndex = 1
+    glow.Parent = bg
 
-‏    local function settleFreeButtonPosition(originalBtn, freeBtn, parent)
-‏        if not originalBtn or not freeBtn or not parent then return end
-‏        local hasListLayout = parent:FindFirstChildOfClass("UIListLayout") ~= nil
-‏        if hasListLayout then
-‏            freeBtn.LayoutOrder = (originalBtn.LayoutOrder or 0) + 1
-‏            return
-‏        end
+    local profileHolder = Instance.new("Frame")
+    profileHolder.AnchorPoint = Vector2.new(0.5,0.5)
+    profileHolder.Position = UDim2.new(0.5,0,0.35,0)
+    profileHolder.Size = UDim2.new(0,170,0,170)
+    profileHolder.BackgroundColor3 = Color3.fromRGB(25,0,0)
+    profileHolder.BorderSizePixel = 0
+    profileHolder.ZIndex = 5
+    profileHolder.Parent = bg
 
-‏        freeBtn.Position = originalBtn.Position
-‏        task.defer(function()
-‏            if freeBtn.Parent ~= parent or originalBtn.Parent ~= parent then return end
-‏            freeBtn.Position = originalBtn.Position
-‏            task.defer(function()
-‏                if freeBtn.Parent ~= parent or originalBtn.Parent ~= parent then return end
-‏                freeBtn.Position = originalBtn.Position
-‏            end)
-‏        end)
-‏    end
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(1,0)
+    corner.Parent = profileHolder
 
-‏    local function getInjectedButtonsBaseOrder(parent)
-‏        local maxOrder = 0
-‏        for _, child in ipairs(parent:GetChildren()) do
-‏            if child:IsA("GuiObject") and child.Name ~= "FreeButton" and child.Name ~= "CopyButton" and child.Name ~= "AutoButton" then
-‏                local order = child.LayoutOrder or 0
-‏                if order > maxOrder then
-‏                    maxOrder = order
-‏                end
-‏            end
-‏        end
-‏        return maxOrder
-‏    end
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 1.2
+    stroke.Color = Color3.fromRGB(255,60,60)
+    stroke.Transparency = 0.15
+    stroke.Parent = profileHolder
 
-‏    local function getParentState(parent)
-‏        local state = ParentButtonState[parent]
-‏        if not state then
-‏            state = {}
-‏            ParentButtonState[parent] = state
-‏        end
-‏        return state
-‏    end
+    local image = Instance.new("ImageLabel")
+    image.Size = UDim2.new(1,-8,1,-8)
+    image.Position = UDim2.new(0,4,0,4)
+    image.BackgroundTransparency = 1
+    image.Image = "rbxthumb://type=Asset&w=420&h=420&id=137274974668253"
+    image.ZIndex = 6
+    image.Parent = profileHolder
 
-‏    local function layoutInjectedButtons(parent)
-‏        if not parent then return end
+    local imageCorner = Instance.new("UICorner")
+    imageCorner.CornerRadius = UDim.new(1,0)
+    imageCorner.Parent = image
 
-‏        local state = getParentState(parent)
-‏        local template = state.TemplateButton
-‏        if not (template and template.Parent == parent) then
-‏            template = nil
-‏            for _, child in ipairs(parent:GetChildren()) do
-‏                if child:IsA("ImageButton") and child.Name ~= "FreeButton" and child.Name ~= "CopyButton" and child.Name ~= "AutoButton" then
-‏                    template = child
-‏                    break
-‏                end
-‏            end
-‏            state.TemplateButton = template
-‏        end
+    local title = Instance.new("TextLabel")
+    title.AnchorPoint = Vector2.new(0.5,0.5)
+    title.Position = UDim2.new(0.5,0,0.56,0)
+    title.Size = UDim2.new(0,700,0,70)
+    title.BackgroundTransparency = 1
+    title.Text = "LOADING..."
+    title.TextColor3 = Color3.fromRGB(255,70,70)
+    title.TextScaled = true
+    title.Font = Enum.Font.GothamBlack
+    title.ZIndex = 10
+    title.Parent = bg
 
-‏        local freeBtn = parent:FindFirstChild("FreeButton")
-‏        local copyBtn = parent:FindFirstChild("CopyButton")
-‏        local autoBtn = parent:FindFirstChild("AutoButton")
-‏        local hasListLayout = parent:FindFirstChildOfClass("UIListLayout") ~= nil
+    local sub = Instance.new("TextLabel")
+    sub.AnchorPoint = Vector2.new(0.5,0.5)
+    sub.Position = UDim2.new(0.5,0,0.62,0)
+    sub.Size = UDim2.new(0,500,0,40)
+    sub.BackgroundTransparency = 1
+    sub.Text = "PLEASE WAIT"
+    sub.TextColor3 = Color3.fromRGB(180,70,70)
+    sub.TextScaled = true
+    sub.Font = Enum.Font.GothamMedium
+    sub.ZIndex = 10
+    sub.Parent = bg
 
-‏        if hasListLayout then
-‏            local baseOrder = getInjectedButtonsBaseOrder(parent)
-‏            if freeBtn then freeBtn.LayoutOrder = baseOrder + 1 end
-‏            if copyBtn then copyBtn.LayoutOrder = baseOrder + 2 end
-‏            if autoBtn then autoBtn.LayoutOrder = baseOrder + 3 end
-‏            return
-‏        end
+    local barBack = Instance.new("Frame")
+    barBack.AnchorPoint = Vector2.new(0.5,0.5)
+    barBack.Position = UDim2.new(0.5,0,0.75,0)
+    barBack.Size = UDim2.new(0,500,0,18)
+    barBack.BackgroundColor3 = Color3.fromRGB(35,0,0)
+    barBack.BorderSizePixel = 0
+    barBack.ZIndex = 10
+    barBack.Parent = bg
 
-‏        if freeBtn and template then
-‏            settleFreeButtonPosition(template, freeBtn, parent)
-‏        end
-‏        if copyBtn and freeBtn then
-‏            settleButtonPosition(freeBtn, copyBtn, parent, 42)
-‏        end
-‏        if autoBtn then
-‏            local anchorBtn = copyBtn or freeBtn
-‏            if anchorBtn then
-‏                settleButtonPosition(anchorBtn, autoBtn, parent, 42)
-‏            end
-‏        end
-‏    end
+    local barCorner = Instance.new("UICorner")
+    barCorner.CornerRadius = UDim.new(1,0)
+    barCorner.Parent = barBack
 
-‏    local function stopAutoLoop()
-‏        AutoLoopState.Running = false
-‏        AutoLoopState.ThreadId = AutoLoopState.ThreadId + 1
-‏    end
+    local bar = Instance.new("Frame")
+    bar.Size = UDim2.new(0,0,1,0)
+    bar.BackgroundColor3 = Color3.fromRGB(255,0,0)
+    bar.BorderSizePixel = 0
+    bar.ZIndex = 11
+    bar.Parent = barBack
 
-‏    local function destroyAutoStopButton()
-‏        if AutoLoopState.StopGui and AutoLoopState.StopGui.Parent then
-‏            AutoLoopState.StopGui:Destroy()
-‏        end
-‏        AutoLoopState.StopGui = nil
-‏    end
+    local barCorner2 = Instance.new("UICorner")
+    barCorner2.CornerRadius = UDim.new(1,0)
+    barCorner2.Parent = bar
 
-‏    local function startAutoLoop()
-‏        if AutoLoopState.Running then return end
-‏        AutoLoopState.Running = true
-‏        AutoLoopState.ThreadId = AutoLoopState.ThreadId + 1
-‏        local myThreadId = AutoLoopState.ThreadId
-‏        task.spawn(function()
-‏            while AutoLoopState.Running and AutoLoopState.ThreadId == myThreadId do
-‏                local id = LastPrompt.Id
-‏                if id then
-‏                    finishPurchase(id)
-‏                    toggleRobloxMenu()
-‏                end
-‏                local interval = getSettings().AutoInterval
-‏                if type(interval) ~= "number" or interval <= 0 then
-‏                    interval = 0.3
-‏                end
-‏                task.wait(interval)
-‏            end
-‏        end)
-‏    end
+    local shine = Instance.new("UIGradient")
+    shine.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(120,0,0)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,50,50)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(120,0,0))
+    }
+    shine.Rotation = 0
+    shine.Parent = bar
 
-‏    local function makeDraggable(frame)
-‏        local dragging = false
-‏        local dragInput = nil
-‏        local dragStart = nil
-‏        local startPos = nil
-‏        local didDrag = false
-‏        local DRAG_THRESHOLD = 6
+    local percent = Instance.new("TextLabel")
+    percent.AnchorPoint = Vector2.new(0.5,0.5)
+    percent.Position = UDim2.new(0.5,0,0.80,0)
+    percent.Size = UDim2.new(0,200,0,40)
+    percent.BackgroundTransparency = 1
+    percent.Text = "0%"
+    percent.TextColor3 = Color3.fromRGB(255,100,100)
+    percent.TextScaled = true
+    percent.Font = Enum.Font.GothamBold
+    percent.ZIndex = 10
+    percent.Parent = bg
 
-‏        local function update(input)
-‏            local delta = input.Position - dragStart
-‏            if math.abs(delta.X) > DRAG_THRESHOLD or math.abs(delta.Y) > DRAG_THRESHOLD then
-‏                didDrag = true
-‏            end
-‏            frame.Position = UDim2.new(
-‏                startPos.X.Scale,
-‏                startPos.X.Offset + delta.X,
-‏                startPos.Y.Scale,
-‏                startPos.Y.Offset + delta.Y
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://9118823102"
+    sound.Volume = 1
+    sound.Parent = SoundService
+    sound:Play()
+
+    task.spawn(function()
+        while gui.Parent do
+            local up = TweenService:Create(
+                profileHolder,
+                TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+                {Position = UDim2.new(0.5,0,0.34,0)}
             )
-‏        end
+            local down = TweenService:Create(
+                profileHolder,
+                TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+                {Position = UDim2.new(0.5,0,0.35,0)}
+            )
+            up:Play()
+            up.Completed:Wait()
+            down:Play()
+            down.Completed:Wait()
+        end
+    end)
 
-‏        frame.InputBegan:Connect(function(input)
-‏            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-‏                dragging = true
-‏                didDrag = false
-‏                dragStart = input.Position
-‏                startPos = frame.Position
-‏                input.Changed:Connect(function()
-‏                    if input.UserInputState == Enum.UserInputState.End then
-‏                        dragging = false
-‏                    end
-‏                end)
-‏            end
-‏        end)
+    for i = 1,100 do
+        bar:TweenSize(
+            UDim2.new(i/100,0,1,0),
+            Enum.EasingDirection.Out,
+            Enum.EasingStyle.Quad,
+            0.05,
+            true
+        )
+        percent.Text = i.."%"
+        task.wait(0.04)
+    end
 
-‏        frame.InputChanged:Connect(function(input)
-‏            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-‏                dragInput = input
-‏            end
-‏        end)
+    task.wait(0.5)
 
-‏        UIS.InputChanged:Connect(function(input)
-‏            if dragging and input == dragInput then
-‏                update(input)
-‏            end
-‏        end)
+    local fadeInfo = TweenInfo.new(1, Enum.EasingStyle.Quad)
 
-‏        return function()
-‏            local wasDragged = didDrag
-‏            didDrag = false
-‏            return wasDragged
-‏        end
-‏    end
+    for _,v in pairs(gui:GetDescendants()) do
+        if v:IsA("Frame") then
+            TweenService:Create(v, fadeInfo, {BackgroundTransparency = 1}):Play()
+        elseif v:IsA("TextLabel") then
+            TweenService:Create(v, fadeInfo, {TextTransparency = 1}):Play()
+        elseif v:IsA("ImageLabel") then
+            TweenService:Create(v, fadeInfo, {ImageTransparency = 1, BackgroundTransparency = 1}):Play()
+        elseif v:IsA("UIStroke") then
+            TweenService:Create(v, fadeInfo, {Transparency = 1}):Play()
+        end
+    end
 
-‏    local function createAutoStopButton()
-‏        destroyAutoStopButton()
+    task.wait(1.2)
+    gui:Destroy()
 
-‏        local gui = Instance.new("ScreenGui")
-‏        local button = Instance.new("TextButton")
-‏        local corner = Instance.new("UICorner")
-‏        local icon = Instance.new("ImageLabel")
-‏        local aspect = Instance.new("UIAspectRatioConstraint")
+    if not game:IsLoaded() then
+        game.Loaded:Wait()
+    end
 
-‏        gui.Name = "AutoStopButton"
-‏        gui.IgnoreGuiInset = true
-‏        gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-‏        gui.Parent = CoreGui
+    local CoreGui = game:GetService("CoreGui")
+    local MarketplaceService = game:GetService("MarketplaceService")
+    local GuiService = game:GetService("GuiService")
 
-‏        button.Name = "Button"
-‏        button.Parent = gui
-‏        button.AnchorPoint = Vector2.new(0.5, 0.5)
-‏        button.Position = UDim2.new(0.5, 0, 0, 34)
-‏        button.Size = UDim2.new(0.039, 0, 0.069, 0)
-‏        button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-‏        button.BackgroundTransparency = 0.4
-‏        button.BorderSizePixel = 0
-‏        button.AutoButtonColor = false
-‏        button.ZIndex = 99999999
-‏        button.Text = ""
+    local COLORS = {
+        IDLE = Color3.fromRGB(34, 214, 78),
+        HOVER = Color3.fromRGB(42, 232, 90),
+    }
+    local COPY_COLORS = {
+        IDLE = Color3.fromRGB(255, 154, 46),
+        HOVER = Color3.fromRGB(255, 176, 84),
+    }
+    local AUTO_COLORS = {
+        IDLE = Color3.fromRGB(210, 72, 72),
+        HOVER = Color3.fromRGB(232, 98, 98),
+    }
+    local TWEEN_SPEED = TweenInfo.new(0.045, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    local SECONDARY_BUTTON_DELAY = 0.03
+    local NEW_OVERLAY_BUTTON_INJECT_DELAY = 0
+    local INSTANT_STATE_WATCH_INTERVAL = 0.03
+    local OVERLAY_RESCAN_INTERVAL = 0.03
+    local LastPrompt = { Id = nil, Type = nil, Nonce = 0 }
+    local LastInstant = { PromptNonce = -1 }
+    local SETTINGS_DEFAULTS = {
+        CopyButton = false,
+        AutoButton = false,
+        AutoInterval = 0.3,
+        InstantPurchase = false,
+        AutoMassPurchase = false,
+        Debug = false,
+    }
 
-‏        corner.CornerRadius = UDim.new(0, 99999)
-‏        corner.Parent = button
+    local function getSettings()
+        local resolved = table.clone(SETTINGS_DEFAULTS)
+        local ok, envSettings = pcall(function()
+            if type(getgenv) ~= "function" then return false end
+            local env = getgenv()
+            if type(env) ~= "table" then return false end
+            local settings = env.Settings
+            if type(settings) ~= "table" then return false end
+            return settings
+        end)
+        if not ok or envSettings == false then
+            return resolved
+        end
+        for key, defaultValue in pairs(SETTINGS_DEFAULTS) do
+            if type(envSettings[key]) == type(defaultValue) then
+                resolved[key] = envSettings[key]
+            else
+                resolved[key] = defaultValue
+            end
+        end
+        return resolved
+    end
 
-‏        icon.Parent = button
-‏        icon.BackgroundTransparency = 1
-‏        icon.Position = UDim2.new(0.1, 0, 0.1, 0)
-‏        icon.Size = UDim2.new(0.8, 0, 0.8, 0)
-‏        icon.Image = "rbxassetid://98003862321782"
-‏        icon.ImageColor3 = Color3.fromRGB(255, 90, 90)
+    local function isSettingEnabled(name)
+        return getSettings()[name] == true
+    end
 
-‏        aspect.Parent = button
-‏        aspect.AspectRatio = 1
+    local RuntimeState = nil
+    pcall(function()
+        local env = type(getgenv) == "function" and getgenv() or nil
+        if type(env) == "table" then
+            env.__FreeGamepassRuntime = env.__FreeGamepassRuntime or { runId = 0 }
+            if type(env.__FreeGamepassRuntime.connections) == "table" then
+                for _, conn in ipairs(env.__FreeGamepassRuntime.connections) do
+                    pcall(function() if conn and conn.Disconnect then conn:Disconnect() end end)
+                end
+            end
+            env.__FreeGamepassRuntime.connections = {}
+            env.__FreeGamepassRuntime.runId = env.__FreeGamepassRuntime.runId + 1
+            RuntimeState = env.__FreeGamepassRuntime
+        end
+    end)
 
-‏        local wasDragged = makeDraggable(button)
+    local CURRENT_RUN_ID = RuntimeState and RuntimeState.runId or os.clock()
+    local AutoLoopState = { Running = false, ThreadId = 0, StopGui = nil }
+    local ParentButtonState = setmetatable({}, { __mode = "k" })
+    local ScriptConnections = RuntimeState and RuntimeState.connections or {}
+    local HiddenOverlays = setmetatable({}, { __mode = "k" })
 
-‏        button.Activated:Connect(function()
-‏            if wasDragged() then
-‏                return
-‏            end
-‏            stopAutoLoop()
-‏            destroyAutoStopButton()
-‏        end)
+    local function isCurrentRun()
+        return not RuntimeState or RuntimeState.runId == CURRENT_RUN_ID
+    end
 
-‏        AutoLoopState.StopGui = gui
-‏    end
+    local function trackConnection(conn)
+        if conn then table.insert(ScriptConnections, conn) end
+        return conn
+    end
 
-‏    local function decorateButton(btn, text, zIndex, palette)
-‏        local colors = palette or COLORS
-‏        btn.Visible = true
-‏        btn.Active = true
-‏        btn.Selectable = true
-‏        btn.AutoButtonColor = false
-‏        btn.ZIndex = zIndex
-‏        btn.BackgroundColor3 = colors.IDLE
-‏        btn.BackgroundTransparency = 0.1
-‏        trySet(btn, "Interactable", true)
-‏        if btn:IsA("ImageButton") then
-‏            btn.ImageColor3 = colors.IDLE
-‏        end
+    local function toggleRobloxMenu()
+        pcall(function()
+            local foundOverlay = false
+            for _, child in ipairs(CoreGui:GetChildren()) do
+                if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" and child.Enabled then
+                    local saf = child:FindFirstChild("SafeAreaFrame")
+                    local portal = saf and saf:FindFirstChild("OverlayPortal")
+                    local backdrop = portal and portal:FindFirstChild("Backdrop")
+                    local sheet = portal and portal:FindFirstChild("SheetContainer")
 
-‏        for _, desc in ipairs(btn:GetDescendants()) do
-‏            if desc:IsA("LocalScript") or desc:IsA("Script") or desc:IsA("ModuleScript") then
-‏                desc:Destroy()
-‏            elseif desc:IsA("GuiObject") then
-‏                desc.ZIndex = math.max(desc.ZIndex, btn.ZIndex)
-‏                desc.Active = true
-‏                trySet(desc, "Interactable", true)
-‏                if desc:IsA("TextLabel") or desc:IsA("TextButton") then
-‏                    desc.Text = text
-‏                    desc.TextTransparency = 0
-‏                end
-‏            end
-‏        end
-‏    end
+                    if backdrop and sheet then
+                        foundOverlay = true
+                        local info = TweenInfo.new(0.1, Enum.EasingStyle.Cubic, Enum.EasingDirection.In)
+                        TweenService:Create(backdrop, info, {BackgroundTransparency = 1}):Play()
+                        local t = TweenService:Create(sheet, info, {Position = UDim2.new(0.5, 0, 0.5, 32)})
+                        t:Play()
+                        t.Completed:Connect(function()
+                            GuiService:SetMenuIsOpen(true)
+                            GuiService:SetMenuIsOpen(false)
+                        end)
+                        break
+                    end
+                end
+            end
+            if not foundOverlay then
+                GuiService:SetMenuIsOpen(true)
+                GuiService:SetMenuIsOpen(false)
+            end
+        end)
+    end
 
-‏    local function wireHover(btn, palette)
-‏        local colors = palette or COLORS
-‏        btn.MouseEnter:Connect(function()
-‏            applyVisualState(btn, colors.HOVER)
-‏        end)
+    pcall(function()
+        local oldStopGui = CoreGui:FindFirstChild("AutoStopButton")
+        if oldStopGui then oldStopGui:Destroy() end
+    end)
 
-‏        btn.MouseLeave:Connect(function()
-‏            applyVisualState(btn, colors.IDLE)
-‏        end)
-‏    end
+    local function trySet(obj, prop, value)
+        pcall(function() obj[prop] = value end)
+    end
 
-‏    local function processParentButtons(parent)
-‏        if not parent then return end
-‏        local state = getParentState(parent)
-‏        if state.Injecting then
-‏            state.Dirty = true
-‏            return
-‏        end
-‏        state.Injecting = true
+    local function tweenColor(target, color)
+        if not target or not target.Parent then return end
+        local props = {}
+        if target:IsA("GuiObject") then props.BackgroundColor3 = color end
+        if target:IsA("ImageButton") or target:IsA("ImageLabel") then props.ImageColor3 = color end
+        if next(props) then TweenService:Create(target, TWEEN_SPEED, props):Play() end
+    end
 
-‏        task.spawn(function()
-‏            repeat
-‏                state.Dirty = false
-‏                local template = state.TemplateButton
-‏                if not (template and template.Parent == parent) then
-‏                    state.Injecting = false
-‏                    return
-‏                end
+    local function applyVisualState(root, color)
+        tweenColor(root, color)
+        for _, desc in ipairs(root:GetDescendants()) do
+            if desc:IsA("ImageLabel") or desc:IsA("ImageButton") or desc:IsA("Frame") then
+                tweenColor(desc, color)
+            end
+        end
+    end
 
-‏                if not parent:FindFirstChild("FreeButton") then
-‏                    local freeBtn = template:Clone()
-‏                    freeBtn.Name = "FreeButton"
-‏                    freeBtn.Parent = parent
-‏                    decorateButton(freeBtn, "مجاني", (template.ZIndex or 1) + 10)
-‏                    settleFreeButtonPosition(template, freeBtn, parent)
-‏                    wireHover(freeBtn, COLORS)
-‏                    freeBtn.Activated:Connect(function()
-‏                        local id = LastPrompt.Id
-‏                        if not id then return end
-‏                        applyVisualState(freeBtn, COLORS.HOVER)
-‏                        finishPurchase(id)
-‏                        applyVisualState(freeBtn, COLORS.IDLE)
-‏                        toggleRobloxMenu()
-‏                    end)
-‏                end
+    local function fireEventFallback(event, ...)
+        if type(firesignal) == "function" then pcall(firesignal, event, ...) end
+    end
 
-‏                task.defer(function()
-‏                    task.wait(SECONDARY_BUTTON_DELAY)
-‏                    if not isSettingEnabled("CopyButton") then
-‏                        local existingCopy = parent:FindFirstChild("CopyButton")
-‏                        if existingCopy then existingCopy:Destroy() end
-‏                        return
-‏                    end
-‏                    if parent:FindFirstChild("CopyButton") then return end
-‏                    local templateBtn = state.TemplateButton
-‏                    if not (templateBtn and templateBtn.Parent == parent) then return end
-‏                    local copyBtn = templateBtn:Clone()
-‏                    copyBtn.Name = "CopyButton"
-‏                    copyBtn.Parent = parent
-‏                    local freeBtn = parent:FindFirstChild("FreeButton")
-‏                    decorateButton(copyBtn, "نسخ", freeBtn and freeBtn.ZIndex or ((templateBtn.ZIndex or 1) + 10), COPY_COLORS)
-‏                    wireHover(copyBtn, COPY_COLORS)
-‏                    settleButtonPosition(freeBtn, copyBtn, parent, 42)
-‏                    copyBtn.Activated:Connect(function()
-‏                        local id = LastPrompt.Id
-‏                        if not id then return end
-‏                        local operationText = buildPurchaseOperation(id)
-‏                        local copied = pcall(function() setclipboard(operationText) end)
-‏                        if copied then
-‏                            applyVisualState(copyBtn, COPY_COLORS.HOVER)
-‏                            task.wait(0.05)
-‏                        end
-‏                        applyVisualState(copyBtn, COPY_COLORS.IDLE)
-‏                    end)
-‏                end)
+    local function finishPurchase(id)
+        if LastPrompt.Type == "GamePass" then
+            if not pcall(function() MarketplaceService:SignalPromptGamePassPurchaseFinished(player.UserId, id, true) end) then
+                fireEventFallback(MarketplaceService.PromptGamePassPurchaseFinished, player, id, true)
+            end
+        elseif LastPrompt.Type == "Product" then
+            if not pcall(function() MarketplaceService:SignalPromptProductPurchaseFinished(player.UserId, id, true) end) then
+                fireEventFallback(MarketplaceService.PromptProductPurchaseFinished, player.UserId, id, true)
+            end
+        elseif LastPrompt.Type == "Asset" then
+            if not pcall(function() MarketplaceService:SignalPromptPurchaseFinished(player.UserId, id, true) end) then
+                fireEventFallback(MarketplaceService.PromptPurchaseFinished, player, id, true)
+            end
+        elseif LastPrompt.Type == "Bundle" then
+            if not pcall(function() MarketplaceService:SignalPromptBundlePurchaseFinished(player.UserId, id, true) end) then
+                fireEventFallback(MarketplaceService.PromptBundlePurchaseFinished, player.UserId, id, true)
+            end
+        elseif LastPrompt.Type == "Premium" then
+            if not pcall(function() MarketplaceService:SignalPromptPremiumPurchaseFinished(true) end) then
+                fireEventFallback(MarketplaceService.PromptPremiumPurchaseFinished, true)
+            end
+        end
+    end
 
-‏                task.defer(function()
-‏                    task.wait(SECONDARY_BUTTON_DELAY)
-‏                    if not isSettingEnabled("AutoButton") then
-‏                        local existingAuto = parent:FindFirstChild("AutoButton")
-‏                        if existingAuto then existingAuto:Destroy() end
-‏                        stopAutoLoop()
-‏                        destroyAutoStopButton()
-‏                        return
-‏                    end
-‏                    if parent:FindFirstChild("AutoButton") then return end
-‏                    local templateBtn = state.TemplateButton
-‏                    if not (templateBtn and templateBtn.Parent == parent) then return end
-‏                    local autoBtn = templateBtn:Clone()
-‏                    autoBtn.Name = "AutoButton"
-‏                    autoBtn.Parent = parent
-‏                    local anchorBtn = parent:FindFirstChild("CopyButton") or parent:FindFirstChild("FreeButton")
-‏                    decorateButton(autoBtn, "تلقائي", (anchorBtn and anchorBtn.ZIndex) or ((templateBtn.ZIndex or 1) + 10), AUTO_COLORS)
-‏                    wireHover(autoBtn, AUTO_COLORS)
-‏                    settleButtonPosition(anchorBtn, autoBtn, parent, 42)
-‏                    autoBtn.Activated:Connect(function()
-‏                        toggleRobloxMenu()
-‏                        if AutoLoopState.Running then
-‏                            stopAutoLoop()
-‏                            destroyAutoStopButton()
-‏                            return
-‏                        end
-‏                        startAutoLoop()
-‏                        createAutoStopButton()
-‏                        applyVisualState(autoBtn, AUTO_COLORS.HOVER)
-‏                    end)
-‏                end)
+    local function restoreHiddenOverlays()
+        for overlay in pairs(HiddenOverlays) do
+            pcall(function() if overlay and overlay.Parent and overlay:IsA("ScreenGui") then overlay.Enabled = true end end)
+            HiddenOverlays[overlay] = nil
+        end
+    end
 
-‏                task.wait()
-‏                layoutInjectedButtons(parent)
-‏            until not state.Dirty
+    local function restoreFoundationOverlayVisibility()
+        for _, child in ipairs(CoreGui:GetDescendants()) do
+            if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
+                pcall(function() child.Enabled = true end)
+            end
+        end
+    end
 
-‏            state.Injecting = false
-‏        end)
-‏    end
+    local function runInstantPurchase(id, options)
+        if not isCurrentRun() or not isSettingEnabled("InstantPurchase") then return end
+        local opts = options or {}
+        if opts.hideOverlay and opts.overlay then
+            pcall(function()
+                if opts.overlay:IsA("ScreenGui") then
+                    opts.overlay.Enabled = false
+                    HiddenOverlays[opts.overlay] = true
+                end
+            end)
+        end
+        if opts.forceMenuToggle then toggleRobloxMenu() end
+        if not id or id ~= LastPrompt.Id then return end
+        local promptNonce = LastPrompt.Nonce or 0
+        if LastInstant.PromptNonce == promptNonce then return end
+        LastInstant.PromptNonce = promptNonce
+        finishPurchase(id)
+    end
 
-‏    local function injectButtons(originalBtn)
-‏        if not originalBtn or originalBtn.Name == "FreeButton" or originalBtn.Name == "CopyButton" or originalBtn.Name == "AutoButton" then
-‏            return
-‏        end
-‏        local parent = originalBtn.Parent
-‏        if not parent then return end
-‏        local state = getParentState(parent)
-‏        if not (state.TemplateButton and state.TemplateButton.Parent == parent) then
-‏            state.TemplateButton = originalBtn
-‏        end
-‏        processParentButtons(parent)
-‏    end
+    local function capturePrompt(p, id, promptType)
+        if not isCurrentRun() then return end
+        if p == player then
+            LastPrompt.Nonce = (LastPrompt.Nonce or 0) + 1
+            LastPrompt.Id = id
+            LastPrompt.Type = promptType
 
-‏    local function getActions(foundation)
-‏        local actions = foundation:FindFirstChild("SafeAreaFrame")
-‏        actions = actions and actions:FindFirstChild("OverlayPortal")
-‏        actions = actions and actions:FindFirstChild("SheetContainer")
-‏        actions = actions and actions:FindFirstChild("Frame")
-‏        actions = actions and actions:FindFirstChild("Sheet")
-‏        actions = actions and actions:FindFirstChild("Content")
-‏        actions = actions and actions:FindFirstChild("Actions")
-‏        return actions or foundation:FindFirstChild("Actions", true)
-‏    end
+            if isSettingEnabled("Debug") then
+                task.spawn(function()
+                    local infoType
+                    if promptType == "GamePass" then infoType = Enum.InfoType.GamePass
+                    elseif promptType == "Product" then infoType = Enum.InfoType.Product
+                    elseif promptType == "Asset" then infoType = Enum.InfoType.Asset
+                    elseif promptType == "Bundle" then infoType = Enum.InfoType.Bundle end
+                    
+                    if infoType then
+                        local success, info = pcall(function() return MarketplaceService:GetProductInfo(id, infoType) end)
+                        if success and info then
+                            print(string.format("%s | %s | %s", tostring(info.Name), tostring(id), tostring(info.PriceInRobux or 0)))
+                        else
+                            print(string.format("غير معروف | %s | 0", tostring(id)))
+                        end
+                    else
+                        print(string.format("غير معروف | %s | 0", tostring(id)))
+                    end
+                end)
+            end
 
-‏    local function scanActions(actionsFolder)
-‏        for _, child in ipairs(actionsFolder:GetChildren()) do
-‏            if tonumber(child.Name) then
-‏                for _, inner in ipairs(child:GetDescendants()) do
-‏                    if inner:IsA("ImageButton") then
-‏                        injectButtons(inner)
-‏                    end
-‏                end
-‏            end
-‏        end
-‏    end
+            if isSettingEnabled("InstantPurchase") then
+                task.spawn(function() runInstantPurchase(id, { forceMenuToggle = false }) end)
+            end
+        end
+    end
 
-‏    local function scanAllFoundationOverlays()
-‏        for _, child in ipairs(CoreGui:GetDescendants()) do
-‏            if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
-‏                local actions = getActions(child)
-‏                if actions then
-‏                    scanActions(actions)
-‏                end
-‏            end
-‏        end
-‏    end
+    trackConnection(MarketplaceService.PromptGamePassPurchaseRequested:Connect(function(p, id) capturePrompt(p, id, "GamePass") end))
+    trackConnection(MarketplaceService.PromptProductPurchaseRequested:Connect(function(p, id) capturePrompt(p, id, "Product") end))
+    trackConnection(MarketplaceService.PromptPurchaseRequested:Connect(function(p, id) capturePrompt(p, id, "Asset") end))
+    trackConnection(MarketplaceService.PromptBundlePurchaseRequested:Connect(function(p, id) capturePrompt(p, id, "Bundle") end))
+    trackConnection(MarketplaceService.PromptPremiumPurchaseRequested:Connect(function(p) capturePrompt(p, 0, "Premium") end))
 
-‏    local ProcessedOverlays = setmetatable({}, { __mode = "k" })
-‏    local handleOverlay
-‏    local function startInstantStateWatcher()
-‏        task.spawn(function()
-‏            local wasEnabled = isSettingEnabled("InstantPurchase")
-‏            if not wasEnabled then
-‏                restoreHiddenOverlays()
-‏                restoreFoundationOverlayVisibility()
-‏                scanAllFoundationOverlays()
-‏            end
-‏            while isCurrentRun() do
-‏                local isEnabled = isSettingEnabled("InstantPurchase")
-‏                if isEnabled ~= wasEnabled then
-‏                    if not isEnabled then
-‏                        LastInstant.PromptNonce = -1
-‏                        restoreHiddenOverlays()
-‏                        restoreFoundationOverlayVisibility()
-‏                        scanAllFoundationOverlays()
-‏                    end
-‏                    for _, child in ipairs(CoreGui:GetDescendants()) do
-‏                        if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
-‏                            task.spawn(handleOverlay, child, true)
-‏                        end
-‏                    end
-‏                    wasEnabled = isEnabled
-‏                end
-‏                task.wait(INSTANT_STATE_WATCH_INTERVAL)
-‏            end
-‏        end)
-‏    end
+    local function buildPurchaseOperation(id)
+        local code = "local MarketplaceService = game:GetService(\"MarketplaceService\")\n\n"
+        if LastPrompt.Type == "GamePass" then return code .. string.format("MarketplaceService:SignalPromptGamePassPurchaseFinished(%d, %d, true)", player.UserId, id)
+        elseif LastPrompt.Type == "Product" then return code .. string.format("MarketplaceService:SignalPromptProductPurchaseFinished(%d, %d, true)", player.UserId, id)
+        elseif LastPrompt.Type == "Asset" then return code .. string.format("MarketplaceService:SignalPromptPurchaseFinished(%d, %d, true)", player.UserId, id)
+        elseif LastPrompt.Type == "Bundle" then return code .. string.format("MarketplaceService:SignalPromptBundlePurchaseFinished(%d, %d, true)", player.UserId, id)
+        elseif LastPrompt.Type == "Premium" then return code .. "MarketplaceService:SignalPromptPremiumPurchaseFinished(true)" end
+        return ""
+    end
 
-‏    local function startOverlayRescanLoop()
-‏        task.spawn(function()
-‏            while isCurrentRun() do
-‏                if not isSettingEnabled("InstantPurchase") then
-‏                    for _, child in ipairs(CoreGui:GetDescendants()) do
-‏                        if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
-‏                            local actions = getActions(child)
-‏                            if actions then
-‏                                scanActions(actions)
-‏                            end
-‏                        end
-‏                    end
-‏                end
-‏                task.wait(OVERLAY_RESCAN_INTERVAL)
-‏            end
-‏        end)
-‏    end
+    local function settleButtonPosition(anchorBtn, btn, parent, offsetY)
+        if not anchorBtn or not btn or not parent then return end
+        if parent:FindFirstChildOfClass("UIListLayout") then
+            btn.LayoutOrder = (anchorBtn.LayoutOrder or 0) + 1
+            return
+        end
+        btn.Position = anchorBtn.Position + UDim2.fromOffset(0, offsetY or 0)
+    end
 
-‏    function handleOverlay(child, force)
-‏        if child.Name ~= "FoundationOverlay" then return end
-‏        local modeKey = isSettingEnabled("InstantPurchase") and "instant" or "buttons"
-‏        if not force and ProcessedOverlays[child] == modeKey then return end
-‏        ProcessedOverlays[child] = modeKey
+    local function settleFreeButtonPosition(originalBtn, freeBtn, parent)
+        if not originalBtn or not freeBtn or not parent then return end
+        if parent:FindFirstChildOfClass("UIListLayout") then
+            freeBtn.LayoutOrder = (originalBtn.LayoutOrder or 0) + 1
+            return
+        end
+        freeBtn.Position = originalBtn.Position
+    end
 
-‏        if isSettingEnabled("InstantPurchase") then
-‏            local function executeInstant()
-‏                local id = LastPrompt.Id
-‏                runInstantPurchase(id, { hideOverlay = true, overlay = child, forceMenuToggle = true })
-‏            end
+    local function getInjectedButtonsBaseOrder(parent)
+        local maxOrder = 0
+        for _, child in ipairs(parent:GetChildren()) do
+            if child:IsA("GuiObject") and child.Name ~= "FreeButton" and child.Name ~= "CopyButton" and child.Name ~= "AutoButton" then
+                maxOrder = math.max(maxOrder, child.LayoutOrder or 0)
+            end
+        end
+        return maxOrder
+    end
 
-‏            task.spawn(function()
-‏                local function check()
-‏                    if not (child and child.Parent and isSettingEnabled("InstantPurchase")) then return true end
-‏                    local safeArea = child:FindFirstChild("SafeAreaFrame")
-‏                    local portal = safeArea and safeArea:FindFirstChild("OverlayPortal")
-‏                    if portal then
-‏                        executeInstant()
-‏                        return true
-‏                    end
-‏                    return false
-‏                end
+    local function getParentState(parent)
+        local state = ParentButtonState[parent]
+        if not state then state = {}; ParentButtonState[parent] = state end
+        return state
+    end
 
-‏                if not check() then
-‏                    local conn
-‏                    conn = trackConnection(child.DescendantAdded:Connect(function()
-‏                        if check() then
-‏                            if conn then conn:Disconnect() end
-‏                        end
-‏                    end))
-‏                end
-‏            end)
-‏            return
-‏        end
+    local function layoutInjectedButtons(parent)
+        if not parent then return end
+        local state = getParentState(parent)
+        local template = state.TemplateButton
+        if not (template and template.Parent == parent) then
+            for _, child in ipairs(parent:GetChildren()) do
+                if child:IsA("ImageButton") and child.Name ~= "FreeButton" and child.Name ~= "CopyButton" and child.Name ~= "AutoButton" then
+                    template = child; break
+                end
+            end
+            state.TemplateButton = template
+        end
 
-‏        local function scanButtonsWithDelay()
-‏            if not (child and child.Parent and isCurrentRun() and not isSettingEnabled("InstantPurchase")) then return false end
-‏            if not force then
-‏                task.wait(NEW_OVERLAY_BUTTON_INJECT_DELAY)
-‏            end
-‏            if not (child and child.Parent and isCurrentRun() and not isSettingEnabled("InstantPurchase")) then return false end
-‏            local actions = getActions(child)
-‏            if not actions then return false end
-‏            scanActions(actions)
-‏            return true
-‏        end
+        local freeBtn = parent:FindFirstChild("FreeButton")
+        local copyBtn = parent:FindFirstChild("CopyButton")
+        local autoBtn = parent:FindFirstChild("AutoButton")
 
-‏        if scanButtonsWithDelay() then
-‏            return
-‏        end
+        if parent:FindFirstChildOfClass("UIListLayout") then
+            local baseOrder = getInjectedButtonsBaseOrder(parent)
+            if freeBtn then freeBtn.LayoutOrder = baseOrder + 1 end
+            if copyBtn then copyBtn.LayoutOrder = baseOrder + 2 end
+            if autoBtn then autoBtn.LayoutOrder = baseOrder + 3 end
+            return
+        end
 
-‏        local conn
-‏        conn = trackConnection(child.DescendantAdded:Connect(function()
-‏            if scanButtonsWithDelay() then
-‏                if conn then conn:Disconnect() end
-‏            end
-‏        end))
-‏        task.delay(10, function()
-‏            if conn then conn:Disconnect() end
-‏        end)
-‏    end
+        if freeBtn and template then settleFreeButtonPosition(template, freeBtn, parent) end
+        if copyBtn and freeBtn then settleButtonPosition(freeBtn, copyBtn, parent, 42) end
+        if autoBtn then
+            local anchorBtn = copyBtn or freeBtn
+            if anchorBtn then settleButtonPosition(anchorBtn, autoBtn, parent, 42) end
+        end
+    end
 
-‏    trackConnection(CoreGui.DescendantAdded:Connect(handleOverlay))
-‏    for _, child in ipairs(CoreGui:GetDescendants()) do
-‏        task.spawn(handleOverlay, child)
-‏    end
-‏    startInstantStateWatcher()
-‏    startOverlayRescanLoop()
+    local function stopAutoLoop()
+        AutoLoopState.Running = false
+        AutoLoopState.ThreadId = AutoLoopState.ThreadId + 1
+    end
 
-‏    local function performAutoMassPurchase()
-‏        if not isSettingEnabled("AutoMassPurchase") then return end
-‏        task.spawn(function()
-‏            local success, productsPage = pcall(function()
-‏                return MarketplaceService:GetDeveloperProductsAsync()
-‏            end)
-‏            if success and productsPage then
-‏                while true do
-‏                    local products = productsPage:GetCurrentPage()
-‏                    for _, info in ipairs(products) do
-‏                        local id = info.ProductId
-‏                        local name = info.Name or "Unknown"
-‏                        local price = info.PriceInRobux or 0
-                        
-‏                        if isSettingEnabled("Debug") then
-‏                            print(string.format("منتج: %s | %s | %s", tostring(name), tostring(id), tostring(price)))
-‏                        end
-                        
-‏                        local successSig = pcall(function()
-‏                            MarketplaceService:SignalPromptProductPurchaseFinished(LocalPlayer.UserId, id, true)
-‏                        end)
-‏                        if not successSig then
-‏                            fireEventFallback(MarketplaceService.PromptProductPurchaseFinished, LocalPlayer.UserId, id, true)
-‏                        end
-‏                        task.wait(0.1)
-‏                    end
-‏                    if productsPage.IsFinished then
-‏                        break
-‏                    end
-‏                    pcall(function() productsPage:AdvanceToNextPageAsync() end)
-‏                end
-‏            end
-            
-‏            local HttpService = game:GetService("HttpService")
-‏            local universeId = game.GameId
-‏            if universeId == 0 then
-‏                pcall(function()
-‏                    local res = game:HttpGet("https://apis.roblox.com/universes/v1/places/" .. tostring(game.PlaceId) .. "/universe")
-‏                    local data = HttpService:JSONDecode(res)
-‏                    if data and data.universeId then
-‏                        universeId = data.universeId
-‏                    end
-‏                end)
-‏            end
-            
-‏            if universeId and universeId > 0 then
-‏                pcall(function()
-‏                    local cursor = ""
-‏                    while cursor do
-‏                        local url = "https://games.roblox.com/v1/games/" .. tostring(universeId) .. "/game-passes?limit=100"
-‏                        if cursor ~= "" then
-‏                            url = url .. "&cursor=" .. cursor
-‏                        end
-‏                        local res = game:HttpGet(url)
-‏                        local data = HttpService:JSONDecode(res)
-‏                        if data and data.data then
-‏                            for _, gp in ipairs(data.data) do
-‏                                local id = gp.id
-‏                                local name = gp.name or "Unknown"
-‏                                pcall(function()
-‏                                    MarketplaceService:SignalPromptGamePassPurchaseFinished(LocalPlayer.UserId, id, true)
-‏                                end)
-‏                                task.wait(0.1)
-‏                            end
-‏                            cursor = data.nextPageCursor
-‏                        else
-‏                            cursor = nil
-‏                        end
-‏                    end
-‏                end)
-‏            end
-‏        end)
-‏    end
+    local function destroyAutoStopButton()
+        if AutoLoopState.StopGui and AutoLoopState.StopGui.Parent then AutoLoopState.StopGui:Destroy() end
+        AutoLoopState.StopGui = nil
+    end
 
-‏    performAutoMassPurchase()
+    local function startAutoLoop()
+        if AutoLoopState.Running then return end
+        AutoLoopState.Running = true
+        AutoLoopState.ThreadId = AutoLoopState.ThreadId + 1
+        local myThreadId = AutoLoopState.ThreadId
+        task.spawn(function()
+            while AutoLoopState.Running and AutoLoopState.ThreadId == myThreadId do
+                local id = LastPrompt.Id
+                if id then finishPurchase(id); toggleRobloxMenu() end
+                local interval = getSettings().AutoInterval or 0.3
+                task.wait(interval)
+            end
+        end)
+    end
+
+    local function makeDraggable(frame)
+        local dragging = false
+        local dragInput = nil
+        local dragStart = nil
+        local startPos = nil
+        local didDrag = false
+        local DRAG_THRESHOLD = 6
+
+        frame.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true; didDrag = false; dragStart = input.Position; startPos = frame.Position
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then dragging = false end
+                end)
+            end
+        end)
+
+        frame.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+
+        UserInputService.InputChanged:Connect(function(input)
+            if dragging and input == dragInput then
+                local delta = input.Position - dragStart
+                if math.abs(delta.X) > DRAG_THRESHOLD or math.abs(delta.Y) > DRAG_THRESHOLD then didDrag = true end
+                frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            end
+        end)
+
+        return function() local wasDragged = didDrag; didDrag = false; return wasDragged end
+    end
+
+    local function createAutoStopButton()
+        destroyAutoStopButton()
+        local guiObj = Instance.new("ScreenGui")
+        local button = Instance.new("TextButton")
+        local corner = Instance.new("UICorner")
+        local icon = Instance.new("ImageLabel")
+        local aspect = Instance.new("UIAspectRatioConstraint")
+
+        guiObj.Name = "AutoStopButton"
+        guiObj.IgnoreGuiInset = true
+        guiObj.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        guiObj.Parent = CoreGui
+
+        button.Name = "Button"
+        button.Parent = guiObj
+        button.AnchorPoint = Vector2.new(0.5, 0.5)
+        button.Position = UDim2.new(0.5, 0, 0, 34)
+        button.Size = UDim2.new(0.039, 0, 0.069, 0)
+        button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        button.BackgroundTransparency = 0.4
+        button.BorderSizePixel = 0
+        button.AutoButtonColor = false
+        button.ZIndex = 99999999
+        button.Text = ""
+
+        corner.CornerRadius = UDim.new(0, 99999)
+        corner.Parent = button
+
+        icon.Parent = button
+        icon.BackgroundTransparency = 1
+        icon.Position = UDim2.new(0.1, 0, 0.1, 0)
+        icon.Size = UDim2.new(0.8, 0, 0.8, 0)
+        icon.Image = "rbxassetid://98003862321782"
+        icon.ImageColor3 = Color3.fromRGB(255, 90, 90)
+
+        aspect.Parent = button
+        aspect.AspectRatio = 1
+
+        local wasDragged = makeDraggable(button)
+        button.Activated:Connect(function()
+            if wasDragged() then return end
+            stopAutoLoop(); destroyAutoStopButton()
+        end)
+        AutoLoopState.StopGui = guiObj
+    end
+
+    local function decorateButton(btn, text, zIndex, palette)
+        local colors = palette or COLORS
+        btn.Visible = true; btn.Active = true; btn.Selectable = true; btn.AutoButtonColor = false; btn.ZIndex = zIndex
+        btn.BackgroundColor3 = colors.IDLE; btn.BackgroundTransparency = 0.1
+        trySet(btn, "Interactable", true)
+        if btn:IsA("ImageButton") then btn.ImageColor3 = colors.IDLE end
+
+        for _, desc in ipairs(btn:GetDescendants()) do
+            if desc:IsA("LocalScript") or desc:IsA("Script") or desc:IsA("ModuleScript") then
+                desc:Destroy()
+            elseif desc:IsA("GuiObject") then
+                desc.ZIndex = math.max(desc.ZIndex, btn.ZIndex)
+                desc.Active = true; trySet(desc, "Interactable", true)
+                if desc:IsA("TextLabel") or desc:IsA("TextButton") then
+                    desc.Text = text; desc.TextTransparency = 0
+                end
+            end
+        end
+    end
+
+    local function wireHover(btn, palette)
+        local colors = palette or COLORS
+        btn.MouseEnter:Connect(function() applyVisualState(btn, colors.HOVER) end)
+        btn.MouseLeave:Connect(function() applyVisualState(btn, colors.IDLE) end)
+    end
+
+    local function processParentButtons(parent)
+        if not parent then return end
+        local state = getParentState(parent)
+        if state.Injecting then state.Dirty = true; return end
+        state.Injecting = true
+
+        task.spawn(function()
+            repeat
+                state.Dirty = false
+                local template = state.TemplateButton
+                if not (template and template.Parent == parent) then state.Injecting = false; return end
+
+                if not parent:FindFirstChild("FreeButton") then
+                    local freeBtn = template:Clone()
+                    freeBtn.Name = "FreeButton"
+                    freeBtn.Parent = parent
+                    decorateButton(freeBtn, "مجاني", (template.ZIndex or 1) + 10)
+                    settleFreeButtonPosition(template, freeBtn, parent)
+                    wireHover(freeBtn, COLORS)
+                    freeBtn.Activated:Connect(function()
+                        local id = LastPrompt.Id
+                        if not id then return end
+                        applyVisualState(freeBtn, COLORS.HOVER)
+                        finishPurchase(id)
+                        applyVisualState(freeBtn, COLORS.IDLE)
+                        toggleRobloxMenu()
+                    end)
+                end
+
+                task.defer(function()
+                    task.wait(SECONDARY_BUTTON_DELAY)
+                    if not isSettingEnabled("CopyButton") then
+                        local existingCopy = parent:FindFirstChild("CopyButton")
+                        if existingCopy then existingCopy:Destroy() end
+                        return
+                    end
+                    if parent:FindFirstChild("CopyButton") then return end
+                    local templateBtn = state.TemplateButton
+                    if not (templateBtn and templateBtn.Parent == parent) then return end
+                    local copyBtn = templateBtn:Clone()
+                    copyBtn.Name = "CopyButton"
+                    copyBtn.Parent = parent
+                    local freeBtn = parent:FindFirstChild("FreeButton")
+                    decorateButton(copyBtn, "نسخ", freeBtn and freeBtn.ZIndex or ((templateBtn.ZIndex or 1) + 10), COPY_COLORS)
+                    wireHover(copyBtn, COPY_COLORS)
+                    settleButtonPosition(freeBtn, copyBtn, parent, 42)
+                    copyBtn.Activated:Connect(function()
+                        local id = LastPrompt.Id
+                        if not id then return end
+                        local operationText = buildPurchaseOperation(id)
+                        if pcall(function() setclipboard(operationText) end) then
+                            applyVisualState(copyBtn, COPY_COLORS.HOVER)
+                            task.wait(0.05)
+                        end
+                        applyVisualState(copyBtn, COPY_COLORS.IDLE)
+                    end)
+                end)
+
+                task.defer(function()
+                    task.wait(SECONDARY_BUTTON_DELAY)
+                    if not isSettingEnabled("AutoButton") then
+                        local existingAuto = parent:FindFirstChild("AutoButton")
+                        if existingAuto then existingAuto:Destroy() end
+                        stopAutoLoop(); destroyAutoStopButton()
+                        return
+                    end
+                    if parent:FindFirstChild("AutoButton") then return end
+                    local templateBtn = state.TemplateButton
+                    if not (templateBtn and templateBtn.Parent == parent) then return end
+                    local autoBtn = templateBtn:Clone()
+                    autoBtn.Name = "AutoButton"
+                    autoBtn.Parent = parent
+                    local anchorBtn = parent:FindFirstChild("CopyButton") or parent:FindFirstChild("FreeButton")
+                    decorateButton(autoBtn, "تلقائي", (anchorBtn and anchorBtn.ZIndex) or ((templateBtn.ZIndex or 1) + 10), AUTO_COLORS)
+                    wireHover(autoBtn, AUTO_COLORS)
+                    settleButtonPosition(anchorBtn, autoBtn, parent, 42)
+                    autoBtn.Activated:Connect(function()
+                        toggleRobloxMenu()
+                        if AutoLoopState.Running then stopAutoLoop(); destroyAutoStopButton(); return end
+                        startAutoLoop(); createAutoStopButton()
+                        applyVisualState(autoBtn, AUTO_COLORS.HOVER)
+                    end)
+                end)
+
+                task.wait()
+                layoutInjectedButtons(parent)
+            until not state.Dirty
+            state.Injecting = false
+        end)
+    end
+
+    local function injectButtons(originalBtn)
+        if not originalBtn or originalBtn.Name == "FreeButton" or originalBtn.Name == "CopyButton" or originalBtn.Name == "AutoButton" then return end
+        local parent = originalBtn.Parent
+        if not parent then return end
+        local state = getParentState(parent)
+        if not (state.TemplateButton and state.TemplateButton.Parent == parent) then state.TemplateButton = originalBtn end
+        processParentButtons(parent)
+    end
+
+    local function getActions(foundation)
+        local actions = foundation:FindFirstChild("SafeAreaFrame")
+        actions = actions and actions:FindFirstChild("OverlayPortal")
+        actions = actions and actions:FindFirstChild("SheetContainer")
+        actions = actions and actions:FindFirstChild("Frame")
+        actions = actions and actions:FindFirstChild("Sheet")
+        actions = actions and actions:FindFirstChild("Content")
+        actions = actions and actions:FindFirstChild("Actions")
+        return actions or foundation:FindFirstChild("Actions", true)
+    end
+
+    local function scanActions(actionsFolder)
+        for _, child in ipairs(actionsFolder:GetChildren()) do
+            if tonumber(child.Name) then
+                for _, inner in ipairs(child:GetDescendants()) do
+                    if inner:IsA("ImageButton") then injectButtons(inner) end
+                end
+            end
+        end
+    end
+
+    local function scanAllFoundationOverlays()
+        for _, child in ipairs(CoreGui:GetDescendants()) do
+            if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
+                local actions = getActions(child)
+                if actions then scanActions(actions) end
+            end
+        end
+    end
+
+    local ProcessedOverlays = setmetatable({}, { __mode = "k" })
+    local handleOverlay
     
-‏end
+    local function startInstantStateWatcher()
+        task.spawn(function()
+            local wasEnabled = isSettingEnabled("InstantPurchase")
+            if not wasEnabled then restoreHiddenOverlays(); restoreFoundationOverlayVisibility(); scanAllFoundationOverlays() end
+            while isCurrentRun() do
+                local isEnabled = isSettingEnabled("InstantPurchase")
+                if isEnabled ~= wasEnabled then
+                    if not isEnabled then
+                        LastInstant.PromptNonce = -1; restoreHiddenOverlays(); restoreFoundationOverlayVisibility(); scanAllFoundationOverlays()
+                    end
+                    for _, child in ipairs(CoreGui:GetDescendants()) do
+                        if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then task.spawn(handleOverlay, child, true) end
+                    end
+                    wasEnabled = isEnabled
+                end
+                task.wait(INSTANT_STATE_WATCH_INTERVAL)
+            end
+        end)
+    end
 
+    local function startOverlayRescanLoop()
+        task.spawn(function()
+            while isCurrentRun() do
+                if not isSettingEnabled("InstantPurchase") then
+                    for _, child in ipairs(CoreGui:GetDescendants()) do
+                        if child:IsA("ScreenGui") and child.Name == "FoundationOverlay" then
+                            local actions = getActions(child)
+                            if actions then scanActions(actions) end
+                        end
+                    end
+                end
+                task.wait(OVERLAY_RESCAN_INTERVAL)
+            end
+        end)
+    end
+
+    function handleOverlay(child, force)
+        if child.Name ~= "FoundationOverlay" then return end
+        local modeKey = isSettingEnabled("InstantPurchase") and "instant" or "buttons"
+        if not force and ProcessedOverlays[child] == modeKey then return end
+        ProcessedOverlays[child] = modeKey
+
+        if isSettingEnabled("InstantPurchase") then
+            local function executeInstant()
+                local id = LastPrompt.Id
+                runInstantPurchase(id, { hideOverlay = true, overlay = child, forceMenuToggle = true })
+            end
+            task.spawn(function()
+                local function check()
+                    if not (child and child.Parent and isSettingEnabled("InstantPurchase")) then return true end
+                    if child:FindFirstChild("SafeAreaFrame") and child.SafeAreaFrame:FindFirstChild("OverlayPortal") then
+                        executeInstant(); return true
+                    end
+                    return false
+                end
+                if not check() then
+                    local conn; conn = trackConnection(child.DescendantAdded:Connect(function() if check() then conn:Disconnect() end end))
+                end
+            end)
+            return
+        end
+
+        local function scanButtonsWithDelay()
+            if not (child and child.Parent and isCurrentRun() and not isSettingEnabled("InstantPurchase")) then return false end
+            if not force then task.wait(NEW_OVERLAY_BUTTON_INJECT_DELAY) end
+            if not (child and child.Parent and isCurrentRun() and not isSettingEnabled("InstantPurchase")) then return false end
+            local actions = getActions(child)
+            if not actions then return false end
+            scanActions(actions)
+            return true
+        end
+
+        if scanButtonsWithDelay() then return end
+        local conn; conn = trackConnection(child.DescendantAdded:Connect(function() if scanButtonsWithDelay() then conn:Disconnect() end end))
+        task.delay(10, function() if conn then conn:Disconnect() end end)
+    end
+
+    trackConnection(CoreGui.DescendantAdded:Connect(handleOverlay))
+    for _, child in ipairs(CoreGui:GetDescendants()) do task.spawn(handleOverlay, child) end
+    startInstantStateWatcher()
+    startOverlayRescanLoop()
+
+    local function performAutoMassPurchase()
+        if not isSettingEnabled("AutoMassPurchase") then return end
+        task.spawn(function()
+            local success, productsPage = pcall(function() return MarketplaceService:GetDeveloperProductsAsync() end)
+            if success and productsPage then
+                while true do
+                    for _, info in ipairs(productsPage:GetCurrentPage()) do
+                        local id = info.ProductId
+                        if isSettingEnabled("Debug") then
+                            print(string.format("منتج: %s | %s | %s", tostring(info.Name or "Unknown"), tostring(id), tostring(info.PriceInRobux or 0)))
+                        end
+                        if not pcall(function() MarketplaceService:SignalPromptProductPurchaseFinished(player.UserId, id, true) end) then
+                            fireEventFallback(MarketplaceService.PromptProductPurchaseFinished, player.UserId, id, true)
+                        end
+                        task.wait(0.1)
+                    end
+                    if productsPage.IsFinished then break end
+                    pcall(function() productsPage:AdvanceToNextPageAsync() end)
+                end
+            end
+            
+            local universeId = game.GameId
+            if universeId == 0 then
+                pcall(function()
+                    local res = game:HttpGet("https://apis.roblox.com/universes/v1/places/" .. tostring(game.PlaceId) .. "/universe")
+                    local data = HttpService:JSONDecode(res)
+                    if data and data.universeId then universeId = data.universeId end
+                end)
+            end
+            
+            if universeId and universeId > 0 then
+                pcall(function()
+                    local cursor = ""
+                    while cursor do
+                        local url = "https://games.roblox.com/v1/games/" .. tostring(universeId) .. "/game-passes?limit=100"
+                        if cursor ~= "" then url = url .. "&cursor=" .. cursor end
+                        local res = game:HttpGet(url)
+                        local data = HttpService:JSONDecode(res)
+                        if data and data.data then
+                            for _, gp in ipairs(data.data) do
+                                pcall(function() MarketplaceService:SignalPromptGamePassPurchaseFinished(player.UserId, gp.id, true) end)
+                                task.wait(0.1)
+                            end
+                            cursor = data.nextPageCursor
+                        else
+                            cursor = nil
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+
+    performAutoMassPurchase()
+end
 
 local function loadSavedData()
     if isfile(KEY_FILE) then
-        local ok, data = pcall(function()
-            return HttpService:JSONDecode(readfile(KEY_FILE))
-        end)
+        local ok, data = pcall(function() return HttpService:JSONDecode(readfile(KEY_FILE)) end)
         if ok and data then return data end
     end
     return nil
 end
 
 local function saveKeyData(key, expiryTime, tagText)
-    local data = {
-        SavedKey = key,
-        Expiry = expiryTime,
-        TagText = tagText
-    }
+    local data = { SavedKey = key, Expiry = expiryTime, TagText = tagText }
     writefile(KEY_FILE, HttpService:JSONEncode(data))
 end
-
 
 local savedData = loadSavedData()
 if savedData and savedData.SavedKey then
@@ -1586,13 +1292,11 @@ if savedData and savedData.SavedKey then
     end
 end
 
-
 local keyGui = Instance.new("ScreenGui")
 keyGui.Name = "BokaKeySystem"
 keyGui.ResetOnSpawn = false
 keyGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 keyGui.Parent = playerGui
-
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
@@ -1607,12 +1311,10 @@ local frameCorner = Instance.new("UICorner")
 frameCorner.CornerRadius = UDim.new(0, 12)
 frameCorner.Parent = mainFrame
 
-
 local frameStroke = Instance.new("UIStroke")
 frameStroke.Color = Color3.fromRGB(130, 0, 0)
 frameStroke.Thickness = 2
 frameStroke.Parent = mainFrame
-
 
 local backgroundGlow = Instance.new("ImageLabel")
 backgroundGlow.Size = UDim2.new(1, 60, 1, 60)
@@ -1624,7 +1326,6 @@ backgroundGlow.ImageTransparency = 0.4
 backgroundGlow.ZIndex = 0
 backgroundGlow.Parent = mainFrame
 
-
 local mainTitle = Instance.new("TextLabel")
 mainTitle.Size = UDim2.new(1, 0, 0, 50)
 mainTitle.Position = UDim2.new(0, 0, 0, 15)
@@ -1634,7 +1335,6 @@ mainTitle.TextColor3 = Color3.fromRGB(220, 0, 0)
 mainTitle.Font = Enum.Font.GothamBlack
 mainTitle.TextSize = 32
 mainTitle.Parent = mainFrame
-
 
 local textBox = Instance.new("TextBox")
 textBox.Size = UDim2.new(0, 320, 0, 45)
@@ -1658,7 +1358,6 @@ boxStroke.Color = Color3.fromRGB(80, 0, 0)
 boxStroke.Thickness = 1.2
 boxStroke.Parent = textBox
 
-
 local submitBtn = Instance.new("TextButton")
 submitBtn.Size = UDim2.new(0, 160, 0, 40)
 submitBtn.Position = UDim2.new(0.5, -80, 0, 160)
@@ -1674,7 +1373,6 @@ local btnCorner = Instance.new("UICorner")
 btnCorner.CornerRadius = UDim.new(0, 8)
 btnCorner.Parent = submitBtn
 
-
 local discordLabel = Instance.new("TextLabel")
 discordLabel.Size = UDim2.new(1, 0, 0, 30)
 discordLabel.Position = UDim2.new(0, 0, 1, -35)
@@ -1685,13 +1383,10 @@ discordLabel.Font = Enum.Font.Code
 discordLabel.TextSize = 15
 discordLabel.Parent = mainFrame
 
-
 local dragging, dragInput, dragStart, startPos
 mainFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = mainFrame.Position
+        dragging = true; dragStart = input.Position; startPos = mainFrame.Position
     end
 end)
 mainFrame.InputChanged:Connect(function(input)
@@ -1711,7 +1406,6 @@ UserInputService.InputEnded:Connect(function(input)
     end
 end)
 
-
 submitBtn.MouseEnter:Connect(function()
     TweenService:Create(submitBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(120, 0, 0)}):Play()
 end)
@@ -1719,18 +1413,15 @@ submitBtn.MouseLeave:Connect(function()
     TweenService:Create(submitBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(80, 0, 0)}):Play()
 end)
 
-
 submitBtn.Activated:Connect(function()
     local enteredKey = textBox.Text
     local config = KEYS_DATA[enteredKey]
     
     if config then
-        
         local closeTween = TweenService:Create(mainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0)})
         closeTween:Play()
         closeTween.Completed:Wait()
         keyGui:Destroy()
-        
         
         if config.Type == "Lifetime" then
             saveKeyData(enteredKey, 0, config.TagText)
@@ -1739,15 +1430,11 @@ submitBtn.Activated:Connect(function()
             saveKeyData(enteredKey, expiry, config.TagText)
         end
         
-        
         createOverheadTag(config.TagText)
         RunMainScript()
     else
-        
-        
         showNotification("صاحب السكربت", "الكود مستخدم ما يمديك تستخدمه لانه مستخدم")
         
-         
         local originalPos = mainFrame.Position
         for i = 1, 3 do
             mainFrame.Position = originalPos + UDim2.fromOffset(10, 0)
