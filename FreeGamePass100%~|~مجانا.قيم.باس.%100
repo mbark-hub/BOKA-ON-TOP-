@@ -16,15 +16,15 @@ local KEYS_DATA = {
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
 
-    ["BOKA1234567890"] = {
+    ["11223344556677889900."] = {
         Type = "Timed",
         Duration = Lifetime,
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
 
-    ["BOKAOWNER999"] = {
+    ["GoldUser$1@"] = {
         Type = "Timed",
-        Duration = 100,
+        Duration = 640000,
         TagText = "https://discord.gg/ZpqDpdzWt"
     }
 }
