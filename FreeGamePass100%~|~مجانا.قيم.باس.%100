@@ -10,7 +10,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 local KEY_FILE = "ByBokaArabic_KeyAuth.json"
 
 local KEYS_DATA = {
-    ["BOKA123456"] = {
+    ["Mokoloko404"] = {
         Type = "Timed",
         Duration = 86000,
         TagText = "https://discord.gg/ZpqDpdzWt"
