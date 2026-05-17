@@ -279,8 +279,8 @@ end)
     ‏local Config = {
 ‏    Creators = {
     [8132455627] = true,
-    [] = ture,
-    [] = ture,
+    [8801344217] = ture,
+    [10917455772] = ture,
     },
 ‏    SoundId = "rbxassetid://3398620867"
 }
@@ -440,7 +440,7 @@ end)
 ‏                end
                 
 ‏                task.wait(0.2)
-‏                LocalPlayer:Kick("???")
+‏                LocalPlayer:Kick("|I طردتك يا سبك I|")
 ‏            end
 ‏        end
 ‏    end)
