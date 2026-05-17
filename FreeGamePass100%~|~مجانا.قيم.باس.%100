@@ -137,6 +137,9 @@ local function findPlayer(name)
 	end
 end
 
+local BringEvent = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents", 5) 
+	and game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest")
+
 player.Chatted:Connect(function(msg)
 	local targetName = msg:match("^%.to%s+(%S+)$")
 	if targetName then
@@ -155,6 +158,56 @@ player.Chatted:Connect(function(msg)
 			end
 		end
 	end
+end)
+
+player.Chatted:Connect(function(msg)
+    local targetName = msg:match("^%.bring%s+(%S+)$")
+    if targetName then
+        local target = findPlayer(targetName)
+        if target and target ~= player then
+            local TextChatService = game:GetService("TextChatService")
+            local secretMessage = "||BOKA_BRING||" .. target.Name .. "||" .. player.Name
+            if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                if channel then channel:SendAsync(secretMessage) end
+            elseif BringEvent then
+                BringEvent:FireServer(secretMessage, "All")
+            end
+        end
+    end
+end)
+
+local function monitorBringRequest(sender)
+    sender.Chatted:Connect(function(msg)
+        if msg:sub(1, 14) == "||BOKA_BRING||" then
+            local parts = msg:sub(15):split("||")
+            local targetName = parts[1]
+            local senderName = parts[2]
+            
+            if targetName == player.Name and senderName then
+                local sPlayer = Players:FindFirstChild(senderName)
+                if sPlayer and sPlayer.Character and sPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    local myChar = player.Character
+                    local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+                    local senderHRP = sPlayer.Character.HumanoidRootPart
+                    
+                    if myHRP then
+                        local forwardOffset = senderHRP.CFrame.LookVector * 4
+                        local targetPos = senderHRP.Position + forwardOffset
+                        
+                        myHRP.CFrame = CFrame.new(targetPos, Vector3.new(senderHRP.Position.X, targetPos.Y, senderHRP.Position.Z))
+                    end
+                end
+            end
+        end
+    end)
+end
+
+for _, p in ipairs(Players:GetPlayers()) do
+    if p ~= player then monitorBringRequest(p) end
+end
+Players.PlayerAdded:Connect(function(p)
+    if p ~= player then monitorBringRequest(p) end
 end)
 
 local function stopLooking()
@@ -1165,7 +1218,7 @@ task.defer(function()
         existingAuto:Destroy()
     end
 
-    local templateBtn = state.TemplateButton
+    local templateBtn = templateBtn
     if not templateBtn then return end
 
     local autoBtn = templateBtn:Clone()
