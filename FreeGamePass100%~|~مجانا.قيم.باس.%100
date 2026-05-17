@@ -1441,7 +1441,7 @@ submitBtn.Activated:Connect(function()
         createOverheadTag(config.TagText)
         RunMainScript()
     else
-        showNotification("صاحب السكربت", "الكود مستخدم ما يمديك تستخدمه لانه مستخدم")
+        showNotification("صاحب السكربت", "الكود غلط لو تبي كود جديد ادخل الدي وافتح تكت وان شاء الله يعجبك الاسعار")
         
         local originalPos = mainFrame.Position
         for i = 1, 3 do
