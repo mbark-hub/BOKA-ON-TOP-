@@ -16,7 +16,7 @@ local KEYS_DATA = {
         TagText = "https://discord.gg/ZpqDpdzWt"
     },
 
-    ["11223344556677889900."] = {
+    ["11223344556677889900OwnerGold"] = {
         Type = "Timed",
         Duration = Lifetime,
         TagText = "https://discord.gg/ZpqDpdzWt"
